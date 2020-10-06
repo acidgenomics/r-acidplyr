@@ -1,0 +1,43 @@
+Package: AcidPlyr
+Title: A Grammar of S4 Class Data Manipulation
+Description: A dplyr-like approach for classes defined in S4Vectors.
+Version: 0.1.0
+Date: 2020-10-06
+Authors@R: c(
+    person(
+        "Michael", "Steinbaugh",
+        email = "mike@steinbaugh.com",
+        role = c("aut", "cre"),
+        comment = c(ORCID = "0000-0002-2403-2221")
+    ),
+    person(
+        given = "Acid Genomics",
+        role = c("cph", "fnd")
+    ))
+URL:
+    https://acidplyr.acidgenomics.com/,
+    https://github.com/acidgenomics/AcidPlyr/
+BugReports: https://github.com/acidgenomics/AcidPlyr/issues/
+License: GPL-3
+Encoding: UTF-8
+Depends: R (>= 4.0)
+Imports:
+    AcidGenerics (>= 0.4.0),
+    S4Vectors,
+    goalie (>= 0.4.9),
+    methods
+Suggests:
+    AcidTest (>= 0.4.0),
+    knitr,
+    rmarkdown,
+    testthat
+Remotes:
+    acidgenomics/AcidGenerics,
+    acidgenomics/AcidTest,
+    acidgenomics/goalie
+biocViews:
+    DataImport,
+    DataRepresentation
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+VignetteBuilder: knitr
