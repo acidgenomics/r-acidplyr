@@ -45,8 +45,8 @@ NULL
 
 
 
-## Updated 2020-09-14.
-`splitByLevel,data.frame` <-  # nolint
+## Updated 2020-10-07.
+`splitByLevel,DataFrame` <-  # nolint
     function(x, f, ref = FALSE) {
         assert(
             isString(f),
@@ -72,22 +72,6 @@ NULL
             }
         )
     }
-
-
-
-#' @rdname splitByLevel
-#' @export
-setMethod(
-    f = "splitByLevel",
-    signature = signature("data.frame"),
-    definition = `splitByLevel,data.frame`
-)
-
-
-
-## Updated 2020-09-14.
-`splitByLevel,DataFrame` <-  # nolint
-    `splitByLevel,data.frame`
 
 
 
