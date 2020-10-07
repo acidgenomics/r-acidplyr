@@ -5,8 +5,6 @@
 #' @inheritParams AcidRoxygen::params
 #' @param colnames `character(3)`.
 #'   Column name mappings for melted data frame return.
-#'   Currently only applies to `matrix` and `DataFrame` methods.
-#'   Standardized for `SummarizedExperiment` and `SingleCellExperiment`.
 #' @param min `numeric(1)` or `NULL`.
 #'   Minimum count threshold to apply. Filters using "greater than or equal to"
 #'   logic internally. Note that this threshold gets applied prior to
@@ -50,59 +48,14 @@
 #' ```
 #'
 #' @examples
-#' data(
-#'     RangedSummarizedExperiment,
-#'     SingleCellExperiment,
-#'     package = "AcidTest"
-#' )
+#' data(matrix, package = "AcidTest")
 #'
-#' ## SummarizedExperiment ====
-#' object <- RangedSummarizedExperiment
-#' dim(object)
-#' x <- melt(object)
-#' nrow(x)
-#' print(x)
-#'
-#' ## SingleCellExperiment ====
-#' object <- SingleCellExperiment
-#' dim(object)
-#' x <- melt(object)
-#' nrow(x)
+#' ## matrix ====
+#' dim(matrix)
+#' x <- melt(matrix)
+#' dim(x)
 #' print(x)
 NULL
-
-
-
-## Updated 2019-09-01.
-.melt <- function(
-    object,
-    colnames = c("rowname", "colname", "value")
-) {
-    assert(
-        isAny(object, c("matrix", "Matrix")),
-        hasDims(object),
-        isCharacter(colnames),
-        hasLength(colnames, n = 3L),
-        areDisjointSets(colnames, colnames(object))
-    )
-    if (is.null(rownames(object))) {
-        rownames(object) <- as.character(seq_len(nrow(object)))
-    }
-    if (is.null(colnames(object))) {
-        colnames(object) <- as.character(seq_len(ncol(object)))
-    }
-    dn <- dimnames(object)
-    names(dn) <- colnames[seq_len(2L)]
-    out <- DataFrame(expand.grid(
-        dn,
-        KEEP.OUT.ATTRS = FALSE,
-        stringsAsFactors = TRUE
-    ))
-    value <- DataFrame(as.vector(object))
-    names(value) <- colnames[[3L]]
-    out <- cbind(out, value)
-    out
-}
 
 
 
@@ -115,9 +68,17 @@ NULL
         minMethod = c("absolute", "perRow"),
         trans = c("identity", "log2", "log10")
     ) {
+        if (is.null(rownames(object))) {
+            rownames(object) <- as.character(seq_len(nrow(object)))
+        }
+        if (is.null(colnames(object))) {
+            colnames(object) <- as.character(seq_len(ncol(object)))
+        }
         assert(
-            hasColnames(object),
-            hasRownames(object),
+            hasDims(object),
+            isCharacter(colnames),
+            hasLength(colnames, n = 3L),
+            areDisjointSets(colnames, colnames(object)),
             isNumber(min, nullOK = TRUE)
         )
         minMethod <- match.arg(minMethod)
@@ -144,18 +105,27 @@ NULL
             object <- object[keep, , drop = FALSE]
         }
         valueCol <- colnames[[3L]]
-        data <- .melt(object = object, colnames = colnames)
-        data <- encode(data)
+        dn <- dimnames(object)
+        names(dn) <- colnames[seq_len(2L)]
+        df <- DataFrame(expand.grid(
+            dn,
+            KEEP.OUT.ATTRS = FALSE,
+            stringsAsFactors = TRUE
+        ))
+        value <- DataFrame(as.vector(object))
+        names(value) <- colnames[[3L]]
+        df <- cbind(df, value)
+        df <- decode(df)
         if (
             identical(minMethod, "absolute") &&
             isTRUE(is.finite(min))
         ) {
-            nPrefilter <- nrow(data)
-            keep <- data[[valueCol]] >= min
-            data <- data[keep, , drop = FALSE]
+            nPrefilter <- nrow(df)
+            keep <- df[[valueCol]] >= min
+            df <- df[keep, , drop = FALSE]
             cli_alert_info(sprintf(
                 "%d / %d %s passed {.arg %s} >= {.val %s} expression cutoff.",
-                nrow(data),
+                nrow(df),
                 nPrefilter,
                 ngettext(
                     n = nPrefilter,
@@ -178,10 +148,9 @@ NULL
                 inherits = FALSE
             )
             assert(is.function(fun))
-            data[[valueCol]] <- fun(data[[valueCol]] + 1L)
+            df[[valueCol]] <- fun(df[[valueCol]] + 1L)
         }
-        data <- encode(data)
-        data
+        df
     }
 
 
@@ -192,21 +161,6 @@ setMethod(
     f = "melt",
     signature = signature("matrix"),
     definition = `melt,matrix`
-)
-
-
-
-## Updated 2019-09-01.
-`melt,table` <- .melt  # nolint
-
-
-
-#' @rdname melt
-#' @export
-setMethod(
-    f = "melt",
-    signature = signature("table"),
-    definition = `melt,table`
 )
 
 
@@ -224,6 +178,9 @@ setMethod(
         )
         melt(object = as.matrix(object), colnames = colnames)
     }
+
+formals(`melt,DataFrame`)[["colnames"]] <-
+    formals(`melt,DataFrame`)[["matrix"]]
 
 
 
