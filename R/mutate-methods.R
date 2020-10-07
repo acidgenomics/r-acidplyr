@@ -35,7 +35,7 @@ NULL
     function(object, fun, ...) {
         assert(allAreAtomic(object))
         list <- lapply(X = object, FUN = fun, ...)
-        out <- DataFrame(as_tibble(list), row.names = rownames(object))
+        out <- DataFrame(list, row.names = rownames(object))
         assert(
             identical(dim(out), dim(object)),
             identical(dimnames(out), dimnames(object))
