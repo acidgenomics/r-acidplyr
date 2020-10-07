@@ -25,6 +25,7 @@ Imports:
     AcidBase (>= 0.2.0),
     AcidGenerics (>= 0.4.0),
     S4Vectors,
+    cli (>= 2.0),
     goalie (>= 0.4.9),
     methods
 Suggests:
