@@ -16,7 +16,7 @@ melt(object, ...)
   trans = c("identity", "log2", "log10")
 )
 
-\S4method{melt}{DataFrame}(object)
+\S4method{melt}{DataFrame}(object, colnames = c("rowname", "colname", "value"))
 }
 \arguments{
 \item{object}{Object.}
