@@ -59,7 +59,7 @@ NULL
 
 
 
-## Updated 2020-01-20.
+## Updated 2020-10-07.
 `melt,matrix` <-  # nolint
     function(
         object,
