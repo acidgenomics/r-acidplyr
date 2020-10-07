@@ -180,7 +180,7 @@ setMethod(
     }
 
 formals(`melt,DataFrame`)[["colnames"]] <-
-    formals(`melt,DataFrame`)[["matrix"]]
+    formals(`melt,matrix`)[["colnames"]]
 
 
 
