@@ -10,12 +10,32 @@ test_that("Default", {
     }
 })
 
+test_that("Lacking row and column names", {
+    object <- mat
+    rownames(object) <- NULL
+    ## Note that this step doesn't work on DataFrame class.
+    colnames(object) <- NULL
+    x <- melt(object)
+    expect_s4_class(x, "DataFrame")
+})
+
 test_that("Per row filtering", {
     object <- mat
+    ## Stash a single zero in the first row.
+    object[1L, 1L] <- 0L
+    ## Make the second row all zeros, so we can check for drop.
     gene <- rownames(object)[[2L]]
     object[gene, ] <- 0L
     x <- melt(object, min = 1L, minMethod = "perRow")
     expect_false(any(gene %in% x[["value"]]))
+    expect_true(any(0L %in% x[["value"]]))
+})
+
+test_that("Absolute filtering", {
+    object <- mat
+    object[1L, 1L] <- 0L
+    x <- melt(object, min = 1L, minMethod = "absolute")
+    expect_false(any(0L %in% x[["value"]]))
 })
 
 test_that("trans", {
