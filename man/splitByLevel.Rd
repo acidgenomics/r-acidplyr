@@ -2,13 +2,10 @@
 % Please edit documentation in R/AllGenerics.R, R/splitByLevel-methods.R
 \name{splitByLevel}
 \alias{splitByLevel}
-\alias{splitByLevel,data.frame-method}
 \alias{splitByLevel,DataFrame-method}
 \title{Split by factor level}
 \usage{
 splitByLevel(x, f, ref = FALSE, ...)
-
-\S4method{splitByLevel}{data.frame}(x, f, ref = FALSE)
 
 \S4method{splitByLevel}{DataFrame}(x, f, ref = FALSE)
 }

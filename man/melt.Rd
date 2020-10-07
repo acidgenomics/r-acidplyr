@@ -3,7 +3,6 @@
 \name{melt}
 \alias{melt}
 \alias{melt,matrix-method}
-\alias{melt,table-method}
 \alias{melt,DataFrame-method}
 \title{Melt columns into key-value pairs}
 \usage{
@@ -17,17 +16,13 @@ melt(object, ...)
   trans = c("identity", "log2", "log10")
 )
 
-\S4method{melt}{table}(object, colnames = c("rowname", "colname", "value"))
-
-\S4method{melt}{DataFrame}(object, colnames = c("rowname", "colname", "value"))
+\S4method{melt}{DataFrame}(object)
 }
 \arguments{
 \item{object}{Object.}
 
 \item{colnames}{\code{character(3)}.
-Column name mappings for melted data frame return.
-Currently only applies to \code{matrix} and \code{DataFrame} methods.
-Standardized for \code{SummarizedExperiment} and \code{SingleCellExperiment}.}
+Column name mappings for melted data frame return.}
 
 \item{min}{\code{numeric(1)} or \code{NULL}.
 Minimum count threshold to apply. Filters using "greater than or equal to"
@@ -62,24 +57,12 @@ Unpivot column data from wide format to long format.
 Updated 2020-10-07.
 }
 \examples{
-data(
-    RangedSummarizedExperiment,
-    SingleCellExperiment,
-    package = "AcidTest"
-)
+data(matrix, package = "AcidTest")
 
-## SummarizedExperiment ====
-object <- RangedSummarizedExperiment
-dim(object)
-x <- melt(object)
-nrow(x)
-print(x)
-
-## SingleCellExperiment ====
-object <- SingleCellExperiment
-dim(object)
-x <- melt(object)
-nrow(x)
+## matrix ====
+dim(matrix)
+x <- melt(matrix)
+dim(x)
 print(x)
 }
 \seealso{
