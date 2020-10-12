@@ -60,3 +60,9 @@ test_that("trans", {
         SIMPLIFY = FALSE
     )
 })
+
+test_that("Contingency table", {
+    tbl <- table(rpois(n = 100L, lambda = 5L))
+    df <- melt(tbl)
+    expect_s4_class(object, "DataFrame")
+})
