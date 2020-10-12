@@ -1,6 +1,6 @@
 #' @name melt
 #' @inherit AcidGenerics::melt
-#' @note Updated 2020-10-07.
+#' @note Updated 2020-10-12.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param colnames `character(3)`.
@@ -161,6 +161,22 @@ setMethod(
     f = "melt",
     signature = signature("matrix"),
     definition = `melt,matrix`
+)
+
+
+
+## Updated 2020-10-12.
+`melt,table` <-  # nolint
+    `melt,matrix`
+
+
+
+#' @rdname melt
+#' @export
+setMethod(
+    f = "melt",
+    signature = signature("table"),
+    definition = `melt,table`
 )
 
 

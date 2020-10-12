@@ -1,3 +1,7 @@
+## AcidPlyr 0.1.2 (2020-10-12)
+
+- `melt`: Added back `table` method support, which is used in pointillism.
+
 ## AcidPlyr 0.1.1 (2020-10-07)
 
 ### New functions
