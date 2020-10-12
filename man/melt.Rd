@@ -3,6 +3,7 @@
 \name{melt}
 \alias{melt}
 \alias{melt,matrix-method}
+\alias{melt,table-method}
 \alias{melt,DataFrame-method}
 \title{Melt columns into key-value pairs}
 \usage{
@@ -15,6 +16,8 @@ melt(object, ...)
   minMethod = c("absolute", "perRow"),
   trans = c("identity", "log2", "log10")
 )
+
+\S4method{melt}{table}(object, ...)
 
 \S4method{melt}{DataFrame}(object, colnames = c("rowname", "colname", "value"))
 }
@@ -54,7 +57,7 @@ to melting, if desired. Use \code{"identity"} to return unmodified (default).}
 Unpivot column data from wide format to long format.
 }
 \note{
-Updated 2020-10-07.
+Updated 2020-10-12.
 }
 \examples{
 data(matrix, package = "AcidTest")
