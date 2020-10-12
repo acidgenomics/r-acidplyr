@@ -68,10 +68,10 @@ NULL
         minMethod = c("absolute", "perRow"),
         trans = c("identity", "log2", "log10")
     ) {
-        if (is.null(rownames(object))) {
+        if (!hasRownames(object)) {
             rownames(object) <- as.character(seq_len(nrow(object)))
         }
-        if (is.null(colnames(object))) {
+        if (!hasColnames(object)) {
             colnames(object) <- as.character(seq_len(ncol(object)))
         }
         assert(
@@ -167,7 +167,11 @@ setMethod(
 
 ## Updated 2020-10-12.
 `melt,table` <-  # nolint
-    `melt,matrix`
+    function(object, ...) {
+        mat <- matrix(object)
+        dimnames(mat) <- dimnames(object)
+        melt(object = mat, ...)
+    }
 
 
 
