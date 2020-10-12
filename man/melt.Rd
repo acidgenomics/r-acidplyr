@@ -17,13 +17,7 @@ melt(object, ...)
   trans = c("identity", "log2", "log10")
 )
 
-\S4method{melt}{table}(
-  object,
-  colnames = c("rowname", "colname", "value"),
-  min = -Inf,
-  minMethod = c("absolute", "perRow"),
-  trans = c("identity", "log2", "log10")
-)
+\S4method{melt}{table}(object, ...)
 
 \S4method{melt}{DataFrame}(object, colnames = c("rowname", "colname", "value"))
 }
