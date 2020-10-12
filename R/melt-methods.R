@@ -168,9 +168,7 @@ setMethod(
 ## Updated 2020-10-12.
 `melt,table` <-  # nolint
     function(object, ...) {
-        mat <- matrix(object)
-        dimnames(mat) <- dimnames(object)
-        melt(object = mat, ...)
+        melt(object = as.matrix(unclass(object)), ...)
     }
 
 
