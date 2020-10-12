@@ -1,6 +1,6 @@
 #' @name melt
 #' @inherit AcidGenerics::melt
-#' @note Updated 2020-10-07.
+#' @note Updated 2020-10-12.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param colnames `character(3)`.
@@ -68,10 +68,10 @@ NULL
         minMethod = c("absolute", "perRow"),
         trans = c("identity", "log2", "log10")
     ) {
-        if (is.null(rownames(object))) {
+        if (!hasRownames(object)) {
             rownames(object) <- as.character(seq_len(nrow(object)))
         }
-        if (is.null(colnames(object))) {
+        if (!hasColnames(object)) {
             colnames(object) <- as.character(seq_len(ncol(object)))
         }
         assert(
@@ -161,6 +161,26 @@ setMethod(
     f = "melt",
     signature = signature("matrix"),
     definition = `melt,matrix`
+)
+
+
+
+## Updated 2020-10-12.
+`melt,table` <-  # nolint
+    function(object, ...) {
+        mat <- matrix(object)
+        dimnames(mat) <- dimnames(object)
+        melt(object = mat, ...)
+    }
+
+
+
+#' @rdname melt
+#' @export
+setMethod(
+    f = "melt",
+    signature = signature("table"),
+    definition = `melt,table`
 )
 
 
