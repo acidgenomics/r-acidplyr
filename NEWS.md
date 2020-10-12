@@ -1,4 +1,12 @@
+## AcidPlyr 0.1.3 (2020-10-12)
+
+### Minor changes
+
+- `melt`: Improved internal code for contingency `table` method support.
+
 ## AcidPlyr 0.1.2 (2020-10-12)
+
+### Minor changes
 
 - `melt`: Added back `table` method support, which is used in pointillism.
 
