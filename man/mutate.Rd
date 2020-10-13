@@ -56,7 +56,7 @@ Modified object.
 Mutate multiple columns
 }
 \note{
-Updated 2020-10-07.
+Updated 2020-10-12.
 }
 \examples{
 data(mtcars, package = "datasets")
