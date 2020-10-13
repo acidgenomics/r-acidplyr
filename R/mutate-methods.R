@@ -1,6 +1,6 @@
 #' @name mutate
 #' @inherit AcidGenerics::mutate
-#' @note Updated 2020-10-07.
+#' @note Updated 2020-10-12.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -31,11 +31,16 @@ NULL
 ## Loop across the columns and then each row internally.
 ## This will fail on complex list columns unless wrapped by `as_tibble()`.
 ## See also list to DataFrame coercion method defined in package.
+## Updated 2020-10-12.
 `mutateAll,DataFrame` <-  # nolint
     function(object, fun, ...) {
-        assert(allAreAtomic(object))
+        assert(
+            allAreAtomic(object),
+            is.function(fun)
+        )
         list <- lapply(X = object, FUN = fun, ...)
-        out <- DataFrame(list, row.names = rownames(object))
+        tbl <- as_tibble(list)
+        out <- DataFrame(tbl, row.names = rownames(object))
         assert(
             identical(dim(out), dim(object)),
             identical(dimnames(out), dimnames(object))
@@ -58,6 +63,7 @@ setMethod(
 
 
 
+## Updated 2020-10-12.
 `mutateAt,DataFrame` <-  # nolint
     function(object, vars, fun, ...) {
         x <- transmuteAt(object, vars = vars, fun = fun, ...)
@@ -83,6 +89,7 @@ setMethod(
 
 
 
+## Updated 2020-10-12.
 `mutateIf,DataFrame` <-  # nolint
     function(object, predicate, fun, ...) {
         x <- transmuteIf(
@@ -113,6 +120,7 @@ setMethod(
 
 
 
+## Updated 2020-10-12.
 `transmuteAt,DataFrame` <-  # nolint
     function(object, vars, fun, ...) {
         x <- object[, vars, drop = FALSE]
@@ -136,6 +144,7 @@ setMethod(
 
 
 
+## Updated 2020-10-12.
 `transmuteIf,DataFrame` <-  # nolint
     function(object, predicate, fun, ...) {
         x <- selectIf(object, predicate = predicate)

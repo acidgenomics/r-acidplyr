@@ -1,3 +1,7 @@
+## AcidPlyr 0.1.4 (2020-10-12)
+
+- `mutateAt`: Bug fix to improve internal `list` to `DataFrame` coercion.
+
 ## AcidPlyr 0.1.3 (2020-10-12)
 
 ### Minor changes

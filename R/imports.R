@@ -7,4 +7,5 @@
 #'   hasDims hasLength hasRownames isAny isCharacter isFlag isInt isNumber
 #'   isString isSubset
 #' @importFrom methods setMethod signature
+#' @importFrom tibble as_tibble
 NULL
