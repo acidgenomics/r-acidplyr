@@ -165,6 +165,7 @@ setMethod(
 
 
 
+## This is used in pointillism package.
 ## Updated 2020-10-12.
 `melt,table` <-  # nolint
     function(object, ...) {
