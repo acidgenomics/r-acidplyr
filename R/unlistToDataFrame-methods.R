@@ -3,6 +3,7 @@
 #' @note Updated 2020-12-22.
 #'
 #' @inheritParams AcidRoxygen::params
+#' @param ... Additional arguments.
 #'
 #' @seealso
 #' - `purrr::map_dfr`.
