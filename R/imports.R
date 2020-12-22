@@ -8,5 +8,6 @@
 #'   hasDims hasLength hasRownames isAny isCharacter isFlag isInt isNumber
 #'   isString isSubset
 #' @importFrom methods setMethod signature
+#' @importFrom purrr map_dfr
 #' @importFrom tibble as_tibble
 NULL
