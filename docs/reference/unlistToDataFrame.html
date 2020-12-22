@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Select multiple columns — selectIf • AcidPlyr</title>
+<title>Unlist to a data frame — unlistToDataFrame • AcidPlyr</title>
 
 
 <!-- jquery -->
@@ -41,8 +41,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Select multiple columns — selectIf" />
-<meta property="og:description" content="Select multiple columns" />
+<meta property="og:title" content="Unlist to a data frame — unlistToDataFrame" />
+<meta property="og:description" content="Unlist to a data frame" />
 
 
 
@@ -119,71 +119,97 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Select multiple columns</h1>
-    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/AcidPlyr/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/acidgenomics/AcidPlyr/blob/master/R/select-methods.R'><code>R/select-methods.R</code></a></small>
-    <div class="hidden name"><code>select.Rd</code></div>
+    <h1>Unlist to a data frame</h1>
+    <small class="dont-index">Source: <a href='https://github.com/acidgenomics/AcidPlyr/blob/master/R/AllGenerics.R'><code>R/AllGenerics.R</code></a>, <a href='https://github.com/acidgenomics/AcidPlyr/blob/master/R/unlistToDataFrame-methods.R'><code>R/unlistToDataFrame-methods.R</code></a></small>
+    <div class="hidden name"><code>unlistToDataFrame.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Select multiple columns</p>
+    <p>Unlist to a data frame</p>
     </div>
 
-    <pre class="usage"><span class='fu'>selectIf</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>predicate</span>, <span class='va'>...</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>unlistToDataFrame</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='co'># S4 method for DataFrame,`function`</span>
-<span class='fu'>selectIf</span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>predicate</span><span class='op'>)</span></pre>
+<span class='co'># S4 method for list</span>
+<span class='fu'>unlistToDataFrame</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>object</th>
+      <th>x</th>
       <td><p>Object.</p></td>
-    </tr>
-    <tr>
-      <th>predicate</th>
-      <td><p><code>function</code>.
-A predicate function to be applied to the columns.
-For example, <code><a href='https://rdrr.io/r/base/is.recursive.html'>is.atomic()</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Modified object.</p>
+    <p><code>DataFrame</code>.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Updated 2019-08-26.</p>
+    <p>Updated 2020-12-22.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>These functions are inspired by dplyr. However, they are designed to only
-work on <code>DataFrame</code> class, and use base R code internally.<div class="r"></p><pre><span class='va'>`help(topic = "select_all", package = "dplyr")`</span>
-</pre><p></div></p></div>
+    <div class='dont-index'>
+<ul>
+<li><p><code><a href='https://purrr.tidyverse.org/reference/map.html'>purrr::map_dfr</a></code>.</p></li>
+<li><p><code><a href='https://rdrr.io/pkg/plyr/man/ldply.html'>plyr::ldply</a></code> (deprecated).</p></li>
+</ul>
+</div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span>, package <span class='op'>=</span> <span class='st'>"datasets"</span><span class='op'>)</span>
-
-<span class='co'>## DataFrame ====</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>as</span><span class='op'>(</span><span class='va'>iris</span>, <span class='st'>"DataFrame"</span><span class='op'>)</span>
-<span class='fu'>selectIf</span><span class='op'>(</span><span class='va'>x</span>, predicate <span class='op'>=</span> <span class='va'>is.factor</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; DataFrame with 150 rows and 1 column
-#&gt;       Species
-#&gt;      &lt;factor&gt;
-#&gt; 1      setosa
-#&gt; 2      setosa
-#&gt; 3      setosa
-#&gt; 4      setosa
-#&gt; 5      setosa
-#&gt; ...       ...
-#&gt; 146 virginica
-#&gt; 147 virginica
-#&gt; 148 virginica
-#&gt; 149 virginica
-#&gt; 150 virginica</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+    a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+        aa <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span>from <span class='op'>=</span> <span class='fl'>1L</span>, to <span class='op'>=</span> <span class='fl'>3L</span><span class='op'>)</span>,
+        bb <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span>from <span class='op'>=</span> <span class='fl'>4L</span>, to <span class='op'>=</span> <span class='fl'>6L</span><span class='op'>)</span>
+    <span class='op'>)</span>,
+    b <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+        cc <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span>from <span class='op'>=</span> <span class='fl'>7L</span>, to <span class='op'>=</span> <span class='fl'>9L</span><span class='op'>)</span>,
+        dd <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span>from <span class='op'>=</span> <span class='fl'>10L</span>, to <span class='op'>=</span> <span class='fl'>12L</span><span class='op'>)</span>
+    <span class='op'>)</span>,
+    c <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+        ee <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span>from <span class='op'>=</span> <span class='fl'>13L</span>, to <span class='op'>=</span> <span class='fl'>15L</span><span class='op'>)</span>,
+        ff <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span>from <span class='op'>=</span> <span class='fl'>16L</span>, to <span class='op'>=</span> <span class='fl'>18L</span><span class='op'>)</span>
+    <span class='op'>)</span>
+<span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $a
+#&gt; $a$aa
+#&gt; [1] 1 2 3
+#&gt; 
+#&gt; $a$bb
+#&gt; [1] 4 5 6
+#&gt; 
+#&gt; 
+#&gt; $b
+#&gt; $b$cc
+#&gt; [1] 7 8 9
+#&gt; 
+#&gt; $b$dd
+#&gt; [1] 10 11 12
+#&gt; 
+#&gt; 
+#&gt; $c
+#&gt; $c$ee
+#&gt; [1] 13 14 15
+#&gt; 
+#&gt; $c$ff
+#&gt; [1] 16 17 18
+#&gt; 
+#&gt; </div><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>unlistToDataFrame</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; DataFrame with 9 rows and 6 columns
+#&gt;          aa        bb        cc        dd        ee        ff
+#&gt;   &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+#&gt; 1         1         4        NA        NA        NA        NA
+#&gt; 2         2         5        NA        NA        NA        NA
+#&gt; 3         3         6        NA        NA        NA        NA
+#&gt; 4        NA        NA         7        10        NA        NA
+#&gt; 5        NA        NA         8        11        NA        NA
+#&gt; 6        NA        NA         9        12        NA        NA
+#&gt; 7        NA        NA        NA        NA        13        16
+#&gt; 8        NA        NA        NA        NA        14        17
+#&gt; 9        NA        NA        NA        NA        15        18</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
