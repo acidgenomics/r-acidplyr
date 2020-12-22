@@ -27,6 +27,7 @@ Imports:
     S4Vectors,
     cli (>= 2.2),
     goalie (>= 0.4.11),
+    purrr (>= 0.3.4),
     tibble (>= 3.0),
     methods
 Suggests:
