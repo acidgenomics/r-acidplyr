@@ -1,8 +1,8 @@
 Package: AcidPlyr
 Title: A Grammar of S4 Class Data Manipulation
 Description: A dplyr-like approach for classes defined in S4Vectors.
-Version: 0.1.4
-Date: 2020-10-12
+Version: 0.1.5
+Date: 2021-01-06
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",

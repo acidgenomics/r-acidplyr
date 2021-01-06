@@ -11,9 +11,9 @@ A grammar of S4 class data manipulation.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://acidplyr.acidgenomics.com/}
-  \item \url{https://github.com/acidgenomics/AcidPlyr/}
-  \item Report bugs at \url{https://github.com/acidgenomics/AcidPlyr/issues/}
+  \item \url{https://r.acidgenomics.com/packages/acidplyr/}
+  \item \url{https://github.com/acidgenomics/r-acidplyr/}
+  \item Report bugs at \url{https://github.com/acidgenomics/r-acidplyr/issues/}
 }
 
 }
