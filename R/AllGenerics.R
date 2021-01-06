@@ -103,3 +103,12 @@ NULL
 #' @usage splitByLevel(x, f, ref = FALSE, ...)
 #' @export
 NULL
+
+
+
+#' @rdname unlistToDataFrame
+#' @name unlistToDataFrame
+#' @importFrom AcidGenerics unlistToDataFrame
+#' @usage unlistToDataFrame(x, ...)
+#' @export
+NULL
