@@ -15,9 +15,9 @@ Authors@R: c(
         role = c("cph", "fnd")
     ))
 URL:
-    https://acidplyr.acidgenomics.com/,
-    https://github.com/acidgenomics/AcidPlyr/
-BugReports: https://github.com/acidgenomics/AcidPlyr/issues/
+    https://r.acidgenomics.com/packages/acidplyr/,
+    https://github.com/acidgenomics/r-acidplyr/
+BugReports: https://github.com/acidgenomics/r-acidplyr/issues/
 License: GPL-3
 Encoding: UTF-8
 Depends: R (>= 4.0)
