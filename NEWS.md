@@ -1,9 +1,19 @@
+## AcidPlyr 0.1.6 (2021-01-06)
+
+### Minor changes
+
+- Migrated internal dependency from cli to AcidCLI.
+
 ## AcidPlyr 0.1.5 (2021-01-06)
+
+### New functions
 
 - Added new `unlistToDataFrame` utility, inspired by approach used in purrr
   package. Note that package now imports purrr.
 
 ## AcidPlyr 0.1.4 (2020-10-12)
+
+### Minor changes
 
 - `mutateAt`: Bug fix to improve internal `list` to `DataFrame` coercion.
 
