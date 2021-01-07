@@ -1,6 +1,6 @@
 #' @name melt
 #' @inherit AcidGenerics::melt
-#' @note Updated 2020-10-12.
+#' @note Updated 2021-01-06.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param colnames `character(3)`.
@@ -89,7 +89,7 @@ NULL
         ) {
             keep <- rowSums(object) >= min
             if (identical(minMethod, "perRow")) {
-                cli_alert_info(sprintf(
+                alertInfo(sprintf(
                     "%d / %d %s passed {.arg %s} >= {.val %s} cutoff.",
                     sum(keep, na.rm = TRUE),
                     nrow(object),
@@ -123,7 +123,7 @@ NULL
             nPrefilter <- nrow(df)
             keep <- df[[valueCol]] >= min
             df <- df[keep, , drop = FALSE]
-            cli_alert_info(sprintf(
+            alertInfo(sprintf(
                 "%d / %d %s passed {.arg %s} >= {.val %s} expression cutoff.",
                 nrow(df),
                 nPrefilter,
@@ -139,7 +139,7 @@ NULL
         ## Log transform the value, if desired.
         if (!identical(trans, "identity")) {
             assert(isInt(min))
-            cli_alert(sprintf(
+            alert(sprintf(
                 "Applying {.code %s(x + 1L)} transformation.", trans
             ))
             fun <- get(
