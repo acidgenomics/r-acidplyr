@@ -57,7 +57,7 @@ to melting, if desired. Use \code{"identity"} to return unmodified (default).}
 Unpivot column data from wide format to long format.
 }
 \note{
-Updated 2020-10-12.
+Updated 2021-01-06.
 }
 \examples{
 data(matrix, package = "AcidTest")
