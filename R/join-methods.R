@@ -35,7 +35,7 @@ NULL
 
 
 
-## Updated 2020-10-06.
+## Updated 2021-01-24.
 `innerJoin,DataFrame` <-  # nolint
     function(x, y, by) {
         assert(
@@ -83,6 +83,7 @@ setMethod(
         )
         x[[".idx"]] <- seq_len(nrow(x))
         out <- merge(x = x, y = y, by = by, all.x = TRUE, sort = FALSE)
+        assert(identical(nrow(x), nrow(out)))
         out <- out[order(out[[".idx"]]), , drop = FALSE]
         assert(identical(x[[".idx"]], out[[".idx"]]))
         if (hasRownames(x)) {
