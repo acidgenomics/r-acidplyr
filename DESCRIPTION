@@ -1,8 +1,8 @@
 Package: AcidPlyr
 Title: A Grammar of S4 Class Data Manipulation
 Description: A dplyr-like approach for classes defined in S4Vectors.
-Version: 0.1.6
-Date: 2021-01-06
+Version: 0.1.7
+Date: 2021-01-29
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -22,11 +22,11 @@ License: GPL-3
 Encoding: UTF-8
 Depends: R (>= 4.0)
 Imports:
-    AcidBase (>= 0.3.1),
-    AcidCLI (>= 0.0.1),
-    AcidGenerics (>= 0.5.0),
+    AcidBase (>= 0.3.4),
+    AcidCLI (>= 0.0.5),
+    AcidGenerics (>= 0.5.3),
     S4Vectors,
-    goalie (>= 0.4.13),
+    goalie (>= 0.4.14),
     purrr (>= 0.3),
     tibble (>= 3.0),
     methods

@@ -1,6 +1,6 @@
 #' @name join
 #' @inherit AcidGenerics::join
-#' @note Updated 2020-10-06.
+#' @note Updated 2021-01-29.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -39,11 +39,27 @@ NULL
 `innerJoin,DataFrame` <-  # nolint
     function(x, y, by) {
         assert(
-            isSubset(by, colnames(x)),
-            isSubset(by, colnames(y)),
-            areDisjointSets(setdiff(colnames(x), by), setdiff(colnames(y), by)),
-            areDisjointSets(c(".idx", ".idy"), colnames(x)),
-            areDisjointSets(c(".idx", ".idy"), colnames(y))
+            hasColnames(x),
+            hasColnames(y),
+            isSubset(x = by, y = colnames(x)),
+            isSubset(x = by, y = colnames(y)),
+            identical(
+                x = intersect(x = colnames(x), y = colnames(y)),
+                y = by
+            ),
+            areDisjointSets(
+                x = setdiff(colnames(x), by),
+                y = setdiff(colnames(y), by)
+            ),
+            hasNoDuplicates(by),
+            areDisjointSets(
+                x = c(".idx", ".idy"),
+                y = colnames(x)
+            ),
+            areDisjointSets(
+                x = c(".idx", ".idy"),
+                y = colnames(y)
+            )
         )
         x[[".idx"]] <- seq_len(nrow(x))
         out <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)
@@ -71,17 +87,34 @@ setMethod(
 
 
 
-## Updated 2020-10-06.
+## Updated 2021-01-29.
 `leftJoin,DataFrame` <-  # nolint
     function(x, y, by) {
         assert(
-            isSubset(by, colnames(x)),
-            isSubset(by, colnames(y)),
-            areDisjointSets(setdiff(colnames(x), by), setdiff(colnames(y), by)),
-            areDisjointSets(c(".idx", ".idy"), colnames(x)),
-            areDisjointSets(c(".idx", ".idy"), colnames(y))
+            hasColnames(x),
+            hasColnames(y),
+            isSubset(x = by, y = colnames(x)),
+            isSubset(x = by, y = colnames(y)),
+            identical(
+                x = intersect(x = colnames(x), y = colnames(y)),
+                y = by
+            ),
+            areDisjointSets(
+                x = setdiff(x = colnames(x), y = by),
+                y = setdiff(x = colnames(y), y = by)
+            ),
+            hasNoDuplicates(by),
+            areDisjointSets(
+                x = c(".idx", ".idy"),
+                y = colnames(x)
+            ),
+            areDisjointSets(
+                x = c(".idx", ".idy"),
+                y = colnames(y)
+            )
         )
         x[[".idx"]] <- seq_len(nrow(x))
+        y <- unique(y)
         out <- merge(x = x, y = y, by = by, all.x = TRUE, sort = FALSE)
         assert(identical(nrow(x), nrow(out)))
         out <- out[order(out[[".idx"]]), , drop = FALSE]
@@ -131,15 +164,31 @@ setMethod(
 
 
 
-## Updated 2020-10-06.
+## Updated 2021-01-29.
 `fullJoin,DataFrame` <-  # nolint
     function(x, y, by) {
         assert(
-            isSubset(by, colnames(x)),
-            isSubset(by, colnames(y)),
-            areDisjointSets(setdiff(colnames(x), by), setdiff(colnames(y), by)),
-            areDisjointSets(c(".idx", ".idy"), colnames(x)),
-            areDisjointSets(c(".idx", ".idy"), colnames(y))
+            hasColnames(x),
+            hasColnames(y),
+            isSubset(x = by, y = colnames(x)),
+            isSubset(x = by, y = colnames(y)),
+            identical(
+                x = intersect(x = colnames(x), y = colnames(y)),
+                y = by
+            ),
+            areDisjointSets(
+                x = setdiff(x = colnames(x), y = by),
+                y = setdiff(x = colnames(y), y = by)
+            ),
+            hasNoDuplicates(by),
+            areDisjointSets(
+                x = c(".idx", ".idy"),
+                y = colnames(x)
+            ),
+            areDisjointSets(
+                x = c(".idx", ".idy"),
+                y = colnames(y)
+            )
         )
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
@@ -172,15 +221,31 @@ setMethod(
 
 
 
-## Updated 2020-10-06.
+## Updated 2021-01-29.
 `semiJoin,DataFrame` <-  # nolint
     function(x, y, by) {
         assert(
-            isSubset(by, colnames(x)),
-            isSubset(by, colnames(y)),
-            areDisjointSets(setdiff(colnames(x), by), setdiff(colnames(y), by)),
-            areDisjointSets(c(".idx", ".idy"), colnames(x)),
-            areDisjointSets(c(".idx", ".idy"), colnames(y))
+            hasColnames(x),
+            hasColnames(y),
+            isSubset(x = by, y = colnames(x)),
+            isSubset(x = by, y = colnames(y)),
+            identical(
+                x = intersect(x = colnames(x), y = colnames(y)),
+                y = by
+            ),
+            areDisjointSets(
+                x = setdiff(x = colnames(x), y = by),
+                y = setdiff(x = colnames(y), y = by)
+            ),
+            hasNoDuplicates(by),
+            areDisjointSets(
+                x = c(".idx", ".idy"),
+                y = colnames(x)
+            ),
+            areDisjointSets(
+                x = c(".idx", ".idy"),
+                y = colnames(y)
+            )
         )
         x[[".idx"]] <- seq_len(nrow(x))
         m <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)
@@ -205,15 +270,31 @@ setMethod(
 
 
 
-## Updated 2020-10-06.
+## Updated 2021-01-29.
 `antiJoin,DataFrame` <-  # nolint
     function(x, y, by) {
         assert(
-            isSubset(by, colnames(x)),
-            isSubset(by, colnames(y)),
-            areDisjointSets(setdiff(colnames(x), by), setdiff(colnames(y), by)),
-            areDisjointSets(c(".idx", ".idy"), colnames(x)),
-            areDisjointSets(c(".idx", ".idy"), colnames(y))
+            hasColnames(x),
+            hasColnames(y),
+            isSubset(x = by, y = colnames(x)),
+            isSubset(x = by, y = colnames(y)),
+            identical(
+                x = intersect(x = colnames(x), y = colnames(y)),
+                y = by
+            ),
+            areDisjointSets(
+                x = setdiff(x = colnames(x), y = by),
+                y = setdiff(x = colnames(y), y = by)
+            ),
+            hasNoDuplicates(by),
+            areDisjointSets(
+                x = c(".idx", ".idy"),
+                y = colnames(x)
+            ),
+            areDisjointSets(
+                x = c(".idx", ".idy"),
+                y = colnames(y)
+            )
         )
         x[[".idx"]] <- seq_len(nrow(x))
         m <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)
