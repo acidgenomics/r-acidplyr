@@ -1,3 +1,9 @@
+## AcidPlyr 0.1.7 (2021-01-31)
+
+### Minor changes
+
+- Tightened up internal code of join functions.
+
 ## AcidPlyr 0.1.6 (2021-01-06)
 
 ### Minor changes
