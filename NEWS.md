@@ -1,3 +1,9 @@
+## AcidPlyr 0.1.8 (2021-02-02)
+
+### New functions
+
+- Migrated `collapseToString` from basejump.
+
 ## AcidPlyr 0.1.7 (2021-01-31)
 
 ### Minor changes
