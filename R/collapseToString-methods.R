@@ -9,8 +9,6 @@
 #'   Unique values.
 #' @param sort `logical(1)`.
 #'   Sort values.
-#' @param removeNA `logical(1)`.
-#'   Remove NA values.
 #' @param ... Additional arguments.
 #'
 #' @seealso [`toString()`][base::toString].
@@ -25,14 +23,12 @@
 #' collapseToString(
 #'     groceries,
 #'     unique = TRUE,
-#'     sort = TRUE,
-#'     removeNA = TRUE
+#'     sort = TRUE
 #' )
 #' collapseToString(
 #'     groceries,
 #'     unique = FALSE,
-#'     sort = FALSE,
-#'     removeNA = FALSE
+#'     sort = FALSE
 #' )
 #'
 #' ## numeric ====
@@ -43,21 +39,20 @@
 #' collapseToString(c(NA, NaN))
 #'
 #' ## data.frame ====
-#' datasets::iris %>%
-#'     head() %>%
-#'     collapseToString(sort = TRUE, unique = TRUE) %>%
-#'     t()
+#' df <- datasets::iris
+#' df <- head(df)
+#' df <- collapseToString(df, sort = TRUE, unique = TRUE)
+#' t(df)
 NULL
 
 
 
-## Updated 2019-08-18.
+## Updated 2021-02-02.
 `collapseToString,atomic` <-  # nolint
     function(
         object,
         sep = ", ",
         sort = FALSE,
-        removeNA = FALSE,
         unique = FALSE
     ) {
         assert(
@@ -66,27 +61,15 @@ NULL
             isFlag(unique),
             isFlag(sort)
         )
-        ## Early return unmodified if scalar.
         if (isScalar(object)) {
             return(object)
         }
-        ## Sort, if desired.
-        if (isTRUE(sort)) {
-            object <- sort(object, na.last = TRUE)
-        }
-        ## Remove NA values, if desired.
-        if (!all(is.na(object))) {
-            if (isTRUE(removeNA)) {
-                object <- removeNA(object)
-            } else {
-                object <- sanitizeNA(object)
-            }
-        }
-        ## Make unique, if desired.
         if (isTRUE(unique)) {
             object <- unique(object)
         }
-        ## Return.
+        if (isTRUE(sort)) {
+            object <- sort(object, na.last = TRUE)
+        }
         out <- as.character(object)
         out <- paste(out, collapse = sep)
         out
@@ -105,13 +88,12 @@ setMethod(
 
 
 ## Alternatively, can use `dplyr::summarise_all()` approach.
-## Updated 2019-08-10.
+## Updated 2020-02-02.
 `collapseToString,matrix` <-  # nolint
     function(
         object,
         sep = ", ",
         sort = FALSE,
-        removeNA = FALSE,
         unique = FALSE
     ) {
         assert(hasLength(object))
@@ -120,12 +102,10 @@ setMethod(
         list <- lapply(
             X = x,
             FUN = function(x) {
-                x <- sanitizeNA(x)
                 x <- collapseToString(
                     object = x,
                     sep = sep,
                     sort = sort,
-                    removeNA = removeNA,
                     unique = unique
                 )
             }
