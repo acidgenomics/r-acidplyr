@@ -1,3 +1,12 @@
+#' @rdname collapseToString
+#' @name collapseToString
+#' @importFrom AcidGenerics collapseToString
+#' @usage collapseToString(object, ...)
+#' @export
+NULL
+
+
+
 #' @rdname join
 #' @name innerJoin
 #' @importFrom AcidGenerics innerJoin
