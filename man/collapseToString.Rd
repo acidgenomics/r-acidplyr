@@ -10,37 +10,13 @@
 \usage{
 collapseToString(object, ...)
 
-\S4method{collapseToString}{atomic}(
-  object,
-  sep = ", ",
-  sort = FALSE,
-  removeNA = FALSE,
-  unique = FALSE
-)
+\S4method{collapseToString}{atomic}(object, sep = ", ", sort = FALSE, unique = FALSE)
 
-\S4method{collapseToString}{matrix}(
-  object,
-  sep = ", ",
-  sort = FALSE,
-  removeNA = FALSE,
-  unique = FALSE
-)
+\S4method{collapseToString}{matrix}(object, sep = ", ", sort = FALSE, unique = FALSE)
 
-\S4method{collapseToString}{data.frame}(
-  object,
-  sep = ", ",
-  sort = FALSE,
-  removeNA = FALSE,
-  unique = FALSE
-)
+\S4method{collapseToString}{data.frame}(object, sep = ", ", sort = FALSE, unique = FALSE)
 
-\S4method{collapseToString}{DataFrame}(
-  object,
-  sep = ", ",
-  sort = FALSE,
-  removeNA = FALSE,
-  unique = FALSE
-)
+\S4method{collapseToString}{DataFrame}(object, sep = ", ", sort = FALSE, unique = FALSE)
 }
 \arguments{
 \item{object}{Object.}
@@ -50,9 +26,6 @@ Separator. Defaults to comma.}
 
 \item{sort}{\code{logical(1)}.
 Sort values.}
-
-\item{removeNA}{\code{logical(1)}.
-Remove NA values.}
 
 \item{unique}{\code{logical(1)}.
 Unique values.}
@@ -77,14 +50,12 @@ groceries <- c(NA, NA, "milk", "eggs", "eggs", "veggies")
 collapseToString(
     groceries,
     unique = TRUE,
-    sort = TRUE,
-    removeNA = TRUE
+    sort = TRUE
 )
 collapseToString(
     groceries,
     unique = FALSE,
-    sort = FALSE,
-    removeNA = FALSE
+    sort = FALSE
 )
 
 ## numeric ====
@@ -95,10 +66,10 @@ collapseToString(c(TRUE, FALSE))
 collapseToString(c(NA, NaN))
 
 ## data.frame ====
-datasets::iris \%>\%
-    head() \%>\%
-    collapseToString(sort = TRUE, unique = TRUE) \%>\%
-    t()
+df <- datasets::iris
+df <- head(df)
+df <- collapseToString(df, sort = TRUE, unique = TRUE)
+t(df)
 }
 \seealso{
 \code{\link[base:toString]{toString()}}.
