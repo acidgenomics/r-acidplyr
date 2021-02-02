@@ -6,7 +6,7 @@
 #' @importFrom S4Vectors DataFrame
 #' @importFrom goalie allAreAtomic areDisjointSets assert bapply hasColnames
 #'   hasDims hasLength hasNoDuplicates hasRownames isAny isCharacter isFlag
-#'   isInt isNumber isString isSubset
+#'   isInt isNumber isScalar isString isSubset
 #' @importFrom methods as setMethod signature
 #' @importFrom purrr map_dfr
 #' @importFrom tibble as_tibble
