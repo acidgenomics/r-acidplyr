@@ -6,7 +6,8 @@
 \alias{AcidPlyr-package}
 \title{AcidPlyr}
 \description{
-A grammar of S4 class data manipulation.
+A dplyr-like grammar for data manipulation of S4 classes defined
+in S4Vectors.
 }
 \seealso{
 Useful links:
