@@ -1,6 +1,7 @@
 Package: AcidPlyr
-Title: A Grammar of S4 Class Data Manipulation
-Description: A dplyr-like approach for classes defined in S4Vectors.
+Title: Acid Genomics Tabular Data Plyr
+Description: A dplyr-like grammar for data manipulation of S4 classes
+    defined in S4Vectors.
 Version: 0.1.8
 Date: 2021-02-02
 Authors@R: c(
