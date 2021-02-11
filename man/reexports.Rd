@@ -4,6 +4,8 @@
 \name{reexports}
 \alias{reexports}
 \alias{DataFrame}
+\alias{map_df}
+\alias{map_dfr}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -12,5 +14,7 @@ below to see their documentation.
 
 \describe{
   \item{AcidGenerics}{\code{\link[AcidGenerics:reexports]{DataFrame}}}
+
+  \item{purrr}{\code{\link[purrr:map]{map_df}}, \code{\link[purrr:map]{map_dfr}}}
 }}
 
