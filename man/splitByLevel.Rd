@@ -66,7 +66,6 @@ splitByLevel(df, f = "concentration", ref = TRUE)
 \seealso{
 \itemize{
 \item \code{split()}
-\item \code{S4Vectors::split()}
 \item \code{dplyr::group_split()}
 }
 }
