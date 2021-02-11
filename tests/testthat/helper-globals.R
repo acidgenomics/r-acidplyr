@@ -1,3 +1,5 @@
+## nolint start
+
 data(
     DFrame, matrix,
     package = "AcidTest",
@@ -12,7 +14,7 @@ data(
 df <- DFrame
 mat <- matrix
 
-## nolint start
-DataFrame <- S4Vectors::DataFrame
+DataFrame <- AcidGenerics::DataFrame
 hasRownames <- goalie::hasRownames
+
 ## nolint end
