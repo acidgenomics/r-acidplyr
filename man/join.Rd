@@ -95,7 +95,7 @@ These functions are inspired by dplyr. However, they are designed to only
 work on Bioconductor S4 class objects, and use base R code internally.
 \itemize{
 \item \code{help(topic = "join", package = "dplyr")}.
-\item \code{help(topic = "merge", package = "S4Vectors")}.
+\item \code{help(topic = "merge", package = "base")}.
 \item https://support.bioconductor.org/p/120277/
 }
 }
