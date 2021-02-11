@@ -1,3 +1,3 @@
-#' @importFrom S4Vectors DataFrame
+#' @importFrom AcidGenerics DataFrame
 #' @export
-S4Vectors::DataFrame
+AcidGenerics::DataFrame
