@@ -4,6 +4,12 @@
 
 - Tightened up dependency requirements.
 
+## AcidPlyr 0.1.9 (2021-02-11)
+
+### Minor changes
+
+- Updated reexports to include some useful purrr map reexports.
+
 ## AcidPlyr 0.1.8 (2021-02-02)
 
 ### New functions
