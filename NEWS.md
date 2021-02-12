@@ -1,3 +1,9 @@
+## AcidPlyr 0.1.10 (2021-02-12)
+
+### Minor changes
+
+- Tightened up dependency requirements.
+
 ## AcidPlyr 0.1.8 (2021-02-02)
 
 ### New functions
