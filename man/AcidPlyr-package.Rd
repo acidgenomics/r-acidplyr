@@ -6,7 +6,8 @@
 \alias{AcidPlyr-package}
 \title{AcidPlyr}
 \description{
-A dplyr-like grammar for data manipulation of S4 classes.
+A dplyr-like grammar for manipulation of S4 rectangular data classes, such
+as DataFrame.
 }
 \seealso{
 Useful links:
