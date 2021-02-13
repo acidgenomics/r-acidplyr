@@ -48,8 +48,8 @@ NULL
                 y = by
             ),
             areDisjointSets(
-                x = setdiff(colnames(x), by),
-                y = setdiff(colnames(y), by)
+                x = setdiff(x = colnames(x), y = by),
+                y = setdiff(x = colnames(y), y = by)
             ),
             hasNoDuplicates(by),
             areDisjointSets(
