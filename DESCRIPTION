@@ -27,9 +27,9 @@ Imports:
     AcidCLI (>= 0.0.6),
     AcidGenerics (>= 0.5.13),
     goalie (>= 0.4.14),
+    methods,
     purrr (>= 0.3.4),
-    tibble (>= 3.0.6),
-    methods
+    tibble (>= 3.0.6)
 Suggests:
     AcidTest (>= 0.4.3),
     testthat
