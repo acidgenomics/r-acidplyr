@@ -121,18 +121,22 @@ setMethod(
         m <- m[, c(".idx", ".idy"), drop = FALSE]
         x <- x[m[[".idx"]], , drop = FALSE]
         y <- y[, setdiff(colnames(y), colnames(x)), drop = FALSE]
-        ## S4Vectors doesn't support indices containing NAs.
-        ## Will see: `Error: subscript contains NAs.` in this case.
+        ## S4Vectors (i.e. DataFrame) doesn't support expansion via indices
+        ## containing NAs. Will see: "Error: subscript contains NAs." in this
+        ## case. Here we are coercing mismatched `y` to data.frame, which does
+        ## allow expansion via indices containing NAs.
         if (any(is.na(m[[".idy"]]))) {
             yy <- as.data.frame(y)
             assert(identical(colnames(yy), colnames(y)))
-            y <- yy
+            yy <- yy[m[[".idy"]], , drop = FALSE]
+            y <- as(yy, "DataFrame")
+        } else {
+            y <- y[m[[".idy"]], , drop = FALSE]
         }
-        y <- y[m[[".idy"]], , drop = FALSE]
+        y[[".idy"]] <- NULL
         out <- cbind(x, y)
+        out <- out[order(out[[".idx"]]), , drop = FALSE]
         out[[".idx"]] <- NULL
-        out[[".idy"]] <- NULL
-        rownames(out) <- rownames(x)
         out
     }
 
