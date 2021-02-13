@@ -2,7 +2,7 @@ Package: AcidPlyr
 Title: Acid Genomics Rectangular Data Plyr
 Description: A dplyr-like grammar for manipulation of S4 rectangular data
   classes, such as DataFrame.
-Version: 0.1.10
+Version: 0.1.11
 Date: 2021-02-12
 Authors@R: c(
     person(
