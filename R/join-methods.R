@@ -1,6 +1,6 @@
 #' @name join
 #' @inherit AcidGenerics::join
-#' @note Updated 2021-01-29.
+#' @note Updated 2021-02-13.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -35,7 +35,7 @@ NULL
 
 
 
-## Updated 2021-01-24.
+## Updated 2021-02-13.
 `innerJoin,DataFrame` <-  # nolint
     function(x, y, by) {
         assert(
@@ -62,12 +62,17 @@ NULL
             )
         )
         x[[".idx"]] <- seq_len(nrow(x))
-        out <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)
+        y[[".idy"]] <- seq_len(nrow(y))
+        m <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)
+        assert(is(m, "DataFrame"))
+        m <- m[, c(".idx", ".idy"), drop = FALSE]
+        y <- y[, setdiff(colnames(y), colnames(x)), drop = FALSE]
+        x <- x[m[[".idx"]], , drop = FALSE]
+        y <- y[m[[".idy"]], , drop = FALSE]
+        out <- cbind(x, y)
         out <- out[order(out[[".idx"]]), , drop = FALSE]
-        if (hasRownames(x)) {
-            rownames(out) <- rownames(x)[out[[".idx"]]]
-        }
-        out <- out[, setdiff(colnames(out), ".idx"), drop = FALSE]
+        out[[".idx"]] <- NULL
+        out[[".idy"]] <- NULL
         out
     }
 
@@ -87,7 +92,7 @@ setMethod(
 
 
 
-## Updated 2021-02-12.
+## Updated 2021-02-13.
 `leftJoin,DataFrame` <-  # nolint
     function(x, y, by) {
         assert(
@@ -117,15 +122,19 @@ setMethod(
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
         m <- merge(x = x, y = y, by = by, all.x = TRUE, sort = FALSE)
-        assert(identical(nrow(x), nrow(m)))
+        assert(
+            is(m, "DataFrame"),
+            identical(nrow(x), nrow(m))
+        )
         m <- m[, c(".idx", ".idy"), drop = FALSE]
-        x <- x[m[[".idx"]], , drop = FALSE]
         y <- y[, setdiff(colnames(y), colnames(x)), drop = FALSE]
+        x <- x[m[[".idx"]], , drop = FALSE]
         ## S4Vectors (i.e. DataFrame) doesn't support expansion via indices
         ## containing NAs. Will see: "Error: subscript contains NAs." in this
         ## case. Here we are coercing mismatched `y` to data.frame, which does
         ## allow expansion via indices containing NAs.
-        if (any(is.na(m[[".idy"]]))) {
+        containsNA <- c("y" = any(is.na(m[[".idy"]])))
+        if (isTRUE(containsNA[["y"]])) {
             yy <- as.data.frame(y)
             assert(identical(colnames(yy), colnames(y)))
             yy <- yy[m[[".idy"]], , drop = FALSE]
@@ -133,10 +142,10 @@ setMethod(
         } else {
             y <- y[m[[".idy"]], , drop = FALSE]
         }
-        y[[".idy"]] <- NULL
         out <- cbind(x, y)
         out <- out[order(out[[".idx"]]), , drop = FALSE]
         out[[".idx"]] <- NULL
+        out[[".idy"]] <- NULL
         out
     }
 
@@ -178,7 +187,7 @@ setMethod(
 
 
 
-## Updated 2021-01-29.
+## Updated 2021-02-13.
 `fullJoin,DataFrame` <-  # nolint
     function(x, y, by) {
         assert(
@@ -207,15 +216,21 @@ setMethod(
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
         out <- merge(x = x, y = y, by = by, all = TRUE, sort = FALSE)
+        assert(is(out, "DataFrame"))
         out <- out[order(out[[".idx"]], out[[".idy"]]), , drop = FALSE]
         if (hasRownames(x) && hasRownames(y)) {
-            rnx <- rownames(x)[na.omit(out[[".idx"]])]
-            rny <- rownames(y)[na.omit(out[[".idy"]])]
-            rn <- unique(c(rnx, rny))
+            rnx <- rownames(x)[order(out[[".idx"]])]
+            rnx <- gsub(pattern = "NA", replacement = NA, x = rnx)
+            rny <- rownames(y)[order(out[[".idy"]])]
+            rny <- gsub(pattern = "NA", replacement = NA, x = rny)
+            rn <- unique(c(na.omit(rnx), na.omit(rny)))
             assert(hasLength(rn, n = nrow(out)))
             rownames(out) <- rn
+        } else {
+            rownames(out) <- NULL
         }
-        out <- out[, setdiff(colnames(out), c(".idx", ".idy")), drop = FALSE]
+        out[[".idx"]] <- NULL
+        out[[".idy"]] <- NULL
         out
     }
 
@@ -235,7 +250,7 @@ setMethod(
 
 
 
-## Updated 2021-01-29.
+## Updated 2021-02-13.
 `semiJoin,DataFrame` <-  # nolint
     function(x, y, by) {
         assert(
@@ -262,9 +277,14 @@ setMethod(
             )
         )
         x[[".idx"]] <- seq_len(nrow(x))
+        y[[".idy"]] <- seq_len(nrow(y))
         m <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)
-        which <- m[[".idx"]]
-        out <- x[which, setdiff(colnames(x), ".idx"), drop = FALSE]
+        assert(is(m, "DataFrame"))
+        m <- m[, c(".idx", ".idy"), drop = FALSE]
+        assert(is(m, "DataFrame"))
+        rows <- m[[".idx"]]
+        cols <- setdiff(colnames(x), ".idx")
+        out <- x[rows, cols, drop = FALSE]
         out
     }
 
@@ -284,7 +304,7 @@ setMethod(
 
 
 
-## Updated 2021-01-29.
+## Updated 2021-02-13.
 `antiJoin,DataFrame` <-  # nolint
     function(x, y, by) {
         assert(
@@ -311,9 +331,13 @@ setMethod(
             )
         )
         x[[".idx"]] <- seq_len(nrow(x))
+        y[[".idy"]] <- seq_len(nrow(y))
         m <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)
-        which <- order(setdiff(x[[".idx"]], m[[".idx"]]))
-        out <- x[which, setdiff(colnames(x), ".idx"), drop = FALSE]
+        assert(is(m, "DataFrame"))
+        m <- m[, c(".idx", ".idy"), drop = FALSE]
+        rows <- order(setdiff(x[[".idx"]], m[[".idx"]]))
+        cols <- setdiff(colnames(x), ".idx")
+        out <- x[rows, cols, drop = FALSE]
         out
     }
 
