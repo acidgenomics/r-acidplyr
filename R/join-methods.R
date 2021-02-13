@@ -87,7 +87,7 @@ setMethod(
 
 
 
-## Updated 2021-01-29.
+## Updated 2021-02-12.
 `leftJoin,DataFrame` <-  # nolint
     function(x, y, by) {
         assert(
@@ -113,16 +113,26 @@ setMethod(
                 y = colnames(y)
             )
         )
-        x[[".idx"]] <- seq_len(nrow(x))
         y <- unique(y)
-        out <- merge(x = x, y = y, by = by, all.x = TRUE, sort = FALSE)
-        assert(identical(nrow(x), nrow(out)))
-        out <- out[order(out[[".idx"]]), , drop = FALSE]
-        assert(identical(x[[".idx"]], out[[".idx"]]))
-        if (hasRownames(x)) {
-            rownames(out) <- rownames(x)
+        x[[".idx"]] <- seq_len(nrow(x))
+        y[[".idy"]] <- seq_len(nrow(y))
+        m <- merge(x = x, y = y, by = by, all.x = TRUE, sort = FALSE)
+        assert(identical(nrow(x), nrow(m)))
+        m <- m[, c(".idx", ".idy"), drop = FALSE]
+        x <- x[m[[".idx"]], , drop = FALSE]
+        y <- y[, setdiff(colnames(y), colnames(x)), drop = FALSE]
+        ## S4Vectors doesn't support indices containing NAs.
+        ## Will see: `Error: subscript contains NAs.` in this case.
+        if (any(is.na(m[[".idy"]]))) {
+            yy <- as.data.frame(y)
+            assert(identical(colnames(yy), colnames(y)))
+            y <- yy
         }
-        out <- out[, setdiff(colnames(out), ".idx"), drop = FALSE]
+        y <- y[m[[".idy"]], , drop = FALSE]
+        out <- cbind(x, y)
+        out[[".idx"]] <- NULL
+        out[[".idy"]] <- NULL
+        rownames(out) <- rownames(x)
         out
     }
 
