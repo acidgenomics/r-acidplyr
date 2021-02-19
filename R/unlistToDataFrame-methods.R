@@ -69,8 +69,16 @@ NULL
 ## Updated 2021-02-19.
 .unlistRecursive <- function(x) {
     x <- .decodeNestedList(x)
-    y <- map_dfr(.x = x, .f = ~.x)
+    assert(hasNames(x))
+    idCol <- "name"
+    assert(areDisjointSets(idCol, names(x)))
+    y <- map_dfr(.x = x, .f = ~.x, .id = idCol)
+    ## This doesn't get set when we bind a simple list of atomic vectors.
+    if (isSubset(idCol, colnames(y))) {
+        y[[idCol]] <- as.factor(y[[idCol]])
+    }
     y <- as(y, "DataFrame")
+    y
 }
 
 
