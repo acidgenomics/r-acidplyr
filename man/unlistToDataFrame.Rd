@@ -7,7 +7,7 @@
 \usage{
 unlistToDataFrame(x, ...)
 
-\S4method{unlistToDataFrame}{list}(x, mode = c("map_dfr", "base"))
+\S4method{unlistToDataFrame}{list}(x, method = c("map_dfr", "base"))
 }
 \arguments{
 \item{x}{Object.}
