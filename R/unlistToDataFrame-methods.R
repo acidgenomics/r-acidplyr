@@ -1,10 +1,3 @@
-## FIXME NEED TO KEEP NESTED LISTS IN TACT.
-## FIXME NEED TO REWORK EXAMPLE WITH A BUNCH OF DUPLICATES...
-## FIXME PURRR::MAP_DFR DOES THINGS WE DONT WANT...ARGH.
-##       IT DOESN'T KEEP LIST COLUMNS IN TACT...
-
-
-
 #' @name unlistToDataFrame
 #' @inherit AcidGenerics::unlistToDataFrame
 #' @note Updated 2021-02-19.
