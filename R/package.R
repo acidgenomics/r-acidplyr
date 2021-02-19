@@ -5,15 +5,15 @@
 #'
 #' @keywords internal
 #'
-#' @importClassesFrom AcidGenerics DataFrame
+#' @importClassesFrom AcidGenerics AsIs DataFrame
 #'
 #' @importFrom AcidBase appendToBody
 #' @importFrom AcidCLI alert alertInfo
 #' @importFrom AcidGenerics DataFrame SimpleList as.data.frame decode merge
 #'   na.omit order rbind setdiff unique
 #' @importFrom goalie allAreAtomic areDisjointSets assert bapply hasColnames
-#'   hasDims hasLength hasNoDuplicates hasRownames isAny isCharacter isFlag
-#'   isInt isNumber isScalar isString isSubset
+#'   hasDims hasLength hasNames hasNoDuplicates hasRownames isAny isCharacter
+#'   isFlag isInt isNumber isScalar isString isSubset
 #' @importFrom methods as is setMethod signature
 #' @importFrom purrr map_dfr
 #' @importFrom tibble as_tibble

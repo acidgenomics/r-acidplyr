@@ -1,5 +1,20 @@
 context("unlistToDataFrame")
 
+test_that("simple case", {
+    x <- list(
+        "aaa" = seq(from = 1L, to = 3L),
+        "bbb" = seq(from = 4L, to = 6L)
+    )
+    expected <- DataFrame(
+        "aaa" = seq(from = 1L, to = 3L),
+        "bbb" = seq(from = 4L, to = 7L)
+    )
+    expect_identical(
+        object = unlistToDataFrame(x),
+        expected = expected
+    )
+})
+
 IntegerList <- AcidGenerics::IntegerList  # nolint
 
 object1 <- list(

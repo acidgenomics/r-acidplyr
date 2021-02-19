@@ -1,3 +1,7 @@
+## FIXME MOVE THIS TO PIPETTE AND REWORK INTO AS.DATAFRAME.
+
+
+
 #' @name unlistToDataFrame
 #' @inherit AcidGenerics::unlistToDataFrame
 #' @note Updated 2021-02-19.
@@ -42,6 +46,135 @@ NULL
 
 
 
+## This step handles nested S4 List elements.
+## Updated 2021-02-19.
+.decodeNestedList <- function(x) {
+    lapply(
+        X = x,
+        FUN = function(x) {
+            if (is.list(x)) {
+                decode(x)
+            } else if (is(x, "List")) {
+                as.list(x)
+            } else {
+                assert(allAreAtomic(x))
+                x
+            }
+        }
+    )
+}
+
+
+
+## FIXME EARLY RETURN IF NOT NESTED???
+
+## list("aaa" = c(1, 2, 3), "bbb" = c(4, 5, 6)) -> xxx
+
+## Updated 2021-02-19.
+.unlistRecursive <- function(x) {
+    x <- .decodeNestedList(x)
+    ## FIXME THIS ISNT HANDING SIMPLE CASE CORRECTLY...
+    ## UGH PURRR MIGHT NOT BE THE WAY TO GO.
+    ## ITS NOT KEEPING TRACK OF TOP LEVEL NAMES CORRECTLY.
+    ## FIXME RETHINK THIS, NOT WORKING CORRECTLY...
+    y <- map_dfr(.x = x, .f = data.frame)
+    y <- as(y, "DataFrame")
+}
+
+
+
+## Updated 2021-02-19.
+.unlistNested <- function(x) {
+    scalarList <- lapply(
+        X = x,
+        FUN = function(x) {
+            assert(hasNames(x))
+            bapply(
+                X = x,
+                FUN = function(x) {
+                    isScalar(x)
+                }
+            )
+        }
+    )
+    colnames <- unique(unlist(
+        lapply(X = scalar, FUN = names),
+        recursive = FALSE,
+        use.names = FALSE
+    ))
+    assert(isCharacter(colnames))
+    scalarMat <- matrix(
+        data = TRUE,
+        nrow = length(x),
+        ncol = length(colnames),
+        dimnames = list(names(x), colnames)
+    )
+    for (i in seq_along(scalarList)) {
+        for (j in seq_along(scalarList[[i]])) {
+            rowname <- names(scalarList)[[i]]
+            colname <- names(scalarList[[i]])[[j]]
+            if (isFALSE(scalarList[[i]][[j]])) {
+                scalarMat[rowname, colname] <- FALSE
+            }
+        }
+    }
+    scalarCols <- apply(X = scalarMat, MARGIN = 2L, FUN = all)
+    complexCols <- names(which(!scalarCols))
+    ## FIXME NEED TO TEST THIS CASE.
+    if (!hasLength(complexCols)) {
+        df <- DataFrame(
+            lapply(X = x, FUN = I),
+            row.names = names(x)
+        )
+        return(df)
+    }
+    scalarCols <- names(which(scalarCols))
+
+
+
+
+    ## FIXME RETHINKT THIS APPROACH?
+    ## ASSIGN INTO EXPANDED MATRIX?
+    df <- DataFrame(matrix(
+        data = NA,
+        nrow = nrow(scalarMat),
+        ncol = ncol(scalarMat),
+        dimnames = dimnames(scalarMat)
+    ))
+
+
+    ## UGH THIS CODE IS MESSY, NEED TO RETHINK...
+    ## Collect the columns and selectively assign.
+    cols <- mapply(
+        colname = colnames(scalarMat),
+        MoreArgs = list(
+            rownames = rownames(scalarMat),
+            input = x
+        ),
+        FUN = function(colname, rownames, input) {
+            ok <- colname %in% scalarCols
+            xxx <- list()
+            for (i in seq_along(list)) {
+                xxx[[i]] <- list[[i]][[col]]
+            }
+            if (isTRUE(ok)) {
+                xxx <- unlist(xxx, recursive = FALSE, use.names = FALSE)
+            }
+            xxx
+        },
+        SIMPLIFY = FALSE,
+        USE.NAMES = FALSE
+    )
+    names(cols) <- rownames(scalarMat)
+
+    assert(
+        hasLength(nrow(y), n = 1L),
+        identical(length(x), ncol(y))
+    )
+}
+
+
+
 ## Recursive mode was previous default, so keeping that intact.
 ##
 ## The `purrr::map_dfr()` method doesn't expect complex S4 input and can do
@@ -54,42 +187,13 @@ NULL
     function(x, recursive = TRUE) {
         assert(
             hasLength(x),
+            hasNames(x),
             isFlag(recursive)
         )
         if (isTRUE(recursive)) {
-            ## This step handles nested S4 List elements.
-            decode <- function(x) {
-                lapply(
-                    X = x,
-                    FUN = function(x) {
-                        if (is.list(x)) {
-                            decode(x)
-                        } else if (is(x, "List")) {
-                            as.list(x)
-                        } else {
-                            assert(allAreAtomic(x))
-                            x
-                        }
-                    }
-                )
-            }
-            x <- decode(x)
-            y <- map_dfr(.x = x, .f = data.frame)
-            y <- as(y, "DataFrame")
+            y <- .unlistRecursive(x)
         } else {
-            y <- do.call(
-                what = DataFrame,
-                args = lapply(
-                    X = x,
-                    FUN = function(x) {
-                        I(SimpleList(I(x)))
-                    }
-                )
-            )
-            assert(
-                hasLength(nrow(y), n = 1L),
-                identical(length(x), ncol(y))
-            )
+            y <- .unlistNested(x)
         }
         y
     }
