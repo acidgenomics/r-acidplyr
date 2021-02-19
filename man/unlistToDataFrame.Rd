@@ -15,7 +15,7 @@ unlistToDataFrame(x, ...)
 \item{recursive}{\code{logical(1)}.
 \itemize{
 \item \code{TRUE}: Recursively unlist all nested list columns.
-Calls \code{purrr::map_dfr} internally.
+Calls \code{purrr::map_dfr()} internally.
 \item \code{FALSE}: Only unlists the top level of list, allowing for retention
 of nested list columns and/or complex S4 objects.
 }}
@@ -48,12 +48,16 @@ x <- list(
 )
 print(x)
 y <- unlistToDataFrame(x, recursive = TRUE)
+print(y)
 y <- unlistToDataFrame(x, recursive = FALSE)
-print(x)
+print(y)
+## Note that non-recursive elements must be nested down an extra level.
+print(y[[1L]][[1L]])
 }
 \seealso{
 \itemize{
-\item \code{purrr::map_dfr}.
-\item \code{plyr::ldply} (deprecated).
+\item \code{pipette::as.DataFrame()}.
+\item \code{purrr::map_dfr()}.
+\item \code{plyr::ldply()} (deprecated).
 }
 }
