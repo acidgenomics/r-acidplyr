@@ -1,13 +1,16 @@
 context("unlistToDataFrame")
 
-test_that("simple case", {
+## FIXME THESE ARENT DOING QUITE WHAT I WANT...
+## NEED TO RETHINK THIS.
+
+test_that("Column bind listed vectors into DataFrame", {
     x <- list(
         "aaa" = seq(from = 1L, to = 3L),
         "bbb" = seq(from = 4L, to = 6L)
     )
     expected <- DataFrame(
         "aaa" = seq(from = 1L, to = 3L),
-        "bbb" = seq(from = 4L, to = 7L)
+        "bbb" = seq(from = 4L, to = 6L)
     )
     expect_identical(
         object = unlistToDataFrame(x),

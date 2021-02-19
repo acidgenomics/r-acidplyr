@@ -53,7 +53,7 @@ NULL
         X = x,
         FUN = function(x) {
             if (is.list(x)) {
-                decode(x)
+                .decodeNestedList(x)
             } else if (is(x, "List")) {
                 as.list(x)
             } else {
@@ -66,18 +66,10 @@ NULL
 
 
 
-## FIXME EARLY RETURN IF NOT NESTED???
-
-## list("aaa" = c(1, 2, 3), "bbb" = c(4, 5, 6)) -> xxx
-
 ## Updated 2021-02-19.
 .unlistRecursive <- function(x) {
     x <- .decodeNestedList(x)
-    ## FIXME THIS ISNT HANDING SIMPLE CASE CORRECTLY...
-    ## UGH PURRR MIGHT NOT BE THE WAY TO GO.
-    ## ITS NOT KEEPING TRACK OF TOP LEVEL NAMES CORRECTLY.
-    ## FIXME RETHINK THIS, NOT WORKING CORRECTLY...
-    y <- map_dfr(.x = x, .f = data.frame)
+    y <- map_dfr(.x = x, .f = ~.x)
     y <- as(y, "DataFrame")
 }
 
