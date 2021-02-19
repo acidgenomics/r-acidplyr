@@ -59,19 +59,40 @@ NULL
 
 
 ## Updated 2021-02-19.
+.unlistDfBase <- function(x) {
+}
+
+
+
+## Updated 2021-02-19.
+.unlistDfMapDfr <- function(x) {
+    x <- .decodeNestedList(x)
+    idCol <- "name"
+    assert(areDisjointSets(idCol, names(x)))
+    y <- map_dfr(.x = x, .f = ~.x, .id = idCol)
+    ## This doesn't get set when we bind a simple list of atomic vectors.
+    if (isSubset(idCol, colnames(y))) {
+        y[[idCol]] <- as.factor(y[[idCol]])
+    }
+    y <- as(y, "DataFrame")
+    y
+}
+
+
+
+## Updated 2021-02-19.
 `unlistToDataFrame,list` <-  # nolint
-    function(x) {
+    function(
+        x,
+        mode = c("map_dfr", "base")
+    ) {
         assert(hasLength(x))
-        x <- .decodeNestedList(x)
-        idCol <- "name"
-        assert(areDisjointSets(idCol, names(x)))
-        y <- map_dfr(.x = x, .f = ~.x, .id = idCol)
-        ## This doesn't get set when we bind a simple list of atomic vectors.
-        if (isSubset(idCol, colnames(y))) {
-            y[[idCol]] <- as.factor(y[[idCol]])
-        }
-        y <- as(y, "DataFrame")
-        y
+        switch(
+            EXPR = match.arg(mode),
+            "map_dfr" = .unlistDfMapDfr(x),
+            "base" = .unlistDfBase(x)
+        )
+
     }
 
 
