@@ -32,13 +32,8 @@
 #'     )
 #' )
 #' print(x)
-#' y <- unlistToDataFrame(x, recursive = TRUE)
+#' y <- unlistToDataFrame(x)
 #' print(y)
-#' y <- unlistToDataFrame(x, recursive = FALSE)
-#' print(y)
-#' ## Note that non-recursive elements must be nested down an extra level.
-#' ## FIXME RETHINK THIS.
-#' print(y[[1L]][[1L]])
 NULL
 
 
