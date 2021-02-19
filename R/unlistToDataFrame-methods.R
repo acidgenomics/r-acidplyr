@@ -5,14 +5,15 @@
 #' @inheritParams AcidRoxygen::params
 #' @param recursive `logical(1)`.
 #'  - `TRUE`: Recursively unlist all nested list columns.
-#'    Calls `purrr::map_dfr` internally.
+#'    Calls `purrr::map_dfr()` internally.
 #'  - `FALSE`: Only unlists the top level of list, allowing for retention
 #'    of nested list columns and/or complex S4 objects.
 #' @param ... Additional arguments.
 #'
 #' @seealso
-#' - `purrr::map_dfr`.
-#' - `plyr::ldply` (deprecated).
+#' - `pipette::as.DataFrame()`.
+#' - `purrr::map_dfr()`.
+#' - `plyr::ldply()` (deprecated).
 #'
 #' @examples
 #' x <- list(
@@ -31,8 +32,11 @@
 #' )
 #' print(x)
 #' y <- unlistToDataFrame(x, recursive = TRUE)
+#' print(y)
 #' y <- unlistToDataFrame(x, recursive = FALSE)
-#' print(x)
+#' print(y)
+#' ## Note that non-recursive elements must be nested down an extra level.
+#' print(y[[1L]][[1L]])
 NULL
 
 
@@ -57,7 +61,7 @@ NULL
             if (any(s4)) {
                 stop(sprintf(
                     paste(
-                        "S4 elements are not allowed in recursive mode.",
+                        "S4 elements not allowed in recursive mode.",
                         "Detected at: %s.",
                         sep = "\n"
                     ),
@@ -65,11 +69,17 @@ NULL
                 ))
             }
             y <- map_dfr(.x = x, .f = data.frame)
+            y <- as(y, "DataFrame")
         } else {
-            y <- do.call(what = rbind, args = list(x))
-        }
-        y <- as(y, "DataFrame")
-        if (isFALSE(recursive)) {
+            y <- do.call(
+                what = DataFrame,
+                args = lapply(
+                    X = x,
+                    FUN = function(x) {
+                        I(SimpleList(I(x)))
+                    }
+                )
+            )
             assert(
                 hasLength(nrow(y), n = 1L),
                 identical(length(x), ncol(y))
