@@ -37,17 +37,45 @@ NULL
 
 
 
-## NOTE Recursive mode was previous default, so keeping that intact.
+## Recursive mode was previous default, so keeping that intact.
+##
+## The `purrr::map_dfr()` method doesn't expect complex S4 input and can do
+## weird, unexpected things with `CharacterList` and `IntegerList` input, for
+## example. The function will return `group`, `group_name`, and `value` columns
+## in this case, which we don't want here. So we're hardening against unexpected
+## return by not allowing complex S4 items in recursive mode.
+##
 ## Updated 2021-02-19.
 `unlistToDataFrame,list` <-  # nolint
     function(x, recursive = TRUE) {
+        assert(
+            hasLength(x),
+            isFlag(recursive)
+        )
         if (isTRUE(recursive)) {
-            x <- map_dfr(.x = x, .f = data.frame)
+            s4 <- bapply(X = x, FUN = isS4)
+            if (any(s4)) {
+                stop(sprintf(
+                    paste(
+                        "S4 elements are not allowed in recursive mode.",
+                        "Detected at: %s.",
+                        sep = "\n"
+                    ),
+                    toString(which(s4), width = 100L)
+                ))
+            }
+            y <- map_dfr(.x = x, .f = data.frame)
         } else {
-            x <- rbind(lapply(X = x, FUN = I))
+            y <- do.call(what = rbind, args = list(x))
         }
-        x <- as(x, "DataFrame")
-        x
+        y <- as(y, "DataFrame")
+        if (isFALSE(recursive)) {
+            assert(
+                hasLength(nrow(y), n = 1L),
+                identical(length(x), ncol(y))
+            )
+        }
+        y
     }
 
 
