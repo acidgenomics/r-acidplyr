@@ -3,8 +3,7 @@
 ### Minor changes
 
 - `unlistToDataFrame`: Improved internal code to handle input of `CharacterList`
-  and `IntegerList` properly. Also added `recursive = FALSE` mode, which allows
-  for simple top-level listing of any S4 class.
+  and `IntegerList` properly. Reworked internal call to `purrr::map_dfr`.
 
 ## AcidPlyr 0.1.11 (2021-02-13)
 
