@@ -34,17 +34,17 @@ Updated 2021-02-19.
 }
 \examples{
 x <- list(
-    a = list(
-        aa = seq(from = 1L, to = 3L),
-        bb = seq(from = 4L, to = 6L)
+    "a" = list(
+        "aa" = seq(from = 1L, to = 3L),
+        "bb" = seq(from = 4L, to = 6L)
     ),
-    b = list(
-        cc = seq(from = 7L, to = 9L),
-        dd = seq(from = 10L, to = 12L)
+    "b" = list(
+        "cc" = seq(from = 7L, to = 9L),
+        "dd" = seq(from = 10L, to = 12L)
     ),
-    c = list(
-        ee = seq(from = 13L, to = 15L),
-        ff = seq(from = 16L, to = 18L)
+    "c" = list(
+        "ee" = seq(from = 13L, to = 15L),
+        "ff" = seq(from = 16L, to = 18L)
     )
 )
 print(x)
@@ -53,6 +53,7 @@ print(y)
 y <- unlistToDataFrame(x, recursive = FALSE)
 print(y)
 ## Note that non-recursive elements must be nested down an extra level.
+## FIXME RETHINK THIS.
 print(y[[1L]][[1L]])
 }
 \seealso{
