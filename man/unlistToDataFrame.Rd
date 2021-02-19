@@ -7,7 +7,7 @@
 \usage{
 unlistToDataFrame(x, ...)
 
-\S4method{unlistToDataFrame}{list}(x, recursive = TRUE)
+\S4method{unlistToDataFrame}{list}(x)
 }
 \arguments{
 \item{x}{Object.}
@@ -48,18 +48,13 @@ x <- list(
     )
 )
 print(x)
-y <- unlistToDataFrame(x, recursive = TRUE)
+y <- unlistToDataFrame(x)
 print(y)
-y <- unlistToDataFrame(x, recursive = FALSE)
-print(y)
-## Note that non-recursive elements must be nested down an extra level.
-## FIXME RETHINK THIS.
-print(y[[1L]][[1L]])
 }
 \seealso{
 \itemize{
 \item \code{pipette::as.DataFrame()}.
 \item \code{purrr::map_dfr()}.
-\item \code{plyr::ldply()} (deprecated).
+\item \code{plyr::ldply()} (\emph{deprecated}).
 }
 }
