@@ -17,7 +17,8 @@ unlistToDataFrame(x, ...)
 \item \code{TRUE}: Recursively unlist all nested list columns.
 Calls \code{purrr::map_dfr()} internally.
 \item \code{FALSE}: Only unlists the top level of list, allowing for retention
-of nested list columns and/or complex S4 objects.
+of nested list columns and/or complex S4 objects. Note that these
+elements are nested an extra level down as a \code{SimpleList}.
 }}
 
 \item{...}{Additional arguments.}

@@ -7,7 +7,8 @@
 #'  - `TRUE`: Recursively unlist all nested list columns.
 #'    Calls `purrr::map_dfr()` internally.
 #'  - `FALSE`: Only unlists the top level of list, allowing for retention
-#'    of nested list columns and/or complex S4 objects.
+#'    of nested list columns and/or complex S4 objects. Note that these
+#'    elements are nested an extra level down as a `SimpleList`.
 #' @param ... Additional arguments.
 #'
 #' @seealso
