@@ -13,7 +13,7 @@
 #'   na.omit order rbind setdiff unique
 #' @importFrom goalie allAreAtomic areDisjointSets assert bapply hasColnames
 #'   hasDims hasLength hasNames hasNoDuplicates hasRownames isAny isCharacter
-#'   isFlag isInt isNumber isScalar isString isSubset
+#'   isFlag isInt isNumber isScalar isScalarAtomic isString isSubset
 #' @importFrom methods as is setMethod signature
 #' @importFrom purrr map_dfr
 #' @importFrom tibble as_tibble
