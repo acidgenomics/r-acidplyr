@@ -1,6 +1,6 @@
 context("unlistToDataFrame")
 
-IntegerList <- AcidGenerics::IntegerList
+IntegerList <- AcidGenerics::IntegerList  # nolint
 
 object1 <- list(
     "a" = list(
