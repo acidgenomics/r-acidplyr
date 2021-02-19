@@ -1,8 +1,20 @@
+## FIXME NEED TO KEEP NESTED LISTS IN TACT.
+## FIXME NEED TO REWORK EXAMPLE WITH A BUNCH OF DUPLICATES...
+## FIXME PURRR::MAP_DFR DOES THINGS WE DONT WANT...ARGH.
+##       IT DOESN'T KEEP LIST COLUMNS IN TACT...
+
+
+
 #' @name unlistToDataFrame
 #' @inherit AcidGenerics::unlistToDataFrame
-#' @note Updated 2020-12-22.
+#' @note Updated 2021-02-19.
 #'
 #' @inheritParams AcidRoxygen::params
+#' @param recursive `logical(1)`.
+#'  - `TRUE`: Recursively unlist all nested list columns.
+#'    Calls `purrr::map_dfr` internally.
+#'  - `FALSE`: Only unlists the top level of list, allowing for retention
+#'    of nested list columns and/or complex S4 objects.
 #' @param ... Additional arguments.
 #'
 #' @seealso
@@ -25,15 +37,22 @@
 #'     )
 #' )
 #' print(x)
-#' x <- unlistToDataFrame(x)
+#' y <- unlistToDataFrame(x, recursive = TRUE)
+#' y <- unlistToDataFrame(x, recursive = FALSE)
 #' print(x)
 NULL
 
 
 
+## NOTE Recursive mode was previous default, so keeping that intact.
+## Updated 2021-02-19.
 `unlistToDataFrame,list` <-  # nolint
-    function(x) {
-        x <- map_dfr(.x = x, .f = data.frame)
+    function(x, recursive = TRUE) {
+        if (isTRUE(recursive)) {
+            x <- map_dfr(.x = x, .f = data.frame)
+        } else {
+            x <- rbind(lapply(X = x, FUN = I))
+        }
         x <- as(x, "DataFrame")
         x
     }

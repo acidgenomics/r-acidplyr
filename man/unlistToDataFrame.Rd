@@ -7,10 +7,18 @@
 \usage{
 unlistToDataFrame(x, ...)
 
-\S4method{unlistToDataFrame}{list}(x)
+\S4method{unlistToDataFrame}{list}(x, recursive = TRUE)
 }
 \arguments{
 \item{x}{Object.}
+
+\item{recursive}{\code{logical(1)}.
+\itemize{
+\item \code{TRUE}: Recursively unlist all nested list columns.
+Calls \code{purrr::map_dfr} internally.
+\item \code{FALSE}: Only unlists the top level of list, allowing for retention
+of nested list columns and/or complex S4 objects.
+}}
 
 \item{...}{Additional arguments.}
 }
@@ -21,7 +29,7 @@ unlistToDataFrame(x, ...)
 Unlist to a data frame
 }
 \note{
-Updated 2020-12-22.
+Updated 2021-02-19.
 }
 \examples{
 x <- list(
@@ -39,7 +47,8 @@ x <- list(
     )
 )
 print(x)
-x <- unlistToDataFrame(x)
+y <- unlistToDataFrame(x, recursive = TRUE)
+y <- unlistToDataFrame(x, recursive = FALSE)
 print(x)
 }
 \seealso{
