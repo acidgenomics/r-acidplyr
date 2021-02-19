@@ -1,8 +1,5 @@
 context("unlistToDataFrame")
 
-## FIXME THESE ARENT DOING QUITE WHAT I WANT...
-## NEED TO RETHINK THIS.
-
 test_that("Column bind listed vectors into DataFrame", {
     x <- list(
         "aaa" = seq(from = 1L, to = 3L),
