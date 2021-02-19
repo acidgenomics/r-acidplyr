@@ -61,7 +61,7 @@ NULL
 ## Updated 2021-02-19.
 `unlistToDataFrame,list` <-  # nolint
     function(x) {
-        assert(hasLength(x), hasNames(x))
+        assert(hasLength(x))
         x <- .decodeNestedList(x)
         idCol <- "name"
         assert(areDisjointSets(idCol, names(x)))
