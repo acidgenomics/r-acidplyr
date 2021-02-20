@@ -116,7 +116,7 @@ NULL
                             }
                         }
                     )
-                    do.call(what = I, args = list(col))
+                    do.call(what = I, args = list(I(col)))
                 }
             },
             SIMPLIFY = FALSE,
