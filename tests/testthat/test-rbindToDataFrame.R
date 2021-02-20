@@ -123,7 +123,7 @@ test_that("List nested down 2 levels", {
 })
 
 test_that("List nested down 3 levels", {
-    objects <- list(
+    object <- list(
         "list" = list(
             "a" = list(
                 "aa1" = list(
@@ -169,58 +169,74 @@ test_that("List nested down 3 levels", {
             )
         )
     )
-    expected <- DataFrame(
-        "name" = as.factor(rep(c("a", "b"), each = 2L)),
-        "aa1" = I(list(
-            "aaa1" = seq(from = 1L, to = 3L),
-            "aaa2" = seq(from = 4L, to = 6L),
-            NULL,
-            NULL
-        )),
-        "aa2" = I(list(
-            "aaa3" = seq(from = 7L, to = 9L),
-            "aaa4" = seq(from = 10L, to = 12L),
-            NULL,
-            NULL
-        )),
-        "bb1" = I(list(
-            NULL,
-            NULL,
-            "bbb1" = seq(from = 13L, to = 15L),
-            "bbb2" = seq(from = 16L, to = 18L)
-        )),
-        "bb2" = I(list(
-            NULL,
-            NULL,
-            "bbb3" = seq(from = 19L, to = 21L),
-            "bbb4" = seq(from = 22L, to = 24L)
-        ))
+    expected <- list(
+        "integer" = DataFrame(
+            "aa1" = I(list(
+                list(
+                    "aaa1" = seq(from = 1L, to = 3L),
+                    "aaa2" = seq(from = 4L, to = 6L)
+                ),
+                NULL
+            )),
+            "aa2" = I(list(
+                list(
+                    "aaa3" = seq(from = 7L, to = 9L),
+                    "aaa4" = seq(from = 10L, to = 12L)
+                ),
+                NULL
+            )),
+            "bb1" = I(list(
+                NULL,
+                list(
+                    "bbb1" = seq(from = 13L, to = 15L),
+                    "bbb2" = seq(from = 16L, to = 18L)
+                )
+            )),
+            "bb2" = I(list(
+                NULL,
+                list(
+                    "bbb3" = seq(from = 19L, to = 21L),
+                    "bbb4" = seq(from = 22L, to = 24L)
+                )
+            )),
+            row.names = c("a", "b")
+        ),
+        "IntegerList" = DataFrame(
+            "aa1" = I(list(
+                IntegerList(
+                    "aaa1" = seq(from = 1L, to = 3L),
+                    "aaa2" = seq(from = 4L, to = 6L)
+                ),
+                NULL
+            )),
+            "aa2" = I(list(
+                IntegerList(
+                    "aaa3" = seq(from = 7L, to = 9L),
+                    "aaa4" = seq(from = 10L, to = 12L)
+                ),
+                NULL
+            )),
+            "bb1" = I(list(
+                NULL,
+                IntegerList(
+                    "bbb1" = seq(from = 13L, to = 15L),
+                    "bbb2" = seq(from = 16L, to = 18L)
+                )
+            )),
+            "bb2" = I(list(
+                NULL,
+                IntegerList(
+                    "bbb3" = seq(from = 19L, to = 21L),
+                    "bbb4" = seq(from = 22L, to = 24L)
+                )
+            )),
+            row.names = c("a", "b")
+        )
     )
-    for (object in objects) {
+    for (i in seq_along(objects)) {
         expect_identical(
-            object = mapToDataFrame(!!object),
-            expected = expected
+            object = rbindToDataFrame(object[[!!i]]),
+            expected = expected[[!!i]]
         )
     }
-})
-
-
-
-
-
-
-
-
-
-test_that("Mismatched dimensions", {
-    x <- list(
-        c(1L, 2L),
-        c(3L, 4L, 5L)
-    )
-    rbindToDataFrame(x)
-
-    to
-})
-
-test_that("NULL input", {
 })
