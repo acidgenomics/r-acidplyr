@@ -96,6 +96,7 @@ NULL
             col = colsList,
             atomic = atomicCols,
             FUN = function(col, atomic) {
+                col <- unname(col)
                 if (isTRUE(atomic)) {
                     do.call(what = c, args = col)
                 } else {
