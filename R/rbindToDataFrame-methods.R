@@ -27,31 +27,29 @@ NULL
 
 
 
+## Consider using `autopadZeros` here to pad automatically generated positional
+## row and column names.
 ## Updated 2021-02-19.
 `rbindToDataFrame,list` <-  # nolint
     function(x) {
         assert(hasLength(x))
-        rowNames <- names(x)
-        hasPosNames <- c("rows" = FALSE, "cols" = FALSE)
+        hasNames <- c("rows" = TRUE, "cols" = TRUE)
         if (!hasNames(x)) {
-            hasPosNames[["rows"]] <- TRUE
+            hasNames[["rows"]] <- FALSE
             names(x) <- paste0("x", seq_along(x))
         }
         scalarList <- list()
         length(scalarList) <- length(x)
         names(scalarList) <- names(x)
         for (i in seq_along(x)) {
-            xx <- x[[i]]
-            xx <- bapply(X = xx, FUN = isScalarAtomic)
-            if (!hasNames(xx)) {
-                if (isFALSE(hasPosNames[["cols"]])) {
-                    hasPosNames[["cols"]] <- TRUE
+            if (!hasNames(x[[i]])) {
+                if (isTRUE(hasNames[["cols"]])) {
+                    hasNames[["cols"]] <- FALSE
                 }
-                names(xx) <- paste0("x", seq_along(xx))
+                names(x[[i]]) <- paste0("x", seq_along(x[[i]]))
             }
-            scalarList[[i]] <- xx
+            scalarList[[i]] <- bapply(X = x[[i]], FUN = isScalarAtomic)
         }
-        rm(xx)
         dimnames <- list(
             names(x),
             unique(unlist(
@@ -75,19 +73,20 @@ NULL
                 }
             }
         }
-        rm(rn, cn)
         atomicCols <- apply(X = scalarMat, MARGIN = 2L, FUN = all)
         colsList <- list()
         length(colsList) <- ncol(scalarMat)
         names(colsList) <- dimnames[[2L]]
         for (i in dimnames[[1L]]) {
             for (j in dimnames[[2L]]) {
-                value <- x[[i]][[j]]
+                value <- tryCatch(
+                    expr = x[[i]][[j]],
+                    error = function(e) NULL
+                )
                 if (is.null(value)) value <- NA
                 colsList[[j]][[i]] <- value
             }
         }
-        rm(value)
         assert(
             identical(names(colsList), names(atomicCols)),
             all(bapply(X = colsList, FUN = hasLength, n = length(x)))
@@ -106,6 +105,11 @@ NULL
             SIMPLIFY = FALSE,
             USE.NAMES = TRUE
         )
+        if (isFALSE(hasNames[["rows"]])) {
+            rowNames <- NULL
+        } else {
+            rowNames <- dimnames[[1L]]
+        }
         args <- append(x = args, values = list("row.names" = rowNames))
         df <- do.call(what = DataFrame, args = args)
         assert(
