@@ -1,3 +1,8 @@
+## FIXME mapToDataFrame
+## FIXME rbindToDataFrame
+
+
+
 #' @rdname collapseToString
 #' @name collapseToString
 #' @importFrom AcidGenerics collapseToString
@@ -51,6 +56,15 @@ NULL
 
 
 
+#' @rdname mapToDataFrame
+#' @name mapToDataFrame
+#' @importFrom AcidGenerics mapToDataFrame
+#' @usage mapToDataFrame(x, ...)
+#' @export
+NULL
+
+
+
 #' @rdname melt
 #' @name melt
 #' @importFrom AcidGenerics melt
@@ -97,6 +111,15 @@ NULL
 
 
 
+#' @rdname rbindToDataFrame
+#' @name rbindToDataFrame
+#' @importFrom AcidGenerics rbindToDataFrame
+#' @usage rbindToDataFrame(x, ...)
+#' @export
+NULL
+
+
+
 #' @rdname select
 #' @name selectIf
 #' @importFrom AcidGenerics selectIf
@@ -110,14 +133,5 @@ NULL
 #' @name splitByLevel
 #' @importFrom AcidGenerics splitByLevel
 #' @usage splitByLevel(x, f, ref = FALSE, ...)
-#' @export
-NULL
-
-
-
-#' @rdname unlistToDataFrame
-#' @name unlistToDataFrame
-#' @importFrom AcidGenerics unlistToDataFrame
-#' @usage unlistToDataFrame(x, ...)
 #' @export
 NULL
