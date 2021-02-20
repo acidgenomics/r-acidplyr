@@ -1,4 +1,4 @@
-context("unlistToDataFrame")
+context("mapToDataFrame")
 
 IntegerList <- AcidGenerics::IntegerList  # nolint
 
@@ -12,7 +12,7 @@ test_that("Simple column bind of vector list into DataFrame", {
         "bbb" = seq(from = 4L, to = 6L)
     )
     expect_identical(
-        object = unlistToDataFrame(x),
+        object = mapToDataFrame(x),
         expected = expected
     )
 })
@@ -79,7 +79,7 @@ test_that("List nested down 2 levels", {
     )
     for (object in objects) {
         expect_identical(
-            object = unlistToDataFrame(!!object),
+            object = mapToDataFrame(!!object),
             expected = expected
         )
     }
@@ -161,7 +161,7 @@ test_that("List nested down 3 levels", {
     )
     for (object in objects) {
         expect_identical(
-            object = unlistToDataFrame(!!object),
+            object = mapToDataFrame(!!object),
             expected = expected
         )
     }
