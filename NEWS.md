@@ -1,3 +1,16 @@
+## AcidPlyr 0.1.13 (2021-02-20)
+
+### New functions
+
+- Added `rbindToDataFrame`, which is an incredibly useful utility for ensuring
+  that nested list elements return 1:1 per row. The function handles complex
+  S4 classes such as `IntegerList` and nested ranges.
+
+### Minor changes
+
+- Renamed `unlistToDataFrame` to `mapToDataFrame`, which better matches the
+  conventions used in other Acid Genomics packages, as well as purrr.
+
 ## AcidPlyr 0.1.12 (2021-02-19)
 
 ### Minor changes
