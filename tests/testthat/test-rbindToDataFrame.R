@@ -1,5 +1,7 @@
 context("rbindToDataFrame")
 
+IntegerList <- AcidGenerics::IntegerList
+
 test_that("Matched and named input", {
     x <- list(
         "aa" = c("a" = 1L, "b" = 2L),
@@ -14,7 +16,7 @@ test_that("Matched and named input", {
     expect_identical(object, expected)
 })
 
-test_that("Simple row bind of unnamed list into DataFrame", {
+test_that("Unnamed and unmatched input", {
     x <- list(
         seq(from = 1L, to = 3L),
         seq(from = 4L, to = 7L)
@@ -23,18 +25,11 @@ test_that("Simple row bind of unnamed list into DataFrame", {
     expected <- DataFrame(
         "x1" = c(1L, 4L),
         "x2" = c(2L, 5L),
-        "x3" = c(3L, 6L)
+        "x3" = c(3L, 6L),
+        "x4" = c(NA_integer_, 7L)
     )
     expect_identical(object, expected)
 })
-
-
-
-
-
-
-IntegerList <- AcidGenerics::IntegerList
-
 
 test_that("List nested down 2 levels", {
     objects <- list(
@@ -67,6 +62,28 @@ test_that("List nested down 2 levels", {
             )
         )
     )
+
+    objects[["list"]]
+    objects[["IntegerList"]]
+
+
+    xx <- rbindToDataFrame(objects[[1]])
+    ## FIXME THIS SHOULD FILL NULL HERE FOR NESTED LISTS...
+    expected <- DataFrame(
+        "aa",
+        "bb",
+        "cc",
+        "dd",
+        "ee",
+        "ff",
+        row.names = c("a", "b", "c")
+    )
+    expect_identical(xx, expected)
+
+
+
+
+
     expected <- DataFrame(
         "name" = as.factor(rep(c("a", "b", "c"), each = 3L)),
         "aa" = c(
