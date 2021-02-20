@@ -1,8 +1,3 @@
-## FIXME mapToDataFrame
-## FIXME rbindToDataFrame
-
-
-
 #' @rdname collapseToString
 #' @name collapseToString
 #' @importFrom AcidGenerics collapseToString
