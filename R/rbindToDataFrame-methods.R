@@ -99,6 +99,17 @@ NULL
                 if (isTRUE(atomic)) {
                     do.call(what = c, args = col)
                 } else {
+                    ## Replace any nested NAs with NULL for lists.
+                    col <- lapply(
+                        X = col,
+                        FUN = function(x) {
+                            if (identical(x, NA)) {
+                                NULL
+                            } else {
+                                x
+                            }
+                        }
+                    )
                     do.call(what = I, args = list(col))
                 }
             },
