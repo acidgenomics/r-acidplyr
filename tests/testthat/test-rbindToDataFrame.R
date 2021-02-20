@@ -1,6 +1,6 @@
 context("rbindToDataFrame")
 
-IntegerList <- AcidGenerics::IntegerList
+IntegerList <- AcidGenerics::IntegerList  # nolint
 
 test_that("Matched and named input", {
     x <- list(
