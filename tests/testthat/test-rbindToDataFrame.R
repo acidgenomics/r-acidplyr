@@ -32,7 +32,7 @@ test_that("Unnamed and unmatched input", {
 })
 
 test_that("List nested down 2 levels", {
-    objects <- list(
+    object <- list(
         "list" = list(
             "a" = list(
                 "aa" = seq(from = 1L, to = 3L),
@@ -62,61 +62,62 @@ test_that("List nested down 2 levels", {
             )
         )
     )
-
-    objects[["list"]]
-    objects[["IntegerList"]]
-
-
-    xx <- rbindToDataFrame(objects[[1]])
-    ## FIXME THIS SHOULD FILL NULL HERE FOR NESTED LISTS...
-    expected <- DataFrame(
-        "aa",
-        "bb",
-        "cc",
-        "dd",
-        "ee",
-        "ff",
-        row.names = c("a", "b", "c")
-    )
-    expect_identical(xx, expected)
-
-
-
-
-
-    expected <- DataFrame(
-        "name" = as.factor(rep(c("a", "b", "c"), each = 3L)),
-        "aa" = c(
-            seq(from = 1L, to = 3L),
-            rep(NA, times = 6L)
+    expected <- list(
+        "list" = DataFrame(
+            "aa" = I(list(
+                seq(from = 1L, to = 3L),
+                NULL,
+                NULL
+            )),
+            "bb" = I(list(
+                seq(from = 4L, to = 6L),
+                NULL,
+                NULL
+            )),
+            "cc" = I(list(
+                NULL,
+                seq(from = 7L, to = 9L),
+                NULL
+            )),
+            "dd" = I(list(
+                NULL,
+                seq(from = 10L, to = 12L),
+                NULL
+            )),
+            "ee" = I(list(
+                NULL,
+                NULL,
+                seq(from = 13L, to = 15L)
+            )),
+            "ff" = I(list(
+                NULL,
+                NULL,
+                seq(from = 16L, to = 18L)
+            )),
+            row.names = c("a", "b", "c")
         ),
-        "bb" = c(
-            seq(from = 4L, to = 6L),
-            rep(NA, times = 6L)
-        ),
-        "cc" = c(
-            rep(NA, times = 3L),
-            seq(from = 7L, to = 9L),
-            rep(NA, times = 3L)
-        ),
-        "dd" = c(
-            rep(NA, times = 3L),
-            seq(from = 10L, to = 12L),
-            rep(NA, times = 3L)
-        ),
-        "ee" = c(
-            rep(NA, times = 6L),
-            seq(from = 13L, to = 15L)
-        ),
-        "ff" = c(
-            rep(NA, times = 6L),
-            seq(from = 16L, to = 18L)
+        "IntegerList" = DataFrame(
+            "x1" = I(list(
+                IntegerList(
+                    "aa" = seq(from = 1L, to = 3L),
+                    "bb" = seq(from = 4L, to = 6L)
+                ),
+                IntegerList(
+                    "cc" = seq(from = 7L, to = 9L),
+                    "dd" = seq(from = 10L, to = 12L)
+                ),
+                IntegerList(
+                    "ee" = seq(from = 13L, to = 15L),
+                    "ff" = seq(from = 16L, to = 18L)
+                )
+            )),
+            row.names = c("a", "b", "c")
         )
     )
-    for (object in objects) {
+    for (i in seq_along(objects)) {
         expect_identical(
-            object = mapToDataFrame(!!object),
-            expected = expected
+            object = rbindToDataFrame(object[[!!i]]),
+            expected = expected[[!!i]]
         )
     }
 })

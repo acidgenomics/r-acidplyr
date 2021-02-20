@@ -27,12 +27,18 @@ NULL
 
 
 
-## Consider using `autopadZeros` here to pad automatically generated positional
-## row and column names.
-## Updated 2021-02-19.
+## Consider using `autopadZeros()` here when names are not defined.
+## Updated 2021-02-20.
 `rbindToDataFrame,list` <-  # nolint
     function(x) {
         assert(hasLength(x))
+        ## Don't allow evaluation of top-level S4 elements (e.g. IntegerList).
+        if (any(bapply(X = x, FUN = isS4))) {
+            return(DataFrame(
+                "x1" = I(unname(x)),
+                row.names = names(x)
+            ))
+        }
         hasNames <- c("rows" = TRUE, "cols" = TRUE)
         if (!hasNames(x)) {
             hasNames[["rows"]] <- FALSE
