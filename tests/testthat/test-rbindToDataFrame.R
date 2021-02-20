@@ -11,8 +11,6 @@ test_that("Matched and named input", {
         "b" = c(2L, 4L),
         row.names = c("aa", "bb")
     )
-    ## FIXME NAMES MISMATCH HERE.
-    ## FIXME OBJECT NEEDS TO STRIP NAMES PER ROW....
     expect_identical(object, expected)
 })
 
