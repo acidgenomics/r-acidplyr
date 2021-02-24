@@ -7,7 +7,6 @@
 #'
 #' @importClassesFrom AcidGenerics AsIs DataFrame
 #'
-#' @importFrom AcidBase appendToBody
 #' @importFrom AcidCLI alert alertInfo
 #' @importFrom AcidGenerics DataFrame SimpleList as.data.frame cbind decode
 #'   do.call expand.grid lapply merge na.omit order rbind rowSums setdiff unique
