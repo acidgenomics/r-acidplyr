@@ -1,7 +1,3 @@
-## FIXME Running into an error with melt in AcidPlots countsPerBiotype.
-
-
-
 #' @name melt
 #' @inherit AcidGenerics::melt
 #' @note Updated 2021-02-24.
