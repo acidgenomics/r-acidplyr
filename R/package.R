@@ -9,8 +9,8 @@
 #'
 #' @importFrom AcidBase appendToBody
 #' @importFrom AcidCLI alert alertInfo
-#' @importFrom AcidGenerics DataFrame SimpleList as.data.frame decode merge
-#'   na.omit order rbind setdiff unique
+#' @importFrom AcidGenerics DataFrame SimpleList as.data.frame cbind decode
+#'   do.call expand.grid lapply merge na.omit order rbind rowSums setdiff unique
 #' @importFrom goalie allAreAtomic areDisjointSets assert bapply hasColnames
 #'   hasDims hasLength hasNames hasNoDuplicates hasRownames isAny isCharacter
 #'   isFlag isInt isNumber isScalar isScalarAtomic isString isSubset
