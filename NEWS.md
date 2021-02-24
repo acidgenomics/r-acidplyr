@@ -1,3 +1,11 @@
+## AcidPlyr 0.1.14 (2021-02-24)
+
+### Minor changes
+
+- NAMESPACE fixes for downstream packages that attempt to use melt method on
+  sparse matrix. Now calling some functions from AcidGenerics that mask base
+  variants.
+
 ## AcidPlyr 0.1.13 (2021-02-20)
 
 ### New functions
