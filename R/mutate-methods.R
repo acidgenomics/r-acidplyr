@@ -18,35 +18,21 @@ NULL
 
 
 
-## List column approach idea (draft)
-## > list <- lapply(
-## >     X = as.list(object),
-## >     FUN = function(row) {
-## >         unlist(lapply(X = row, FUN = fun, ...))
-## >     }
-## > )
-
-
-
 ## Loop across the columns and then each row internally.
-## This will fail on complex list columns unless wrapped by `as_tibble()`.
-## See also list to DataFrame coercion method defined in package.
-## Updated 2020-10-12.
+## Updated 2021-03-02.
 `mutateAll,DataFrame` <-  # nolint
     function(object, fun, ...) {
-        assert(
-            allAreAtomic(object),
-            is.function(fun)
-        )
+        assert(is.function(fun))
         list <- lapply(X = object, FUN = fun, ...)
-        ## FIXME WE NEED TO RETHINK THIS METHOD.
-        ## DOESNT WORK WITH COMPLEX S4 COLUMNS.
-        tbl <- as_tibble(list)
-        out <- DataFrame(tbl, row.names = rownames(object))
+        out <- DataFrame(
+            lapply(X = list, FUN = I),
+            row.names = rownames(object)
+        )
         assert(
             identical(dim(out), dim(object)),
             identical(dimnames(out), dimnames(object))
         )
+        metadata(out) <- metadata(object)
         out
     }
 
