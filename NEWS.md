@@ -1,3 +1,10 @@
+## AcidPlyr 0.1.15 (2021-03-02)
+
+### Minor changes
+
+- `mutateAll`: Attempting to remove dependency on internal `as_tibble` method,
+  so we can preserve complex S4 columns.
+
 ## AcidPlyr 0.1.14 (2021-02-24)
 
 ### Minor changes
