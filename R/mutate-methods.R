@@ -39,6 +39,8 @@ NULL
             is.function(fun)
         )
         list <- lapply(X = object, FUN = fun, ...)
+        ## FIXME WE NEED TO RETHINK THIS METHOD.
+        ## DOESNT WORK WITH COMPLEX S4 COLUMNS.
         tbl <- as_tibble(list)
         out <- DataFrame(tbl, row.names = rownames(object))
         assert(
