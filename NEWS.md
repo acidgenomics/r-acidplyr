@@ -1,3 +1,11 @@
+## AcidPlyr 0.1.16 (2021-03-03)
+
+### Minor changes
+
+- Join methods now coerce objects to `DataFrame`, to avoid unwanted issues with
+  classed objects.
+- `fullJoin` return now retains metadata from `x`, as expected.
+
 ## AcidPlyr 0.1.15 (2021-03-02)
 
 ### Minor changes
