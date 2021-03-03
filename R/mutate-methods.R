@@ -1,7 +1,3 @@
-## FIXME ENSURE METADATA DOESNT DROP HERE.
-
-
-
 #' @name mutate
 #' @inherit AcidGenerics::mutate
 #' @note Updated 2020-10-12.
