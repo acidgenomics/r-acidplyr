@@ -1,6 +1,6 @@
 #' @name join
 #' @inherit AcidGenerics::join
-#' @note Updated 2021-02-13.
+#' @note Updated 2021-03-03.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -21,8 +21,8 @@
 #'
 #' ## DataFrame ====
 #' x <- as(band_members, "DataFrame")
-#' y <- as(band_instruments, "DataFrame")
 #' print(x)
+#' y <- as(band_instruments, "DataFrame")
 #' print(y)
 #' by <- "name"
 #' innerJoin(x = x, y = y, by = by)
@@ -35,7 +35,7 @@ NULL
 
 
 
-## Updated 2021-02-13.
+## Updated 2021-03-03.
 `innerJoin,DataFrame` <-  # nolint
     function(x, y, by) {
         assert(
@@ -61,6 +61,8 @@ NULL
                 y = colnames(y)
             )
         )
+        x <- as(x, "DataFrame")
+        y <- as(y, "DataFrame")
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
         m <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)
@@ -92,7 +94,7 @@ setMethod(
 
 
 
-## Updated 2021-02-13.
+## Updated 2021-03-03.
 `leftJoin,DataFrame` <-  # nolint
     function(x, y, by) {
         assert(
@@ -118,6 +120,8 @@ setMethod(
                 y = colnames(y)
             )
         )
+        x <- as(x, "DataFrame")
+        y <- as(y, "DataFrame")
         y <- unique(y)
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
@@ -187,7 +191,7 @@ setMethod(
 
 
 
-## Updated 2021-02-13.
+## Updated 2021-03-03.
 `fullJoin,DataFrame` <-  # nolint
     function(x, y, by) {
         assert(
@@ -213,6 +217,8 @@ setMethod(
                 y = colnames(y)
             )
         )
+        x <- as(x, "DataFrame")
+        y <- as(y, "DataFrame")
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
         out <- merge(x = x, y = y, by = by, all = TRUE, sort = FALSE)
@@ -231,6 +237,7 @@ setMethod(
         }
         out[[".idx"]] <- NULL
         out[[".idy"]] <- NULL
+        metadata(out) <- metadata(x)
         out
     }
 
@@ -250,7 +257,7 @@ setMethod(
 
 
 
-## Updated 2021-02-13.
+## Updated 2021-03-03.
 `semiJoin,DataFrame` <-  # nolint
     function(x, y, by) {
         assert(
@@ -276,6 +283,8 @@ setMethod(
                 y = colnames(y)
             )
         )
+        x <- as(x, "DataFrame")
+        y <- as(y, "DataFrame")
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
         m <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)
@@ -304,7 +313,7 @@ setMethod(
 
 
 
-## Updated 2021-02-13.
+## Updated 2021-03-03.
 `antiJoin,DataFrame` <-  # nolint
     function(x, y, by) {
         assert(
@@ -330,6 +339,8 @@ setMethod(
                 y = colnames(y)
             )
         )
+        x <- as(x, "DataFrame")
+        y <- as(y, "DataFrame")
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
         m <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)

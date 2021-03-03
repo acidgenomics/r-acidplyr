@@ -57,7 +57,7 @@ New object containing a merge of \code{x} and \code{y} objects.
 Join operations
 }
 \note{
-Updated 2021-02-13.
+Updated 2021-03-03.
 }
 \section{Ordering}{
 
@@ -79,8 +79,8 @@ data(band_members, band_instruments, package = "AcidTest")
 
 ## DataFrame ====
 x <- as(band_members, "DataFrame")
-y <- as(band_instruments, "DataFrame")
 print(x)
+y <- as(band_instruments, "DataFrame")
 print(y)
 by <- "name"
 innerJoin(x = x, y = y, by = by)
