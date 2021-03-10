@@ -1,3 +1,10 @@
+## AcidPlyr 0.1.17 (2021-03-10)
+
+### Minor changes
+
+- `leftJoin`: Improve error message when user attempts to pass in columns via
+  "by" argument that are not unique.
+
 ## AcidPlyr 0.1.16 (2021-03-03)
 
 ### Minor changes
