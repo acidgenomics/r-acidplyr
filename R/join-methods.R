@@ -1,6 +1,6 @@
 #' @name join
 #' @inherit AcidGenerics::join
-#' @note Updated 2021-03-03.
+#' @note Updated 2021-03-10.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -123,6 +123,13 @@ setMethod(
         x <- as(x, "DataFrame")
         y <- as(y, "DataFrame")
         y <- unique(y)
+        ## Harden against unwanted duplicated defined in "by" argument.
+        if (!identical(
+            x = nrow(y),
+            y = nrow(unique(y[, by, drop = FALSE]))
+        )) {
+            stop("Columns defined in 'by' argument are not unique.")
+        }
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
         m <- merge(x = x, y = y, by = by, all.x = TRUE, sort = FALSE)
