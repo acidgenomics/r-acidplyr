@@ -1,6 +1,6 @@
 #' @name mapToDataFrame
 #' @inherit AcidGenerics::mapToDataFrame
-#' @note Updated 2021-02-20.
+#' @note Updated 2021-04-27.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -53,14 +53,15 @@ NULL
 
 
 
-## Updated 2021-02-20.
+## Updated 2021-04-27.
 `mapToDataFrame,list` <-  # nolint
     function(x) {
+        requireNamespaces("purrr")
         assert(hasLength(x))
         x <- .decodeNestedList(x)
         idCol <- "name"
         assert(areDisjointSets(idCol, names(x)))
-        y <- map_dfr(.x = x, .f = ~.x, .id = idCol)
+        y <- purrr::map_dfr(.x = x, .f = ~.x, .id = idCol)
         ## This doesn't get set when we bind a simple list of atomic vectors.
         if (isSubset(idCol, colnames(y))) {
             y[[idCol]] <- as.factor(y[[idCol]])
