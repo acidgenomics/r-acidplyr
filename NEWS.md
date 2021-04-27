@@ -1,3 +1,11 @@
+## AcidPlyr 0.1.18 (2021-04-27)
+
+### Minor changes
+
+- `mapToDataFrame`: Offloading purrr as a suggested package, since this is the
+  only function that calls `map_dfr` internally.
+- Removed `map_df` and `map_dfr` as reexported functions.
+
 ## AcidPlyr 0.1.17 (2021-03-10)
 
 ### Minor changes

@@ -15,5 +15,4 @@
 #'   hasDims hasLength hasNames hasNoDuplicates hasRownames isAny isCharacter
 #'   isFlag isInt isNumber isScalar isScalarAtomic isString isSubset
 #' @importFrom methods as is setMethod signature
-#' @importFrom purrr map_dfr
 "_PACKAGE"
