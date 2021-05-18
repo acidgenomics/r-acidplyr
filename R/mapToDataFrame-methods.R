@@ -53,14 +53,15 @@ NULL
 
 
 
-## Updated 2021-04-27.
+## Updated 2021-05-18.
 `mapToDataFrame,list` <-  # nolint
     function(x) {
-        requireNamespaces("purrr")
+        requireNamespaces(c("dplyr", "purrr"))
         assert(hasLength(x))
         x <- .decodeNestedList(x)
         idCol <- "name"
         assert(areDisjointSets(idCol, names(x)))
+        ## This function hands off to dplyr internally.
         y <- purrr::map_dfr(.x = x, .f = ~.x, .id = idCol)
         ## This doesn't get set when we bind a simple list of atomic vectors.
         if (isSubset(idCol, colnames(y))) {

@@ -1,3 +1,10 @@
+## AcidPlyr 0.1.19 (2021-05-18)
+
+### Minor changes
+
+- `mapToDataFrame`: Hardened function in the case when dplyr is not installed.
+  Internally the `purrr::map_df` call hands off to dplyr.
+
 ## AcidPlyr 0.1.18 (2021-04-27)
 
 ### Minor changes
