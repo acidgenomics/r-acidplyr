@@ -1,3 +1,10 @@
+## AcidPlyr 0.1.20 (2021-05-18)
+
+### Minor changes
+
+- Need to import `as.DataFrame` from pipette to improve consistency of `list`
+  to `DataFrame` coercion, which is currently tricky on Bioconductor 3.13.
+
 ## AcidPlyr 0.1.19 (2021-05-18)
 
 ### Minor changes

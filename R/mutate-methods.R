@@ -1,6 +1,6 @@
 #' @name mutate
 #' @inherit AcidGenerics::mutate
-#' @note Updated 2020-10-12.
+#' @note Updated 2021-05-18.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -19,15 +19,12 @@ NULL
 
 
 ## Loop across the columns and then each row internally.
-## Updated 2021-03-02.
+## Updated 2021-05-18.
 `mutateAll,DataFrame` <-  # nolint
     function(object, fun, ...) {
         assert(is.function(fun))
         list <- lapply(X = object, FUN = fun, ...)
-        out <- DataFrame(
-            lapply(X = list, FUN = I),
-            row.names = rownames(object)
-        )
+        out <- as.DataFrame(list)
         assert(
             identical(dim(out), dim(object)),
             identical(dimnames(out), dimnames(object))
