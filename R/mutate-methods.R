@@ -23,8 +23,10 @@ NULL
 `mutateAll,DataFrame` <-  # nolint
     function(object, fun, ...) {
         assert(is.function(fun))
+        rn <- rownames(object)
         list <- lapply(X = object, FUN = fun, ...)
         out <- as.DataFrame(list)
+        rownames(out) <- rn
         assert(
             identical(dim(out), dim(object)),
             identical(dimnames(out), dimnames(object))
