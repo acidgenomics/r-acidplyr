@@ -242,7 +242,7 @@ setMethod(
             assert(hasLength(rn, n = nrow(out)))
             rownames(out) <- rn
         } else {
-            rownames(out) <- NULL
+            rownames(out) <- NULL  # nocov
         }
         out[[".idx"]] <- NULL
         out[[".idy"]] <- NULL
