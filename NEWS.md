@@ -1,3 +1,11 @@
+## AcidPlyr 0.1.21 (2021-09-03)
+
+### Minor changes
+
+- Now using `abort` function internally instead of `stop` for better stylized
+  error messages.
+- Miscellaneous documentation updates, reducing the number of links.
+
 ## AcidPlyr 0.1.20 (2021-05-18)
 
 ### Minor changes
