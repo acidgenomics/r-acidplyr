@@ -240,3 +240,33 @@ test_that("List nested down 3 levels", {
         )
     }
 })
+
+test_that("Don't allow evaluation of top-level S4 elements", {
+    x <- list(
+        "a" = IntegerList(
+            "aa" = seq(from = 1L, to = 3L),
+            "bb" = seq(from = 4L, to = 6L)
+        ),
+        "b" = IntegerList(
+            "cc" = seq(from = 7L, to = 9L),
+            "dd" = seq(from = 10L, to = 12L)
+        ),
+        "c" = "hello"
+    )
+    object <- rbindToDataFrame(x)
+    expected <- DataFrame(
+        "x1" = I(list(
+            IntegerList(
+                "aa" = seq(from = 1L, to = 3L),
+                "bb" = seq(from = 4L, to = 6L)
+            ),
+            IntegerList(
+                "cc" = seq(from = 7L, to = 9L),
+                "dd" = seq(from = 10L, to = 12L)
+            ),
+            "hello"
+        )),
+        row.names = c("a", "b", "c")
+    )
+    expect_identical(object, expected)
+})
