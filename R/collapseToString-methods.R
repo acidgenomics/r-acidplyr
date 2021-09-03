@@ -1,6 +1,6 @@
 #' @name collapseToString
 #' @inherit AcidGenerics::collapseToString
-#' @note Updated 2020-02-02.
+#' @note Updated 2021-09-03.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param sep `character(1)`.
@@ -11,7 +11,7 @@
 #'   Sort values.
 #' @param ... Additional arguments.
 #'
-#' @seealso [`toString()`][base::toString].
+#' @seealso `toString()`.
 #'
 #' @return
 #' - `atomic`: `character(1)`.

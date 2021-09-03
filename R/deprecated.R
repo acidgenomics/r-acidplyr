@@ -12,6 +12,7 @@ NULL
 
 
 ## v0.1.13 =====================================================================
+## NOTE Safe to remove this once basejump is updated.
 #' @rdname deprecated
 #' @name unlistToDataFrame
 #' @importFrom AcidGenerics unlistToDataFrame

@@ -42,7 +42,7 @@ Unique values.}
 Collapse to string
 }
 \note{
-Updated 2020-02-02.
+Updated 2021-09-03.
 }
 \examples{
 ## character ====
@@ -72,5 +72,5 @@ df <- collapseToString(df, sort = TRUE, unique = TRUE)
 t(df)
 }
 \seealso{
-\code{\link[base:toString]{toString()}}.
+\code{toString()}.
 }
