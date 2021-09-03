@@ -1,6 +1,6 @@
 #' @name join
 #' @inherit AcidGenerics::join
-#' @note Updated 2021-03-10.
+#' @note Updated 2021-09-03.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -9,7 +9,7 @@
 #'
 #' The join functions never rearrange rows. To accomplish this, we're currently
 #' setting an internal `.idx` column that we can use to reorder the rows after
-#' [`merge()`][base::merge] operation.
+#' `merge()` operation.
 #'
 #' @section Row names:
 #'
@@ -128,7 +128,9 @@ setMethod(
             x = nrow(y),
             y = nrow(unique(y[, by, drop = FALSE]))
         )) {
-            stop("Columns defined in 'by' argument are not unique.")
+            abort(sprintf(
+                "Columns defined in {.arg %s} argument are not unique.", "by"
+            ))
         }
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))

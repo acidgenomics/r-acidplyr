@@ -57,14 +57,14 @@ New object containing a merge of \code{x} and \code{y} objects.
 Join operations
 }
 \note{
-Updated 2021-03-10.
+Updated 2021-09-03.
 }
 \section{Ordering}{
 
 
 The join functions never rearrange rows. To accomplish this, we're currently
 setting an internal \code{.idx} column that we can use to reorder the rows after
-\code{\link[base:merge]{merge()}} operation.
+\code{merge()} operation.
 }
 
 \section{Row names}{
