@@ -4,7 +4,9 @@ A grammar of S4 class data manipulation.
 
 ## Installation
 
-This is an [R][] package.
+Requirements: [R][] >= 4.0, [Bioconductor][] >= 3.13.
+
+### [R][] method
 
 ```r
 if (!requireNamespace("BiocManager", quietly = TRUE)) {

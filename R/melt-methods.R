@@ -1,6 +1,6 @@
 #' @name melt
 #' @inherit AcidGenerics::melt
-#' @note Updated 2021-02-24.
+#' @note Updated 2021-09-03.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param colnames `character(3)`.
@@ -12,13 +12,13 @@
 #'   Use `-Inf` or `NULL` to disable.
 #' @param minMethod `character(1)`.
 #'   Only applies when `min` argument is numeric.
-#'   Uses [`match.arg()`][base::match.arg].
+#'   Uses `match.arg()`.
 #'
 #'   - `absolute`: Applies hard cutoff to `counts` column after the melt
 #'     operation. This applies to all counts, not per feature.
-#'   - `perRow`: Applies cutoff per row (i.e. gene). Internally,
-#'     [`rowSums()`][base::rowSums] values are checked against this cutoff
-#'     threshold prior to the melt operation.
+#'   - `perRow`: Applies cutoff per row (i.e. gene). Internally, `rowSums()`
+#'     values are checked against this cutoff threshold prior to the melt
+#'     operation.
 #' @param trans `character(1)`.
 #'   Apply a log transformation (e.g. `log2(x + 1L)`) to the count matrix prior
 #'   to melting, if desired. Use `"identity"` to return unmodified (default).
