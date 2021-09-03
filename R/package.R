@@ -8,7 +8,7 @@
 #' @importClassesFrom AcidGenerics AsIs DataFrame
 #'
 #' @importFrom AcidBase requireNamespaces
-#' @importFrom AcidCLI abort alert alertInfo
+#' @importFrom AcidCLI alert alertInfo
 #' @importFrom AcidGenerics DataFrame SimpleList as.data.frame cbind decode
 #'   do.call expand.grid lapply merge metadata metadata<- na.omit order rbind
 #'   rowSums setdiff unique
