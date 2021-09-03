@@ -123,15 +123,15 @@ setMethod(
         x <- as(x, "DataFrame")
         y <- as(y, "DataFrame")
         y <- unique(y)
-        ## Harden against unwanted duplicated defined in "by" argument.
-        if (!identical(
-            x = nrow(y),
-            y = nrow(unique(y[, by, drop = FALSE]))
-        )) {
-            abort(sprintf(
-                "Columns defined in {.arg %s} argument are not unique.", "by"
-            ))
-        }
+        assert(
+            identical(
+                x = nrow(y),
+                y = nrow(unique(y[, by, drop = FALSE]))
+            ),
+            msg = sprintf(
+                "Columns defined in '%s' argument are not unique.", "by"
+            )
+        )
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
         m <- merge(x = x, y = y, by = by, all.x = TRUE, sort = FALSE)
