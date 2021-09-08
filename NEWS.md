@@ -1,3 +1,10 @@
+## AcidPlyr 0.1.22 (2021-09-08)
+
+### Minor changes
+
+- Removed deprecated `unlistToDataFrame` function from NAMESPACE.
+- Updated basejump dependency versions.
+
 ## AcidPlyr 0.1.21 (2021-09-03)
 
 ### Minor changes
