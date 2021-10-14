@@ -221,10 +221,10 @@ NULL
         m <- m[, c(".idx", ".idy"), drop = FALSE]
         y <- y[, setdiff(colnames(y), colnames(x)), drop = FALSE]
         x <- x[m[[".idx"]], , drop = FALSE]
-        ## S4Vectors (i.e. DataFrame) doesn't support expansion via indices
-        ## containing NAs. Will see: "Error: subscript contains NAs." in this
-        ## case. Here we are coercing mismatched `y` to data.frame, which does
-        ## allow expansion via indices containing NAs.
+        # S4Vectors (i.e. DFrame) doesn't support expansion via indices
+        # containing NAs. Will see: "Error: subscript contains NAs." in this
+        # case. Here we are coercing mismatched `y` to data.frame, which does
+        # allow expansion via indices containing NAs.
         containsNA <- c("y" = any(is.na(m[[".idy"]])))
         if (isTRUE(containsNA[["y"]])) {
             yy <- as.data.frame(y)

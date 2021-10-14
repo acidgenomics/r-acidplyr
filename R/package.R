@@ -1,11 +1,11 @@
 #' AcidPlyr
 #'
 #' A dplyr-like grammar for manipulation of S4 rectangular data classes, such
-#' as DataFrame.
+#' as DFrame.
 #'
 #' @keywords internal
 #'
-#' @importClassesFrom AcidGenerics AsIs DataFrame
+#' @importClassesFrom AcidGenerics AsIs DFrame
 #'
 #' @importFrom AcidBase requireNamespaces
 #' @importFrom AcidCLI alert alertInfo
