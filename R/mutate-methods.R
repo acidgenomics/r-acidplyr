@@ -8,7 +8,7 @@
 #' data(mtcars, package = "datasets")
 #'
 #' ## DataFrame ====
-#' x <- as(mtcars, "DataFrame")
+#' x <- as(mtcars, "DFrame")
 #' mutateAll(x, fun = log, base = 2L)
 #' mutateAt(x, vars = c("mpg", "cyl"), fun = log, base = 2L)
 #' mutateIf(x, predicate = is.double, fun = as.integer)
@@ -20,12 +20,12 @@ NULL
 
 ## Loop across the columns and then each row internally.
 ## Updated 2021-05-18.
-`mutateAll,DataFrame` <-  # nolint
+`mutateAll,DFrame` <-  # nolint
     function(object, fun, ...) {
         assert(is.function(fun))
         rn <- rownames(object)
         list <- lapply(X = object, FUN = fun, ...)
-        out <- as.DataFrame(list)
+        out <- as.DFrame(list)
         rownames(out) <- rn
         assert(
             identical(dim(out), dim(object)),
@@ -42,16 +42,16 @@ NULL
 setMethod(
     f = "mutateAll",
     signature = signature(
-        object = "DataFrame",
+        object = "DFrame",
         fun = "function"
     ),
-    definition = `mutateAll,DataFrame`
+    definition = `mutateAll,DFrame`
 )
 
 
 
-## Updated 2020-10-12.
-`mutateAt,DataFrame` <-  # nolint
+## Updated 2021-10-13.
+`mutateAt,DFrame` <-  # nolint
     function(object, vars, fun, ...) {
         x <- transmuteAt(object, vars = vars, fun = fun, ...)
         y <- object[, setdiff(colnames(object), colnames(x)), drop = FALSE]
@@ -67,17 +67,17 @@ setMethod(
 setMethod(
     f = "mutateAt",
     signature = signature(
-        object = "DataFrame",
+        object = "DFrame",
         vars = "character",
         fun = "function"
     ),
-    definition = `mutateAt,DataFrame`
+    definition = `mutateAt,DFrame`
 )
 
 
 
 ## Updated 2020-10-12.
-`mutateIf,DataFrame` <-  # nolint
+`mutateIf,DFrame` <-  # nolint
     function(object, predicate, fun, ...) {
         x <- transmuteIf(
             object = object,
@@ -98,17 +98,17 @@ setMethod(
 setMethod(
     f = "mutateIf",
     signature = signature(
-        object = "DataFrame",
+        object = "DFrame",
         predicate = "function",
         fun = "function"
     ),
-    definition = `mutateIf,DataFrame`
+    definition = `mutateIf,DFrame`
 )
 
 
 
 ## Updated 2020-10-12.
-`transmuteAt,DataFrame` <-  # nolint
+`transmuteAt,DFrame` <-  # nolint
     function(object, vars, fun, ...) {
         x <- object[, vars, drop = FALSE]
         x <- mutateAll(x, fun = fun, ...)
@@ -122,17 +122,17 @@ setMethod(
 setMethod(
     f = "transmuteAt",
     signature = signature(
-        object = "DataFrame",
+        object = "DFrame",
         vars = "character",
         fun = "function"
     ),
-    definition = `transmuteAt,DataFrame`
+    definition = `transmuteAt,DFrame`
 )
 
 
 
 ## Updated 2020-10-12.
-`transmuteIf,DataFrame` <-  # nolint
+`transmuteIf,DFrame` <-  # nolint
     function(object, predicate, fun, ...) {
         x <- selectIf(object, predicate = predicate)
         x <- mutateAll(x, fun = fun, ...)
@@ -146,9 +146,9 @@ setMethod(
 setMethod(
     f = "transmuteIf",
     signature = signature(
-        object = "DataFrame",
+        object = "DFrame",
         predicate = "function",
         fun = "function"
     ),
-    definition = `transmuteIf,DataFrame`
+    definition = `transmuteIf,DFrame`
 )

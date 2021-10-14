@@ -7,8 +7,8 @@ data(
     envir = environment()
 )
 
-x <- as(band_members, "DataFrame")
-y <- as(band_instruments, "DataFrame")
+x <- as(band_members, "DFrame")
+y <- as(band_instruments, "DFrame")
 rownames(x) <- x[["name"]]
 rownames(y) <- y[["name"]]
 by <- "name"
