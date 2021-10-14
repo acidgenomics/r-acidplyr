@@ -142,6 +142,6 @@ NULL
 #' @export
 setMethod(
     f = "rbindToDataFrame",
-    signature = signature("list"),
+    signature = signature(x = "list"),
     definition = `rbindToDataFrame,list`
 )

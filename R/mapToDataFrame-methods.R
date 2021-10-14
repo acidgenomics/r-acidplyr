@@ -67,7 +67,7 @@ NULL
         if (isSubset(idCol, colnames(y))) {
             y[[idCol]] <- as.factor(y[[idCol]])
         }
-        y <- as(y, "DataFrame")
+        y <- as(y, "DFrame")
         y
     }
 
@@ -77,6 +77,6 @@ NULL
 #' @export
 setMethod(
     f = "mapToDataFrame",
-    signature = signature("list"),
+    signature = signature(x = "list"),
     definition = `mapToDataFrame,list`
 )

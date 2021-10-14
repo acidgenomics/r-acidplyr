@@ -20,9 +20,9 @@
 #' data(band_members, band_instruments, package = "AcidTest")
 #'
 #' ## DataFrame ====
-#' x <- as(band_members, "DataFrame")
+#' x <- as(band_members, "DFrame")
 #' print(x)
-#' y <- as(band_instruments, "DataFrame")
+#' y <- as(band_instruments, "DFrame")
 #' print(y)
 #' by <- "name"
 #' innerJoin(x = x, y = y, by = by)
@@ -35,8 +35,8 @@ NULL
 
 
 
-## Updated 2021-03-03.
-`innerJoin,DataFrame` <-  # nolint
+## Updated 2021-10-13.
+`innerJoin,DFrame` <-  # nolint
     function(x, y, by) {
         assert(
             hasColnames(x),
@@ -61,12 +61,12 @@ NULL
                 y = colnames(y)
             )
         )
-        x <- as(x, "DataFrame")
-        y <- as(y, "DataFrame")
+        x <- as(x, "DFrame")
+        y <- as(y, "DFrame")
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
         m <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)
-        assert(is(m, "DataFrame"))
+        assert(is(m, "DFrame"))
         m <- m[, c(".idx", ".idy"), drop = FALSE]
         y <- y[, setdiff(colnames(y), colnames(x)), drop = FALSE]
         x <- x[m[[".idx"]], , drop = FALSE]
@@ -85,17 +85,17 @@ NULL
 setMethod(
     f = "innerJoin",
     signature = signature(
-        x = "DataFrame",
-        y = "DataFrame",
+        x = "DFrame",
+        y = "DFrame",
         by = "character"
     ),
-    definition = `innerJoin,DataFrame`
+    definition = `innerJoin,DFrame`
 )
 
 
 
-## Updated 2021-03-03.
-`leftJoin,DataFrame` <-  # nolint
+## Updated 2021-10-13.
+`leftJoin,DFrame` <-  # nolint
     function(x, y, by) {
         assert(
             hasColnames(x),
@@ -120,8 +120,8 @@ setMethod(
                 y = colnames(y)
             )
         )
-        x <- as(x, "DataFrame")
-        y <- as(y, "DataFrame")
+        x <- as(x, "DFrame")
+        y <- as(y, "DFrame")
         y <- unique(y)
         assert(
             identical(
@@ -136,7 +136,7 @@ setMethod(
         y[[".idy"]] <- seq_len(nrow(y))
         m <- merge(x = x, y = y, by = by, all.x = TRUE, sort = FALSE)
         assert(
-            is(m, "DataFrame"),
+            is(m, "DFrame"),
             identical(nrow(x), nrow(m))
         )
         m <- m[, c(".idx", ".idy"), drop = FALSE]
@@ -151,7 +151,7 @@ setMethod(
             yy <- as.data.frame(y)
             assert(identical(colnames(yy), colnames(y)))
             yy <- yy[m[[".idy"]], , drop = FALSE]
-            y <- as(yy, "DataFrame")
+            y <- as(yy, "DFrame")
         } else {
             y <- y[m[[".idy"]], , drop = FALSE]
         }
@@ -169,17 +169,17 @@ setMethod(
 setMethod(
     f = "leftJoin",
     signature = signature(
-        x = "DataFrame",
-        y = "DataFrame",
+        x = "DFrame",
+        y = "DFrame",
         by = "character"
     ),
-    definition = `leftJoin,DataFrame`
+    definition = `leftJoin,DFrame`
 )
 
 
 
-## Updated 2020-10-06.
-`rightJoin,DataFrame` <-  # nolint
+## Updated 2021-10-13.
+`rightJoin,DFrame` <-  # nolint
     function(x, y, by) {
         leftJoin(x = y, y = x, by = by)
     }
@@ -191,17 +191,17 @@ setMethod(
 setMethod(
     f = "rightJoin",
     signature = signature(
-        x = "DataFrame",
-        y = "DataFrame",
+        x = "DFrame",
+        y = "DFrame",
         by = "character"
     ),
-    definition = `rightJoin,DataFrame`
+    definition = `rightJoin,DFrame`
 )
 
 
 
-## Updated 2021-03-03.
-`fullJoin,DataFrame` <-  # nolint
+## Updated 2021-10-13.
+`fullJoin,DFrame` <-  # nolint
     function(x, y, by) {
         assert(
             hasColnames(x),
@@ -226,12 +226,12 @@ setMethod(
                 y = colnames(y)
             )
         )
-        x <- as(x, "DataFrame")
-        y <- as(y, "DataFrame")
+        x <- as(x, "DFrame")
+        y <- as(y, "DFrame")
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
         out <- merge(x = x, y = y, by = by, all = TRUE, sort = FALSE)
-        assert(is(out, "DataFrame"))
+        assert(is(out, "DFrame"))
         out <- out[order(out[[".idx"]], out[[".idy"]]), , drop = FALSE]
         if (hasRownames(x) && hasRownames(y)) {
             rnx <- rownames(x)[order(out[[".idx"]])]
@@ -257,17 +257,17 @@ setMethod(
 setMethod(
     f = "fullJoin",
     signature = signature(
-        x = "DataFrame",
-        y = "DataFrame",
+        x = "DFrame",
+        y = "DFrame",
         by = "character"
     ),
-    definition = `fullJoin,DataFrame`
+    definition = `fullJoin,DFrame`
 )
 
 
 
-## Updated 2021-03-03.
-`semiJoin,DataFrame` <-  # nolint
+## Updated 2021-10-13.
+`semiJoin,DFrame` <-  # nolint
     function(x, y, by) {
         assert(
             hasColnames(x),
@@ -292,14 +292,14 @@ setMethod(
                 y = colnames(y)
             )
         )
-        x <- as(x, "DataFrame")
-        y <- as(y, "DataFrame")
+        x <- as(x, "DFrame")
+        y <- as(y, "DFrame")
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
         m <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)
-        assert(is(m, "DataFrame"))
+        assert(is(m, "DFrame"))
         m <- m[, c(".idx", ".idy"), drop = FALSE]
-        assert(is(m, "DataFrame"))
+        assert(is(m, "DFrame"))
         rows <- m[[".idx"]]
         cols <- setdiff(colnames(x), ".idx")
         out <- x[rows, cols, drop = FALSE]
@@ -313,17 +313,17 @@ setMethod(
 setMethod(
     f = "semiJoin",
     signature = signature(
-        x = "DataFrame",
-        y = "DataFrame",
+        x = "DFrame",
+        y = "DFrame",
         by = "character"
     ),
-    definition = `semiJoin,DataFrame`
+    definition = `semiJoin,DFrame`
 )
 
 
 
-## Updated 2021-03-03.
-`antiJoin,DataFrame` <-  # nolint
+## Updated 2021-10-13.
+`antiJoin,DFrame` <-  # nolint
     function(x, y, by) {
         assert(
             hasColnames(x),
@@ -348,12 +348,12 @@ setMethod(
                 y = colnames(y)
             )
         )
-        x <- as(x, "DataFrame")
-        y <- as(y, "DataFrame")
+        x <- as(x, "DFrame")
+        y <- as(y, "DFrame")
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
         m <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)
-        assert(is(m, "DataFrame"))
+        assert(is(m, "DFrame"))
         m <- m[, c(".idx", ".idy"), drop = FALSE]
         rows <- order(setdiff(x[[".idx"]], m[[".idx"]]))
         cols <- setdiff(colnames(x), ".idx")
@@ -368,9 +368,9 @@ setMethod(
 setMethod(
     f = "antiJoin",
     signature = signature(
-        x = "DataFrame",
-        y = "DataFrame",
+        x = "DFrame",
+        y = "DFrame",
         by = "character"
     ),
-    definition = `antiJoin,DataFrame`
+    definition = `antiJoin,DFrame`
 )
