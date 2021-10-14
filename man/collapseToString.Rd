@@ -2,7 +2,7 @@
 % Please edit documentation in R/AllGenerics.R, R/collapseToString-methods.R
 \name{collapseToString}
 \alias{collapseToString}
-\alias{collapseToString,DFrame-method}
+\alias{collapseToString,DataFrame-method}
 \alias{collapseToString,atomic-method}
 \alias{collapseToString,data.frame-method}
 \alias{collapseToString,matrix-method}
@@ -10,7 +10,7 @@
 \usage{
 collapseToString(object, ...)
 
-\S4method{collapseToString}{DFrame}(object, sep = ", ", sort = FALSE, unique = FALSE)
+\S4method{collapseToString}{DataFrame}(object, sep = ", ", sort = FALSE, unique = FALSE)
 
 \S4method{collapseToString}{atomic}(object, sep = ", ", sort = FALSE, unique = FALSE)
 
