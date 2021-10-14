@@ -165,7 +165,7 @@ NULL
 
 
 ## Updated 2019-09-01.
-`melt,DFrame` <-  # nolint
+`melt,DataFrame` <-  # nolint
     function(
         object,
         colnames = c("rowname", "colname", "value")
@@ -178,7 +178,7 @@ NULL
         melt(object = as.matrix(object), colnames = colnames)
     }
 
-formals(`melt,DFrame`)[["colnames"]] <-
+formals(`melt,DataFrame`)[["colnames"]] <-
     formals(`melt,matrix`)[["colnames"]]
 
 
@@ -187,8 +187,8 @@ formals(`melt,DFrame`)[["colnames"]] <-
 #' @export
 setMethod(
     f = "melt",
-    signature = signature(object = "DFrame"),
-    definition = `melt,DFrame`
+    signature = signature(object = "DataFrame"),
+    definition = `melt,DataFrame`
 )
 
 #' @rdname melt

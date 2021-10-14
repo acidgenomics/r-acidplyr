@@ -67,7 +67,7 @@ NULL
         if (isSubset(idCol, colnames(y))) {
             y[[idCol]] <- as.factor(y[[idCol]])
         }
-        y <- as(y, "DFrame")
+        y <- as(y, "DataFrame")
         y
     }
 

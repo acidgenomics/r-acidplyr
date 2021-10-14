@@ -2,11 +2,11 @@ context("melt")
 
 test_that("Default", {
     for (object in list(
-        "DFrame" = df,
+        "DataFrame" = df,
         "matrix" = mat
     )) {
         x <- melt(object)
-        expect_s4_class(x, "DFrame")
+        expect_s4_class(x, "DataFrame")
     }
 })
 
@@ -16,7 +16,7 @@ test_that("Lacking row and column names", {
     ## Note that this step doesn't work on DataFrame class.
     colnames(object) <- NULL
     x <- melt(object)
-    expect_s4_class(x, "DFrame")
+    expect_s4_class(x, "DataFrame")
 })
 
 test_that("Per row filtering", {
@@ -53,7 +53,7 @@ test_that("trans", {
                 minMethod = "perRow",
                 trans = trans
             )
-            expect_s4_class(object, "DFrame")
+            expect_s4_class(object, "DataFrame")
             object <- round(head(object[["value"]]), digits = 3L)
             expect_identical(object, expected)
         },
@@ -64,5 +64,5 @@ test_that("trans", {
 test_that("Contingency table", {
     tbl <- table(rpois(n = 100L, lambda = 5L))
     df <- melt(tbl)
-    expect_s4_class(df, "DFrame")
+    expect_s4_class(df, "DataFrame")
 })

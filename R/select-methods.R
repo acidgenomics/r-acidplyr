@@ -21,14 +21,14 @@
 #' data(iris, package = "datasets")
 #'
 #' ## DataFrame ====
-#' x <- as(iris, "DFrame")
+#' x <- as(iris, "DataFrame")
 #' selectIf(x, predicate = is.factor)
 NULL
 
 
 
 ## Updated 2021-10-14.
-`selectIf,DFrame` <-  # nolint
+`selectIf,DataFrame` <-  # nolint
     function(object, predicate) {
         keep <- bapply(X = object, FUN = predicate)
         object[, keep, drop = FALSE]
@@ -41,8 +41,8 @@ NULL
 setMethod(
     f = "selectIf",
     signature = signature(
-        object = "DFrame",
+        object = "DataFrame",
         predicate = "function"
     ),
-    definition = `selectIf,DFrame`
+    definition = `selectIf,DataFrame`
 )
