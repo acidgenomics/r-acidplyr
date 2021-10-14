@@ -3,12 +3,12 @@
 \name{selectIf}
 \alias{selectIf}
 \alias{select}
-\alias{selectIf,DFrame,function-method}
+\alias{selectIf,DataFrame,function-method}
 \title{Select multiple columns}
 \usage{
 selectIf(object, predicate, ...)
 
-\S4method{selectIf}{DFrame,`function`}(object, predicate)
+\S4method{selectIf}{DataFrame,`function`}(object, predicate)
 }
 \arguments{
 \item{object}{Object.}
@@ -32,7 +32,7 @@ Updated 2019-08-26.
 data(iris, package = "datasets")
 
 ## DataFrame ====
-x <- as(iris, "DFrame")
+x <- as(iris, "DataFrame")
 selectIf(x, predicate = is.factor)
 }
 \seealso{

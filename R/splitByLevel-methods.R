@@ -44,7 +44,7 @@ NULL
 
 
 ## Updated 2020-10-07.
-`splitByLevel,DFrame` <-  # nolint
+`splitByLevel,DataFrame` <-  # nolint
     function(x, f, ref = FALSE) {
         assert(
             isString(f),
@@ -77,6 +77,6 @@ NULL
 #' @export
 setMethod(
     f = "splitByLevel",
-    signature = signature(x = "DFrame"),
-    definition = `splitByLevel,DFrame`
+    signature = signature(x = "DataFrame"),
+    definition = `splitByLevel,DataFrame`
 )

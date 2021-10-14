@@ -37,8 +37,8 @@ test_that("data.frame", {
     expect_identical(object =  x, expected = mpgString)
 })
 
-test_that("DFrame", {
-    x <- head(as(mtcars, "DFrame"))
+test_that("DataFrame", {
+    x <- head(as(mtcars, "DataFrame"))
     x <- collapseToString(x, sort = TRUE, unique = TRUE)
     x <- x[["mpg"]]
     expect_identical(object = x, expected = mpgString)

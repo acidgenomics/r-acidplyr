@@ -1,3 +1,7 @@
+## FIXME Need to rework test data using new "joins" list.
+
+
+
 context("join : Beatles vs. Stones")
 
 data(
@@ -7,8 +11,8 @@ data(
     envir = environment()
 )
 
-x <- as(band_members, "DFrame")
-y <- as(band_instruments, "DFrame")
+x <- as(band_members, "DataFrame")
+y <- as(band_instruments, "DataFrame")
 rownames(x) <- x[["name"]]
 rownames(y) <- y[["name"]]
 by <- "name"

@@ -109,7 +109,7 @@ NULL
 
 
 ## Updated 2021-10-14.
-`collapseToString,DFrame` <-  # nolint
+`collapseToString,DataFrame` <-  # nolint
     `collapseToString,matrix`
 
 ## Updated 2019-07-22.
@@ -122,8 +122,8 @@ NULL
 #' @export
 setMethod(
     f = "collapseToString",
-    signature = signature(object = "DFrame"),
-    definition = `collapseToString,DFrame`
+    signature = signature(object = "DataFrame"),
+    definition = `collapseToString,DataFrame`
 )
 
 #' @rdname collapseToString

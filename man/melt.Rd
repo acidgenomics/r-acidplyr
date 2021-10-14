@@ -2,14 +2,14 @@
 % Please edit documentation in R/AllGenerics.R, R/melt-methods.R
 \name{melt}
 \alias{melt}
-\alias{melt,DFrame-method}
+\alias{melt,DataFrame-method}
 \alias{melt,matrix-method}
 \alias{melt,table-method}
 \title{Melt columns into key-value pairs}
 \usage{
 melt(object, ...)
 
-\S4method{melt}{DFrame}(object, colnames = c("rowname", "colname", "value"))
+\S4method{melt}{DataFrame}(object, colnames = c("rowname", "colname", "value"))
 
 \S4method{melt}{matrix}(
   object,

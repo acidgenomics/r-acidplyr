@@ -1,7 +1,7 @@
 ## nolint start
 
 data(
-    DFrame, matrix,
+    DFrame, matrix,  # FIXME
     package = "AcidTest",
     envir = environment()
 )
@@ -11,7 +11,7 @@ data(
     envir = environment()
 )
 
-df <- DFrame
+df <- DFrame  # FIXME
 mat <- matrix
 
 DataFrame <- AcidGenerics::DataFrame

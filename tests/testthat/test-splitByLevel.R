@@ -1,4 +1,4 @@
-context("splitByLevel : DFrame")
+context("splitByLevel : DataFrame")
 
 df <- DataFrame(
     compound = relevel(
