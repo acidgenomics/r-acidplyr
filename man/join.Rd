@@ -75,12 +75,12 @@ Unlike the S3 methods defined in dplyr, the join methods defined here for
 }
 
 \examples{
-data(band_members, band_instruments, package = "AcidTest")
+data(join, package = "AcidTest")
 
 ## DataFrame ====
-x <- as(band_members, "DataFrame")
+x <- as(join[["members"]], "DataFrame")
 print(x)
-y <- as(band_instruments, "DataFrame")
+y <- as(join[["instruments"]], "DataFrame")
 print(y)
 by <- "name"
 innerJoin(x = x, y = y, by = by)
