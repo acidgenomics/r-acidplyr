@@ -7,7 +7,7 @@
 \title{AcidPlyr}
 \description{
 A dplyr-like grammar for manipulation of S4 rectangular data classes, such
-as DataFrame.
+as DFrame.
 }
 \seealso{
 Useful links:
