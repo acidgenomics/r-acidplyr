@@ -56,12 +56,12 @@ Modified object.
 Mutate multiple columns
 }
 \note{
-Updated 2021-05-18.
+Updated 2021-10-14.
 }
 \examples{
 data(mtcars, package = "datasets")
 
-## DataFrame ====
+## DFrame ====
 x <- as(mtcars, "DFrame")
 mutateAll(x, fun = log, base = 2L)
 mutateAt(x, vars = c("mpg", "cyl"), fun = log, base = 2L)
