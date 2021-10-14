@@ -33,7 +33,7 @@ Updated 2020-09-14.
 }
 \examples{
 df <- DataFrame(
-    compound = relevel(
+    "compound" = relevel(
         factor(
             c(
                 rep(x = "dmso", each = 3L),
@@ -42,13 +42,13 @@ df <- DataFrame(
         ),
         ref = "dmso"
     ),
-    concentration = factor(
+    "concentration" = factor(
         c(
             rep(x = 0, each = 3L),
             rep(x = c(0.1, 1, 10), each = 3L, times = 2L)
         )
     ),
-    replicate = factor(
+    "replicate" = factor(
         rep(
             seq(from = 1L, to = 3L),
             times = 7L
@@ -56,10 +56,8 @@ df <- DataFrame(
     )
 )
 lapply(df, levels)
-
 splitByLevel(df, f = "compound", ref = FALSE)
 splitByLevel(df, f = "compound", ref = TRUE)
-
 splitByLevel(df, f = "concentration", ref = FALSE)
 splitByLevel(df, f = "concentration", ref = TRUE)
 }

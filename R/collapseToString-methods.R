@@ -108,15 +108,13 @@ NULL
 
 
 
+## Updated 2021-10-14.
+`collapseToString,DFrame` <-  # nolint
+    `collapseToString,matrix`
+
 ## Updated 2019-07-22.
 `collapseToString,data.frame` <-  # nolint
     `collapseToString,matrix`
-
-
-
-## Updated 2019-08-18.
-`collapseToString,DFrame` <-  # nolint
-    `collapseToString,data.frame`
 
 
 

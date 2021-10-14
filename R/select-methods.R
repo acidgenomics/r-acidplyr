@@ -27,6 +27,7 @@ NULL
 
 
 
+## Updated 2021-10-14.
 `selectIf,DFrame` <-  # nolint
     function(object, predicate) {
         keep <- bapply(X = object, FUN = predicate)
