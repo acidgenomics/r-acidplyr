@@ -1,19 +1,22 @@
 context("mutate")
 
-x <- as(mtcars, "DataFrame")
+x <- as(mtcars, "DFrame")
 
 test_that("mutateAll", {
     expect_identical(x[["gear"]][1L], 4)  # nolint
     x <- mutateAll(x, fun = log, base = 2L)
-    expect_s4_class(x, "DataFrame")
+    expect_s4_class(x, "DFrame")
     ## Check that log2 calculation was applied correctly.
     expect_identical(x[["gear"]][1L], 2)  # nolint
     expect_true(hasRownames(x))
 })
 
+## FIXME Why did I disable this unit test again?
+## Either re-enable or delete.
+
 ## > test_that("mutateAll : List column", {
 ## >     object <- DataFrame(a = I(list(c(1L, 2L), c(3L, 4L))))
-## >     expect_s4_class(object, "DataFrame")
+## >     expect_s4_class(object, "DFrame")
 ## >     expect_identical(
 ## >         object = dim(object),
 ## >         expected = c(2L, 1L)
@@ -26,7 +29,7 @@ test_that("mutateAll", {
 
 test_that("mutateAt", {
     x <- mutateAt(x, vars = c("mpg", "cyl"), log, base = 2L)
-    expect_s4_class(x, "DataFrame")
+    expect_s4_class(x, "DFrame")
     expect_true(hasRownames(x))
 })
 
@@ -35,7 +38,7 @@ test_that("mutateAt", {
 ## >         a = I(list(c(1L, 2L), c(3L, 4L))),
 ## >         b = I(list(NULL, NULL))
 ## >     )
-## >     expect_s4_class(object, "DataFrame")
+## >     expect_s4_class(object, "DFrame")
 ## >     expect_identical(
 ## >         object = dim(object),
 ## >         expected = c(2L, 2L)
@@ -51,18 +54,18 @@ test_that("mutateAt", {
 
 test_that("mutateIf", {
     x <- mutateIf(x, predicate = is.double, fun = as.integer)
-    expect_s4_class(x, "DataFrame")
+    expect_s4_class(x, "DFrame")
     expect_true(hasRownames(x))
 })
 
 test_that("transmuteAt", {
     x <- transmuteAt(x, vars = c("mpg", "cyl"), log, base = 2L)
-    expect_s4_class(x, "DataFrame")
+    expect_s4_class(x, "DFrame")
     expect_true(hasRownames(x))
 })
 
 test_that("transmuteIf", {
     x <- transmuteIf(x, predicate = is.double, fun = as.integer)
-    expect_s4_class(x, "DataFrame")
+    expect_s4_class(x, "DFrame")
     expect_true(hasRownames(x))
 })

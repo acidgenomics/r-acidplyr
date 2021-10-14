@@ -155,16 +155,6 @@ NULL
 
 
 
-#' @rdname melt
-#' @export
-setMethod(
-    f = "melt",
-    signature = signature("matrix"),
-    definition = `melt,matrix`
-)
-
-
-
 ## This is used in pointillism package.
 ## Updated 2020-10-12.
 `melt,table` <-  # nolint
@@ -174,18 +164,8 @@ setMethod(
 
 
 
-#' @rdname melt
-#' @export
-setMethod(
-    f = "melt",
-    signature = signature("table"),
-    definition = `melt,table`
-)
-
-
-
 ## Updated 2019-09-01.
-`melt,DataFrame` <-  # nolint
+`melt,DFrame` <-  # nolint
     function(
         object,
         colnames = c("rowname", "colname", "value")
@@ -198,7 +178,7 @@ setMethod(
         melt(object = as.matrix(object), colnames = colnames)
     }
 
-formals(`melt,DataFrame`)[["colnames"]] <-
+formals(`melt,DFrame`)[["colnames"]] <-
     formals(`melt,matrix`)[["colnames"]]
 
 
@@ -207,6 +187,22 @@ formals(`melt,DataFrame`)[["colnames"]] <-
 #' @export
 setMethod(
     f = "melt",
-    signature = signature("DataFrame"),
-    definition = `melt,DataFrame`
+    signature = signature(object = "DFrame"),
+    definition = `melt,DFrame`
+)
+
+#' @rdname melt
+#' @export
+setMethod(
+    f = "melt",
+    signature = signature(object = "matrix"),
+    definition = `melt,matrix`
+)
+
+#' @rdname melt
+#' @export
+setMethod(
+    f = "melt",
+    signature = signature(object = "table"),
+    definition = `melt,table`
 )

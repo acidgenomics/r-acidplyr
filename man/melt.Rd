@@ -2,12 +2,14 @@
 % Please edit documentation in R/AllGenerics.R, R/melt-methods.R
 \name{melt}
 \alias{melt}
+\alias{melt,DFrame-method}
 \alias{melt,matrix-method}
 \alias{melt,table-method}
-\alias{melt,DataFrame-method}
 \title{Melt columns into key-value pairs}
 \usage{
 melt(object, ...)
+
+\S4method{melt}{DFrame}(object, colnames = c("rowname", "colname", "value"))
 
 \S4method{melt}{matrix}(
   object,
@@ -18,8 +20,6 @@ melt(object, ...)
 )
 
 \S4method{melt}{table}(object, ...)
-
-\S4method{melt}{DataFrame}(object, colnames = c("rowname", "colname", "value"))
 }
 \arguments{
 \item{object}{Object.}
@@ -69,7 +69,7 @@ dim(x)
 print(x)
 }
 \seealso{
-tidyr:\if{html}{\out{<div class="r">}}\preformatted{methods("gather")
+tidyr:\if{html}{\out{<div class="sourceCode r">}}\preformatted{methods("gather")
 methods("gather_")
 getS3method("gather", "data.frame", envir = asNamespace("tidyr"))
 getS3method("gather_", "data.frame", envir = asNamespace("tidyr"))
@@ -79,7 +79,7 @@ tidyr:::melt_dataframe
 https://github.com/tidyverse/tidyr/blob/master/src/melt.cpp
 https://github.com/tidyverse/tidyr/blob/master/src/RcppExports.cpp
 
-reshape2 (deprecated):\if{html}{\out{<div class="r">}}\preformatted{help(topic = "melt.array", package = "reshape2")
+reshape2 (deprecated):\if{html}{\out{<div class="sourceCode r">}}\preformatted{help(topic = "melt.array", package = "reshape2")
 methods("melt")
 getS3method("melt", "data.array", envir = asNamespace("tidyr"))
 getS3method("melt", "data.frame", envir = asNamespace("tidyr"))

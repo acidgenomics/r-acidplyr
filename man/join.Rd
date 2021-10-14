@@ -8,12 +8,12 @@
 \alias{semiJoin}
 \alias{antiJoin}
 \alias{join}
-\alias{innerJoin,DataFrame,DataFrame,character-method}
-\alias{leftJoin,DataFrame,DataFrame,character-method}
-\alias{rightJoin,DataFrame,DataFrame,character-method}
-\alias{fullJoin,DataFrame,DataFrame,character-method}
-\alias{semiJoin,DataFrame,DataFrame,character-method}
-\alias{antiJoin,DataFrame,DataFrame,character-method}
+\alias{innerJoin,DFrame,DFrame,character-method}
+\alias{leftJoin,DFrame,DFrame,character-method}
+\alias{rightJoin,DFrame,DFrame,character-method}
+\alias{fullJoin,DFrame,DFrame,character-method}
+\alias{semiJoin,DFrame,DFrame,character-method}
+\alias{antiJoin,DFrame,DFrame,character-method}
 \title{Join operations}
 \usage{
 innerJoin(x, y, by, ...)
@@ -28,17 +28,17 @@ semiJoin(x, y, by, ...)
 
 antiJoin(x, y, by, ...)
 
-\S4method{innerJoin}{DataFrame,DataFrame,character}(x, y, by)
+\S4method{innerJoin}{DFrame,DFrame,character}(x, y, by)
 
-\S4method{leftJoin}{DataFrame,DataFrame,character}(x, y, by)
+\S4method{leftJoin}{DFrame,DFrame,character}(x, y, by)
 
-\S4method{rightJoin}{DataFrame,DataFrame,character}(x, y, by)
+\S4method{rightJoin}{DFrame,DFrame,character}(x, y, by)
 
-\S4method{fullJoin}{DataFrame,DataFrame,character}(x, y, by)
+\S4method{fullJoin}{DFrame,DFrame,character}(x, y, by)
 
-\S4method{semiJoin}{DataFrame,DataFrame,character}(x, y, by)
+\S4method{semiJoin}{DFrame,DFrame,character}(x, y, by)
 
-\S4method{antiJoin}{DataFrame,DataFrame,character}(x, y, by)
+\S4method{antiJoin}{DFrame,DFrame,character}(x, y, by)
 }
 \arguments{
 \item{x}{Object.}
@@ -78,9 +78,9 @@ Unlike the S3 methods defined in dplyr, the join methods defined here for
 data(band_members, band_instruments, package = "AcidTest")
 
 ## DataFrame ====
-x <- as(band_members, "DataFrame")
+x <- as(band_members, "DFrame")
 print(x)
-y <- as(band_instruments, "DataFrame")
+y <- as(band_instruments, "DFrame")
 print(y)
 by <- "name"
 innerJoin(x = x, y = y, by = by)

@@ -2,21 +2,21 @@
 % Please edit documentation in R/AllGenerics.R, R/collapseToString-methods.R
 \name{collapseToString}
 \alias{collapseToString}
+\alias{collapseToString,DFrame-method}
 \alias{collapseToString,atomic-method}
-\alias{collapseToString,matrix-method}
 \alias{collapseToString,data.frame-method}
-\alias{collapseToString,DataFrame-method}
+\alias{collapseToString,matrix-method}
 \title{Collapse to string}
 \usage{
 collapseToString(object, ...)
 
-\S4method{collapseToString}{atomic}(object, sep = ", ", sort = FALSE, unique = FALSE)
+\S4method{collapseToString}{DFrame}(object, sep = ", ", sort = FALSE, unique = FALSE)
 
-\S4method{collapseToString}{matrix}(object, sep = ", ", sort = FALSE, unique = FALSE)
+\S4method{collapseToString}{atomic}(object, sep = ", ", sort = FALSE, unique = FALSE)
 
 \S4method{collapseToString}{data.frame}(object, sep = ", ", sort = FALSE, unique = FALSE)
 
-\S4method{collapseToString}{DataFrame}(object, sep = ", ", sort = FALSE, unique = FALSE)
+\S4method{collapseToString}{matrix}(object, sep = ", ", sort = FALSE, unique = FALSE)
 }
 \arguments{
 \item{object}{Object.}

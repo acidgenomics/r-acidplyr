@@ -77,16 +77,6 @@ NULL
 
 
 
-#' @rdname collapseToString
-#' @export
-setMethod(
-    f = "collapseToString",
-    signature = signature("atomic"),
-    definition = `collapseToString,atomic`
-)
-
-
-
 ## Alternatively, can use `dplyr::summarise_all()` approach.
 ## Updated 2020-02-02.
 `collapseToString,matrix` <-  # nolint
@@ -118,34 +108,14 @@ setMethod(
 
 
 
-#' @rdname collapseToString
-#' @export
-setMethod(
-    f = "collapseToString",
-    signature = signature("matrix"),
-    definition = `collapseToString,matrix`
-)
-
-
-
 ## Updated 2019-07-22.
 `collapseToString,data.frame` <-  # nolint
     `collapseToString,matrix`
 
 
 
-#' @rdname collapseToString
-#' @export
-setMethod(
-    f = "collapseToString",
-    signature = signature("data.frame"),
-    definition = `collapseToString,data.frame`
-)
-
-
-
 ## Updated 2019-08-18.
-`collapseToString,DataFrame` <-  # nolint
+`collapseToString,DFrame` <-  # nolint
     `collapseToString,data.frame`
 
 
@@ -154,6 +124,30 @@ setMethod(
 #' @export
 setMethod(
     f = "collapseToString",
-    signature = signature("DataFrame"),
-    definition = `collapseToString,DataFrame`
+    signature = signature(object = "DFrame"),
+    definition = `collapseToString,DFrame`
+)
+
+#' @rdname collapseToString
+#' @export
+setMethod(
+    f = "collapseToString",
+    signature = signature(object = "atomic"),
+    definition = `collapseToString,atomic`
+)
+
+#' @rdname collapseToString
+#' @export
+setMethod(
+    f = "collapseToString",
+    signature = signature(object = "data.frame"),
+    definition = `collapseToString,data.frame`
+)
+
+#' @rdname collapseToString
+#' @export
+setMethod(
+    f = "collapseToString",
+    signature = signature(object = "matrix"),
+    definition = `collapseToString,matrix`
 )
