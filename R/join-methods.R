@@ -1,10 +1,6 @@
-## FIXME Move the method exports to the bottom.
-
-
-
 #' @name join
 #' @inherit AcidGenerics::join
-#' @note Updated 2021-09-03.
+#' @note Updated 2021-10-14.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -18,12 +14,12 @@
 #' @section Row names:
 #'
 #' Unlike the S3 methods defined in dplyr, the join methods defined here for
-#' `DataFrame` always preserve row names.
+#' `DFrame` always preserve row names.
 #'
 #' @examples
 #' data(band_members, band_instruments, package = "AcidTest")
 #'
-#' ## DataFrame ====
+#' ## DFrame ====
 #' x <- as(band_members, "DFrame")
 #' print(x)
 #' y <- as(band_instruments, "DFrame")
@@ -36,6 +32,99 @@
 #' semiJoin(x = x, y = y, by = by)
 #' antiJoin(x = x, y = y, by = by)
 NULL
+
+
+
+## Updated 2021-10-13.
+`antiJoin,DFrame` <-  # nolint
+    function(x, y, by) {
+        assert(
+            hasColnames(x),
+            hasColnames(y),
+            isSubset(x = by, y = colnames(x)),
+            isSubset(x = by, y = colnames(y)),
+            identical(
+                x = intersect(x = colnames(x), y = colnames(y)),
+                y = by
+            ),
+            areDisjointSets(
+                x = setdiff(x = colnames(x), y = by),
+                y = setdiff(x = colnames(y), y = by)
+            ),
+            hasNoDuplicates(by),
+            areDisjointSets(
+                x = c(".idx", ".idy"),
+                y = colnames(x)
+            ),
+            areDisjointSets(
+                x = c(".idx", ".idy"),
+                y = colnames(y)
+            )
+        )
+        x <- as(x, "DFrame")
+        y <- as(y, "DFrame")
+        x[[".idx"]] <- seq_len(nrow(x))
+        y[[".idy"]] <- seq_len(nrow(y))
+        m <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)
+        assert(is(m, "DFrame"))
+        m <- m[, c(".idx", ".idy"), drop = FALSE]
+        rows <- order(setdiff(x[[".idx"]], m[[".idx"]]))
+        cols <- setdiff(colnames(x), ".idx")
+        out <- x[rows, cols, drop = FALSE]
+        out
+    }
+
+
+
+## Updated 2021-10-13.
+`fullJoin,DFrame` <-  # nolint
+    function(x, y, by) {
+        assert(
+            hasColnames(x),
+            hasColnames(y),
+            isSubset(x = by, y = colnames(x)),
+            isSubset(x = by, y = colnames(y)),
+            identical(
+                x = intersect(x = colnames(x), y = colnames(y)),
+                y = by
+            ),
+            areDisjointSets(
+                x = setdiff(x = colnames(x), y = by),
+                y = setdiff(x = colnames(y), y = by)
+            ),
+            hasNoDuplicates(by),
+            areDisjointSets(
+                x = c(".idx", ".idy"),
+                y = colnames(x)
+            ),
+            areDisjointSets(
+                x = c(".idx", ".idy"),
+                y = colnames(y)
+            )
+        )
+        x <- as(x, "DFrame")
+        y <- as(y, "DFrame")
+        x[[".idx"]] <- seq_len(nrow(x))
+        y[[".idy"]] <- seq_len(nrow(y))
+        out <- merge(x = x, y = y, by = by, all = TRUE, sort = FALSE)
+        assert(is(out, "DFrame"))
+        out <- out[order(out[[".idx"]], out[[".idy"]]), , drop = FALSE]
+        if (hasRownames(x) && hasRownames(y)) {
+            rnx <- rownames(x)[order(out[[".idx"]])]
+            rnx <- gsub(pattern = "NA", replacement = NA, x = rnx)
+            rny <- rownames(y)[order(out[[".idy"]])]
+            rny <- gsub(pattern = "NA", replacement = NA, x = rny)
+            rn <- unique(c(na.omit(rnx), na.omit(rny)))
+            assert(hasLength(rn, n = nrow(out)))
+            rownames(out) <- rn
+        } else {
+            rownames(out) <- NULL  # nocov
+        }
+        out[[".idx"]] <- NULL
+        out[[".idy"]] <- NULL
+        metadata(out) <- metadata(x)
+        out
+    }
 
 
 
@@ -81,20 +170,6 @@ NULL
         out[[".idy"]] <- NULL
         out
     }
-
-
-
-#' @rdname join
-#' @export
-setMethod(
-    f = "innerJoin",
-    signature = signature(
-        x = "DFrame",
-        y = "DFrame",
-        by = "character"
-    ),
-    definition = `innerJoin,DFrame`
-)
 
 
 
@@ -168,105 +243,11 @@ setMethod(
 
 
 
-#' @rdname join
-#' @export
-setMethod(
-    f = "leftJoin",
-    signature = signature(
-        x = "DFrame",
-        y = "DFrame",
-        by = "character"
-    ),
-    definition = `leftJoin,DFrame`
-)
-
-
-
 ## Updated 2021-10-13.
 `rightJoin,DFrame` <-  # nolint
     function(x, y, by) {
         leftJoin(x = y, y = x, by = by)
     }
-
-
-
-#' @rdname join
-#' @export
-setMethod(
-    f = "rightJoin",
-    signature = signature(
-        x = "DFrame",
-        y = "DFrame",
-        by = "character"
-    ),
-    definition = `rightJoin,DFrame`
-)
-
-
-
-## Updated 2021-10-13.
-`fullJoin,DFrame` <-  # nolint
-    function(x, y, by) {
-        assert(
-            hasColnames(x),
-            hasColnames(y),
-            isSubset(x = by, y = colnames(x)),
-            isSubset(x = by, y = colnames(y)),
-            identical(
-                x = intersect(x = colnames(x), y = colnames(y)),
-                y = by
-            ),
-            areDisjointSets(
-                x = setdiff(x = colnames(x), y = by),
-                y = setdiff(x = colnames(y), y = by)
-            ),
-            hasNoDuplicates(by),
-            areDisjointSets(
-                x = c(".idx", ".idy"),
-                y = colnames(x)
-            ),
-            areDisjointSets(
-                x = c(".idx", ".idy"),
-                y = colnames(y)
-            )
-        )
-        x <- as(x, "DFrame")
-        y <- as(y, "DFrame")
-        x[[".idx"]] <- seq_len(nrow(x))
-        y[[".idy"]] <- seq_len(nrow(y))
-        out <- merge(x = x, y = y, by = by, all = TRUE, sort = FALSE)
-        assert(is(out, "DFrame"))
-        out <- out[order(out[[".idx"]], out[[".idy"]]), , drop = FALSE]
-        if (hasRownames(x) && hasRownames(y)) {
-            rnx <- rownames(x)[order(out[[".idx"]])]
-            rnx <- gsub(pattern = "NA", replacement = NA, x = rnx)
-            rny <- rownames(y)[order(out[[".idy"]])]
-            rny <- gsub(pattern = "NA", replacement = NA, x = rny)
-            rn <- unique(c(na.omit(rnx), na.omit(rny)))
-            assert(hasLength(rn, n = nrow(out)))
-            rownames(out) <- rn
-        } else {
-            rownames(out) <- NULL  # nocov
-        }
-        out[[".idx"]] <- NULL
-        out[[".idy"]] <- NULL
-        metadata(out) <- metadata(x)
-        out
-    }
-
-
-
-#' @rdname join
-#' @export
-setMethod(
-    f = "fullJoin",
-    signature = signature(
-        x = "DFrame",
-        y = "DFrame",
-        by = "character"
-    ),
-    definition = `fullJoin,DFrame`
-)
 
 
 
@@ -315,61 +296,6 @@ setMethod(
 #' @rdname join
 #' @export
 setMethod(
-    f = "semiJoin",
-    signature = signature(
-        x = "DFrame",
-        y = "DFrame",
-        by = "character"
-    ),
-    definition = `semiJoin,DFrame`
-)
-
-
-
-## Updated 2021-10-13.
-`antiJoin,DFrame` <-  # nolint
-    function(x, y, by) {
-        assert(
-            hasColnames(x),
-            hasColnames(y),
-            isSubset(x = by, y = colnames(x)),
-            isSubset(x = by, y = colnames(y)),
-            identical(
-                x = intersect(x = colnames(x), y = colnames(y)),
-                y = by
-            ),
-            areDisjointSets(
-                x = setdiff(x = colnames(x), y = by),
-                y = setdiff(x = colnames(y), y = by)
-            ),
-            hasNoDuplicates(by),
-            areDisjointSets(
-                x = c(".idx", ".idy"),
-                y = colnames(x)
-            ),
-            areDisjointSets(
-                x = c(".idx", ".idy"),
-                y = colnames(y)
-            )
-        )
-        x <- as(x, "DFrame")
-        y <- as(y, "DFrame")
-        x[[".idx"]] <- seq_len(nrow(x))
-        y[[".idy"]] <- seq_len(nrow(y))
-        m <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)
-        assert(is(m, "DFrame"))
-        m <- m[, c(".idx", ".idy"), drop = FALSE]
-        rows <- order(setdiff(x[[".idx"]], m[[".idx"]]))
-        cols <- setdiff(colnames(x), ".idx")
-        out <- x[rows, cols, drop = FALSE]
-        out
-    }
-
-
-
-#' @rdname join
-#' @export
-setMethod(
     f = "antiJoin",
     signature = signature(
         x = "DFrame",
@@ -377,4 +303,64 @@ setMethod(
         by = "character"
     ),
     definition = `antiJoin,DFrame`
+)
+
+#' @rdname join
+#' @export
+setMethod(
+    f = "fullJoin",
+    signature = signature(
+        x = "DFrame",
+        y = "DFrame",
+        by = "character"
+    ),
+    definition = `fullJoin,DFrame`
+)
+
+#' @rdname join
+#' @export
+setMethod(
+    f = "innerJoin",
+    signature = signature(
+        x = "DFrame",
+        y = "DFrame",
+        by = "character"
+    ),
+    definition = `innerJoin,DFrame`
+)
+
+#' @rdname join
+#' @export
+setMethod(
+    f = "leftJoin",
+    signature = signature(
+        x = "DFrame",
+        y = "DFrame",
+        by = "character"
+    ),
+    definition = `leftJoin,DFrame`
+)
+
+#' @rdname join
+#' @export
+setMethod(
+    f = "rightJoin",
+    signature = signature(
+        x = "DFrame",
+        y = "DFrame",
+        by = "character"
+    ),
+    definition = `rightJoin,DFrame`
+)
+
+#' @rdname join
+#' @export
+setMethod(
+    f = "semiJoin",
+    signature = signature(
+        x = "DFrame",
+        y = "DFrame",
+        by = "character"
+    ),
+    definition = `semiJoin,DFrame`
 )

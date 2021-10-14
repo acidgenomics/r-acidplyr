@@ -8,12 +8,12 @@
 \alias{semiJoin}
 \alias{antiJoin}
 \alias{join}
+\alias{antiJoin,DFrame,DFrame,character-method}
+\alias{fullJoin,DFrame,DFrame,character-method}
 \alias{innerJoin,DFrame,DFrame,character-method}
 \alias{leftJoin,DFrame,DFrame,character-method}
 \alias{rightJoin,DFrame,DFrame,character-method}
-\alias{fullJoin,DFrame,DFrame,character-method}
 \alias{semiJoin,DFrame,DFrame,character-method}
-\alias{antiJoin,DFrame,DFrame,character-method}
 \title{Join operations}
 \usage{
 innerJoin(x, y, by, ...)
@@ -28,17 +28,17 @@ semiJoin(x, y, by, ...)
 
 antiJoin(x, y, by, ...)
 
+\S4method{antiJoin}{DFrame,DFrame,character}(x, y, by)
+
+\S4method{fullJoin}{DFrame,DFrame,character}(x, y, by)
+
 \S4method{innerJoin}{DFrame,DFrame,character}(x, y, by)
 
 \S4method{leftJoin}{DFrame,DFrame,character}(x, y, by)
 
 \S4method{rightJoin}{DFrame,DFrame,character}(x, y, by)
 
-\S4method{fullJoin}{DFrame,DFrame,character}(x, y, by)
-
 \S4method{semiJoin}{DFrame,DFrame,character}(x, y, by)
-
-\S4method{antiJoin}{DFrame,DFrame,character}(x, y, by)
 }
 \arguments{
 \item{x}{Object.}
@@ -57,7 +57,7 @@ New object containing a merge of \code{x} and \code{y} objects.
 Join operations
 }
 \note{
-Updated 2021-09-03.
+Updated 2021-10-14.
 }
 \section{Ordering}{
 
@@ -71,13 +71,13 @@ setting an internal \code{.idx} column that we can use to reorder the rows after
 
 
 Unlike the S3 methods defined in dplyr, the join methods defined here for
-\code{DataFrame} always preserve row names.
+\code{DFrame} always preserve row names.
 }
 
 \examples{
 data(band_members, band_instruments, package = "AcidTest")
 
-## DataFrame ====
+## DFrame ====
 x <- as(band_members, "DFrame")
 print(x)
 y <- as(band_instruments, "DFrame")

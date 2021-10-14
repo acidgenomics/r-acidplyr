@@ -1,17 +1,13 @@
-## FIXME Move the method exports to the bottom.
-
-
-
 #' @name mutate
 #' @inherit AcidGenerics::mutate
-#' @note Updated 2021-05-18.
+#' @note Updated 2021-10-14.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
 #' @examples
 #' data(mtcars, package = "datasets")
 #'
-#' ## DataFrame ====
+#' ## DFrame ====
 #' x <- as(mtcars, "DFrame")
 #' mutateAll(x, fun = log, base = 2L)
 #' mutateAt(x, vars = c("mpg", "cyl"), fun = log, base = 2L)
@@ -41,19 +37,6 @@ NULL
 
 
 
-#' @rdname mutate
-#' @export
-setMethod(
-    f = "mutateAll",
-    signature = signature(
-        object = "DFrame",
-        fun = "function"
-    ),
-    definition = `mutateAll,DFrame`
-)
-
-
-
 ## Updated 2021-10-13.
 `mutateAt,DFrame` <-  # nolint
     function(object, vars, fun, ...) {
@@ -63,20 +46,6 @@ setMethod(
         out <- out[, colnames(object), drop = FALSE]
         out
     }
-
-
-
-#' @rdname mutate
-#' @export
-setMethod(
-    f = "mutateAt",
-    signature = signature(
-        object = "DFrame",
-        vars = "character",
-        fun = "function"
-    ),
-    definition = `mutateAt,DFrame`
-)
 
 
 
@@ -97,6 +66,49 @@ setMethod(
 
 
 
+## Updated 2020-10-12.
+`transmuteAt,DFrame` <-  # nolint
+    function(object, vars, fun, ...) {
+        x <- object[, vars, drop = FALSE]
+        x <- mutateAll(x, fun = fun, ...)
+        x
+    }
+
+
+
+## Updated 2020-10-12.
+`transmuteIf,DFrame` <-  # nolint
+    function(object, predicate, fun, ...) {
+        x <- selectIf(object, predicate = predicate)
+        x <- mutateAll(x, fun = fun, ...)
+        x
+    }
+
+
+
+#' @rdname mutate
+#' @export
+setMethod(
+    f = "mutateAll",
+    signature = signature(
+        object = "DFrame",
+        fun = "function"
+    ),
+    definition = `mutateAll,DFrame`
+)
+
+#' @rdname mutate
+#' @export
+setMethod(
+    f = "mutateAt",
+    signature = signature(
+        object = "DFrame",
+        vars = "character",
+        fun = "function"
+    ),
+    definition = `mutateAt,DFrame`
+)
+
 #' @rdname mutate
 #' @export
 setMethod(
@@ -110,17 +122,6 @@ setMethod(
 )
 
 
-
-## Updated 2020-10-12.
-`transmuteAt,DFrame` <-  # nolint
-    function(object, vars, fun, ...) {
-        x <- object[, vars, drop = FALSE]
-        x <- mutateAll(x, fun = fun, ...)
-        x
-    }
-
-
-
 #' @rdname mutate
 #' @export
 setMethod(
@@ -132,18 +133,6 @@ setMethod(
     ),
     definition = `transmuteAt,DFrame`
 )
-
-
-
-## Updated 2020-10-12.
-`transmuteIf,DFrame` <-  # nolint
-    function(object, predicate, fun, ...) {
-        x <- selectIf(object, predicate = predicate)
-        x <- mutateAll(x, fun = fun, ...)
-        x
-    }
-
-
 
 #' @rdname mutate
 #' @export
