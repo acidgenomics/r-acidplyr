@@ -1,18 +1,9 @@
-## FIXME Need to rework test data using new "joins" list.
-
-
-
 context("join : Beatles vs. Stones")
 
-data(
-    band_members,
-    band_instruments,
-    package = "AcidTest",
-    envir = environment()
-)
+data(join, package = "AcidTest", envir = environment())
 
-x <- as(band_members, "DataFrame")
-y <- as(band_instruments, "DataFrame")
+x <- as(join[["members"]], "DataFrame")
+y <- as(join[["instruments"]], "DataFrame")
 rownames(x) <- x[["name"]]
 rownames(y) <- y[["name"]]
 by <- "name"

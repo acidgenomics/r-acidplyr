@@ -1,7 +1,3 @@
-## FIXME Need to rework test data using new "joins" list.
-
-
-
 #' @name join
 #' @inherit AcidGenerics::join
 #' @note Updated 2021-10-14.
@@ -21,12 +17,12 @@
 #' `DataFrame` always preserve row names.
 #'
 #' @examples
-#' data(band_members, band_instruments, package = "AcidTest")
+#' data(join, package = "AcidTest")
 #'
 #' ## DataFrame ====
-#' x <- as(band_members, "DataFrame")
+#' x <- as(join[["members"]], "DataFrame")
 #' print(x)
-#' y <- as(band_instruments, "DataFrame")
+#' y <- as(join[["instruments"]], "DataFrame")
 #' print(y)
 #' by <- "name"
 #' innerJoin(x = x, y = y, by = by)
