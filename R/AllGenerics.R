@@ -5,8 +5,6 @@
 #' @export
 NULL
 
-
-
 #' @rdname join
 #' @name innerJoin
 #' @importFrom AcidGenerics innerJoin
@@ -49,8 +47,6 @@ NULL
 #' @export
 NULL
 
-
-
 #' @rdname mapToDataFrame
 #' @name mapToDataFrame
 #' @importFrom AcidGenerics mapToDataFrame
@@ -58,16 +54,12 @@ NULL
 #' @export
 NULL
 
-
-
 #' @rdname melt
 #' @name melt
 #' @importFrom AcidGenerics melt
 #' @usage melt(object, ...)
 #' @export
 NULL
-
-
 
 #' @rdname mutate
 #' @name mutateAll
@@ -104,8 +96,6 @@ NULL
 #' @export
 NULL
 
-
-
 #' @rdname rbindToDataFrame
 #' @name rbindToDataFrame
 #' @importFrom AcidGenerics rbindToDataFrame
@@ -113,16 +103,12 @@ NULL
 #' @export
 NULL
 
-
-
 #' @rdname select
 #' @name selectIf
 #' @importFrom AcidGenerics selectIf
 #' @usage selectIf(object, predicate, ...)
 #' @export
 NULL
-
-
 
 #' @rdname splitByLevel
 #' @name splitByLevel
