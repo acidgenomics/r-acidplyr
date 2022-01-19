@@ -1,3 +1,9 @@
+## AcidPlyr 0.1.23 (UNRELASED)
+
+### Minor changes
+
+- Updated minimum dependencies to R 4.1 / Bioconductor 3.14.
+
 ## AcidPlyr 0.1.22 (2021-09-08)
 
 ### Minor changes
