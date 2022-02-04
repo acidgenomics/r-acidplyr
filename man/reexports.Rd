@@ -11,6 +11,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{AcidGenerics}{\code{\link[AcidGenerics:reexports]{DataFrame}}}
+  \item{S4Vectors}{\code{\link[S4Vectors:DataFrame-class]{DataFrame}}}
 }}
 

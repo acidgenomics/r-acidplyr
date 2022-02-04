@@ -1,4 +1,8 @@
-## AcidPlyr 0.1.23 (UNRELASED)
+## AcidPlyr 0.2.0 (UNRELASED)
+
+### Major changes
+
+- NAMESPACE updates, reverting back to importing BiocGenerics and S4Vectors.
 
 ### Minor changes
 
