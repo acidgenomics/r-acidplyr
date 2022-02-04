@@ -15,6 +15,7 @@ df <- DataFrame
 mat <- matrix
 
 DataFrame <- S4Vectors::DataFrame
+IntegerList <- IRanges::IntegerList
 hasRownames <- goalie::hasRownames
 
 ## nolint end

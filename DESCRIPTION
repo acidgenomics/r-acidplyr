@@ -33,6 +33,7 @@ Imports:
     pipette (>= 0.8.0)
 Suggests:
     AcidTest (>= 0.5.0),
+    IRanges,
     dplyr (>= 1.0.7),
     purrr (>= 0.3.4),
     testthat (>= 3.1.2)
