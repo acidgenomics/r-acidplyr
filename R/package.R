@@ -5,15 +5,18 @@
 #'
 #' @keywords internal
 #'
-#' @importClassesFrom AcidGenerics AsIs DataFrame
+#' @importClassesFrom BiocGenerics AsIs
+#' @importClassesFrom S4Vectors DataFrame
 #'
 #' @importMethodsFrom pipette as.DataFrame
 #'
 #' @importFrom AcidBase requireNamespaces
 #' @importFrom AcidCLI alert alertInfo
-#' @importFrom AcidGenerics DataFrame SimpleList as.DataFrame as.data.frame
-#'   cbind decode do.call expand.grid lapply merge metadata metadata<- na.omit
-#'   order rbind rowSums setdiff unique
+#' @importFrom AcidGenerics as.DataFrame
+#' @importFrom BiocGenerics as.data.frame cbind do.call lapply order rbind
+#'   rowSums setdiff unique
+#' @importFrom S4Vectors DataFrame SimpleList decode expand.grid merge metadata
+#'   metadata<- na.omit
 #' @importFrom goalie allAreAtomic areDisjointSets assert bapply hasColnames
 #'   hasDims hasLength hasNames hasNoDuplicates hasRownames isAny isCharacter
 #'   isFlag isInt isNumber isScalar isScalarAtomic isString isSubset

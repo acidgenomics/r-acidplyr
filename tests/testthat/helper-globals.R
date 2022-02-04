@@ -14,7 +14,7 @@ data(
 df <- DataFrame
 mat <- matrix
 
-DataFrame <- AcidGenerics::DataFrame
+DataFrame <- S4Vectors::DataFrame
 hasRownames <- goalie::hasRownames
 
 ## nolint end
