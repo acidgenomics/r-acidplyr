@@ -7,6 +7,7 @@
 ### Minor changes
 
 - Updated minimum dependencies to R 4.1 / Bioconductor 3.14.
+- No longer reexporting `DataFrame` function.
 
 ## AcidPlyr 0.1.22 (2021-09-08)
 
