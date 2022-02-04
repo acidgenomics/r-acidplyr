@@ -1,7 +1,5 @@
 context("mapToDataFrame")
 
-IntegerList <- AcidGenerics::IntegerList  # nolint
-
 test_that("Simple column bind of vector list into DataFrame", {
     x <- list(
         "aaa" = seq(from = 1L, to = 3L),
