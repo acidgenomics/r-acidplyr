@@ -4,8 +4,6 @@
 #' @export
 NULL
 
-
-
 #' @rdname join
 #' @name innerJoin
 #' @usage innerJoin(x, y, by, ...)
@@ -42,23 +40,17 @@ NULL
 #' @export
 NULL
 
-
-
 #' @rdname mapToDataFrame
 #' @name mapToDataFrame
 #' @usage mapToDataFrame(x, ...)
 #' @export
 NULL
 
-
-
 #' @rdname melt
 #' @name melt
 #' @usage melt(object, ...)
 #' @export
 NULL
-
-
 
 #' @rdname mutate
 #' @name mutateAll
@@ -90,23 +82,17 @@ NULL
 #' @export
 NULL
 
-
-
 #' @rdname rbindToDataFrame
 #' @name rbindToDataFrame
 #' @usage rbindToDataFrame(x, ...)
 #' @export
 NULL
 
-
-
 #' @rdname select
 #' @name selectIf
 #' @usage selectIf(object, predicate, ...)
 #' @export
 NULL
-
-
 
 #' @rdname splitByLevel
 #' @name splitByLevel
