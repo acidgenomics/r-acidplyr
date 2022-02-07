@@ -11,7 +11,7 @@
 #' @param ... Additional arguments.
 #'
 #' @examples
-#' df <- DataFrame(
+#' df <- S4Vectors::DataFrame(
 #'     "compound" = relevel(
 #'         factor(
 #'             c(
