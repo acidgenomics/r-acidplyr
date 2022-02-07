@@ -32,7 +32,7 @@ Split by factor level
 Updated 2020-09-14.
 }
 \examples{
-df <- DataFrame(
+df <- S4Vectors::DataFrame(
     "compound" = relevel(
         factor(
             c(
