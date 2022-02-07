@@ -3,7 +3,7 @@ Title: Acid Genomics Rectangular Data Plyr
 Description: A dplyr-like grammar for manipulation of S4 rectangular data
   classes, such as DataFrame.
 Version: 0.2.0.9000
-Date: 2022-02-04
+Date: 2022-02-07
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -34,9 +34,9 @@ Imports:
 Suggests:
     AcidTest (>= 0.5.0),
     IRanges,
-    dplyr (>= 1.0.7),
-    purrr (>= 0.3.4),
-    testthat (>= 3.1.2)
+    dplyr,
+    purrr,
+    testthat
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Additional_repositories: https://r.acidgenomics.com
