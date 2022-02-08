@@ -1,4 +1,5 @@
 ## Classes =====================================================================
+
 #' @importClassesFrom BiocGenerics AsIs
 #' @importClassesFrom S4Vectors DataFrame
 NULL
@@ -6,6 +7,7 @@ NULL
 
 
 ## S4 generics =================================================================
+
 #' @importFrom AcidGenerics antiJoin as.DataFrame collapseToString fullJoin
 #'   innerJoin leftJoin mapToDataFrame melt mutateAll mutateAt mutateIf
 #'   rbindToDataFrame rightJoin selectIf semiJoin splitByLevel transmuteAt
@@ -20,6 +22,7 @@ NULL
 
 
 ## Standard functions ==========================================================
+
 #' @importFrom AcidBase requireNamespaces
 #' @importFrom AcidCLI alert alertInfo
 #' @importFrom S4Vectors DataFrame SimpleList
