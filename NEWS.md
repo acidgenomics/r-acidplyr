@@ -1,4 +1,4 @@
-# AcidPlyr 0.2.0 (UNRELASED)
+# AcidPlyr 0.2.0 (2022-03-11)
 
 ## Major changes
 
