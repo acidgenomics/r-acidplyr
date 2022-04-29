@@ -54,10 +54,13 @@ NULL
 
 
 ## Updated 2021-05-18.
-`mapToDataFrame,list` <-  # nolint
+`mapToDataFrame,list` <- # nolint
     function(x) {
-        requireNamespaces(c("dplyr", "purrr"))
-        assert(hasLength(x))
+        assert(
+            requireNamespace("dplyr", quietly = TRUE),
+            requireNamespace("purrr", quietly = TRUE),
+            hasLength(x)
+        )
         x <- .decodeNestedList(x)
         idCol <- "name"
         assert(areDisjointSets(idCol, names(x)))
