@@ -4,10 +4,10 @@
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param f `character(1)`.
-#'   Factor column name.
+#' Factor column name.
 #' @param ref `logical(1)`.
-#'   Include the reference factor level (i.e. first defined) in each split.
-#'   Useful for pairwise contrasts.
+#' Include the reference factor level (i.e. first defined) in each split.
+#' Useful for pairwise contrasts.
 #' @param ... Additional arguments.
 #'
 #' @examples
@@ -44,7 +44,7 @@ NULL
 
 
 ## Updated 2020-10-07.
-`splitByLevel,DataFrame` <-  # nolint
+`splitByLevel,DataFrame` <- # nolint
     function(x, f, ref = FALSE) {
         assert(
             isString(f),

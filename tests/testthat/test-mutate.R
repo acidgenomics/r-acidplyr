@@ -3,11 +3,11 @@ context("mutate")
 x <- as(mtcars, "DataFrame")
 
 test_that("mutateAll", {
-    expect_identical(x[["gear"]][1L], 4)  # nolint
+    expect_identical(x[["gear"]][1L], 4) # nolint
     x <- mutateAll(x, fun = log, base = 2L)
     expect_s4_class(x, "DataFrame")
     ## Check that log2 calculation was applied correctly.
-    expect_identical(x[["gear"]][1L], 2)  # nolint
+    expect_identical(x[["gear"]][1L], 2) # nolint
     expect_true(hasRownames(x))
 })
 

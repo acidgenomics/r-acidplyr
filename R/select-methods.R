@@ -28,7 +28,7 @@ NULL
 
 
 ## Updated 2021-10-14.
-`selectIf,DataFrame` <-  # nolint
+`selectIf,DataFrame` <- # nolint
     function(object, predicate) {
         keep <- bapply(X = object, FUN = predicate)
         object[, keep, drop = FALSE]

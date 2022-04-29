@@ -1,3 +1,11 @@
+# AcidPlyr 0.3.0 (2022-04-29)
+
+## Major changes
+
+- Updated R dependency to 4.2.
+- Reduced the number of strong dependencies in the package, migrating AcidCLI
+  and pipette to `Suggests` instead of `Imports`.
+
 # AcidPlyr 0.2.0 (2022-03-11)
 
 ## Major changes

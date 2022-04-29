@@ -36,7 +36,7 @@ NULL
 
 
 ## Updated 2021-10-13.
-`antiJoin,DataFrame` <-  # nolint
+`antiJoin,DataFrame` <- # nolint
     function(x, y, by) {
         assert(
             hasColnames(x),
@@ -77,7 +77,7 @@ NULL
 
 
 ## Updated 2021-10-13.
-`fullJoin,DataFrame` <-  # nolint
+`fullJoin,DataFrame` <- # nolint
     function(x, y, by) {
         assert(
             hasColnames(x),
@@ -118,7 +118,7 @@ NULL
             assert(hasLength(rn, n = nrow(out)))
             rownames(out) <- rn
         } else {
-            rownames(out) <- NULL  # nocov
+            rownames(out) <- NULL # nocov
         }
         out[[".idx"]] <- NULL
         out[[".idy"]] <- NULL
@@ -129,7 +129,7 @@ NULL
 
 
 ## Updated 2021-10-13.
-`innerJoin,DataFrame` <-  # nolint
+`innerJoin,DataFrame` <- # nolint
     function(x, y, by) {
         assert(
             hasColnames(x),
@@ -174,7 +174,7 @@ NULL
 
 
 ## Updated 2021-10-13.
-`leftJoin,DataFrame` <-  # nolint
+`leftJoin,DataFrame` <- # nolint
     function(x, y, by) {
         assert(
             hasColnames(x),
@@ -244,7 +244,7 @@ NULL
 
 
 ## Updated 2021-10-13.
-`rightJoin,DataFrame` <-  # nolint
+`rightJoin,DataFrame` <- # nolint
     function(x, y, by) {
         leftJoin(x = y, y = x, by = by)
     }
@@ -252,7 +252,7 @@ NULL
 
 
 ## Updated 2021-10-13.
-`semiJoin,DataFrame` <-  # nolint
+`semiJoin,DataFrame` <- # nolint
     function(x, y, by) {
         assert(
             hasColnames(x),

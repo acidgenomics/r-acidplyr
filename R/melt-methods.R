@@ -4,24 +4,24 @@
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param colnames `character(3)`.
-#'   Column name mappings for melted data frame return.
+#' Column name mappings for melted data frame return.
 #' @param min `numeric(1)` or `NULL`.
-#'   Minimum count threshold to apply. Filters using "greater than or equal to"
-#'   logic internally. Note that this threshold gets applied prior to
-#'   logarithmic transformation, when `trans` argument applies.
-#'   Use `-Inf` or `NULL` to disable.
+#' Minimum count threshold to apply. Filters using "greater than or equal to"
+#' logic internally. Note that this threshold gets applied prior to
+#' logarithmic transformation, when `trans` argument applies.
+#' Use `-Inf` or `NULL` to disable.
 #' @param minMethod `character(1)`.
-#'   Only applies when `min` argument is numeric.
-#'   Uses `match.arg()`.
+#' Only applies when `min` argument is numeric.
+#' Uses `match.arg()`.
 #'
-#'   - `absolute`: Applies hard cutoff to `counts` column after the melt
-#'     operation. This applies to all counts, not per feature.
-#'   - `perRow`: Applies cutoff per row (i.e. gene). Internally, `rowSums()`
-#'     values are checked against this cutoff threshold prior to the melt
-#'     operation.
+#' - `absolute`: Applies hard cutoff to `counts` column after the melt
+#' operation. This applies to all counts, not per feature.
+#' - `perRow`: Applies cutoff per row (i.e. gene). Internally, `rowSums()`
+#' values are checked against this cutoff threshold prior to the melt
+#' operation.
 #' @param trans `character(1)`.
-#'   Apply a log transformation (e.g. `log2(x + 1L)`) to the count matrix prior
-#'   to melting, if desired. Use `"identity"` to return unmodified (default).
+#' Apply a log transformation (e.g. `log2(x + 1L)`) to the count matrix prior
+#' to melting, if desired. Use `"identity"` to return unmodified (default).
 #' @param ... Additional arguments.
 #'
 #' @seealso
@@ -59,15 +59,13 @@ NULL
 
 
 
-## Updated 2020-10-07.
-`melt,matrix` <-  # nolint
-    function(
-        object,
-        colnames = c("rowname", "colname", "value"),
-        min = -Inf,
-        minMethod = c("absolute", "perRow"),
-        trans = c("identity", "log2", "log10")
-    ) {
+## Updated 2022-04-29.
+`melt,matrix` <- # nolint
+    function(object,
+             colnames = c("rowname", "colname", "value"),
+             min = -Inf,
+             minMethod = c("absolute", "perRow"),
+             trans = c("identity", "log2", "log10")) {
         if (!hasRownames(object)) {
             rownames(object) <- as.character(seq_len(nrow(object)))
         }
@@ -81,15 +79,17 @@ NULL
             areDisjointSets(colnames, colnames(object)),
             isNumber(min, nullOK = TRUE)
         )
+        hasCli <- isInstalled("AcidCLI")
         minMethod <- match.arg(minMethod)
         trans <- match.arg(trans)
         if (
             identical(minMethod, "perRow") &&
-            isTRUE(is.finite(min))
+                isTRUE(is.finite(min))
         ) {
             keep <- rowSums(object) >= min
-            if (identical(minMethod, "perRow")) {
-                alertInfo(sprintf(
+            if (isTRUE(hasCli)) {
+                assert(requireNamespace("AcidCLI", quietly = TRUE))
+                AcidCLI::alertInfo(sprintf(
                     "%d / %d %s passed {.arg %s} >= {.val %s} cutoff.",
                     sum(keep, na.rm = TRUE),
                     nrow(object),
@@ -118,30 +118,39 @@ NULL
         df <- decode(df)
         if (
             identical(minMethod, "absolute") &&
-            isTRUE(is.finite(min))
+                isTRUE(is.finite(min))
         ) {
             nPrefilter <- nrow(df)
             keep <- df[[valueCol]] >= min
             df <- df[keep, , drop = FALSE]
-            alertInfo(sprintf(
-                "%d / %d %s passed {.arg %s} >= {.val %s} expression cutoff.",
-                nrow(df),
-                nPrefilter,
-                ngettext(
-                    n = nPrefilter,
-                    msg1 = "feature",
-                    msg2 = "features"
-                ),
-                minMethod,
-                as.character(min)
-            ))
+            if (isTRUE(hasCli)) {
+                assert(requireNamespace("AcidCLI", quietly = TRUE))
+                AcidCLI::alertInfo(sprintf(
+                    paste(
+                        "%d / %d %s passed {.arg %s} >= {.val %s}",
+                        "expression cutoff."
+                    ),
+                    nrow(df),
+                    nPrefilter,
+                    ngettext(
+                        n = nPrefilter,
+                        msg1 = "feature",
+                        msg2 = "features"
+                    ),
+                    minMethod,
+                    as.character(min)
+                ))
+            }
         }
         ## Log transform the value, if desired.
         if (!identical(trans, "identity")) {
             assert(isInt(min))
-            alert(sprintf(
-                "Applying {.code %s(x + 1L)} transformation.", trans
-            ))
+            if (isTRUE(hasCli)) {
+                assert(requireNamespace("AcidCLI", quietly = TRUE))
+                AcidCLI::alert(sprintf(
+                    "Applying {.code %s(x + 1L)} transformation.", trans
+                ))
+            }
             fun <- get(
                 x = trans,
                 envir = asNamespace("base"),
@@ -157,7 +166,7 @@ NULL
 
 ## This is used in pointillism package.
 ## Updated 2020-10-12.
-`melt,table` <-  # nolint
+`melt,table` <- # nolint
     function(object, ...) {
         melt(object = as.matrix(unclass(object)), ...)
     }
@@ -165,11 +174,9 @@ NULL
 
 
 ## Updated 2019-09-01.
-`melt,DataFrame` <-  # nolint
-    function(
-        object,
-        colnames = c("rowname", "colname", "value")
-    ) {
+`melt,DataFrame` <- # nolint
+    function(object,
+             colnames = c("rowname", "colname", "value")) {
         assert(
             hasColnames(object),
             all(bapply(object, is.atomic)),

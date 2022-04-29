@@ -19,13 +19,16 @@ NULL
 
 
 ## Loop across the columns and then each row internally.
-## Updated 2021-05-18.
-`mutateAll,DataFrame` <-  # nolint
+## Updated 2022-04-29.
+`mutateAll,DataFrame` <- # nolint
     function(object, fun, ...) {
-        assert(is.function(fun))
+        assert(
+            requireNamespace("pipette", quietly = TRUE),
+            is.function(fun)
+        )
         rn <- rownames(object)
         list <- lapply(X = object, FUN = fun, ...)
-        out <- as.DataFrame(list)
+        out <- pipette::as.DataFrame(list)
         rownames(out) <- rn
         assert(
             identical(dim(out), dim(object)),
@@ -38,7 +41,7 @@ NULL
 
 
 ## Updated 2021-10-13.
-`mutateAt,DataFrame` <-  # nolint
+`mutateAt,DataFrame` <- # nolint
     function(object, vars, fun, ...) {
         x <- transmuteAt(object, vars = vars, fun = fun, ...)
         y <- object[, setdiff(colnames(object), colnames(x)), drop = FALSE]
@@ -50,7 +53,7 @@ NULL
 
 
 ## Updated 2020-10-12.
-`mutateIf,DataFrame` <-  # nolint
+`mutateIf,DataFrame` <- # nolint
     function(object, predicate, fun, ...) {
         x <- transmuteIf(
             object = object,
@@ -67,7 +70,7 @@ NULL
 
 
 ## Updated 2020-10-12.
-`transmuteAt,DataFrame` <-  # nolint
+`transmuteAt,DataFrame` <- # nolint
     function(object, vars, fun, ...) {
         x <- object[, vars, drop = FALSE]
         x <- mutateAll(x, fun = fun, ...)
@@ -77,7 +80,7 @@ NULL
 
 
 ## Updated 2020-10-12.
-`transmuteIf,DataFrame` <-  # nolint
+`transmuteIf,DataFrame` <- # nolint
     function(object, predicate, fun, ...) {
         x <- selectIf(object, predicate = predicate)
         x <- mutateAll(x, fun = fun, ...)
