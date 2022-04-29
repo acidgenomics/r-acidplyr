@@ -29,7 +29,7 @@ NULL
 
 ## Consider using `autopadZeros()` here when names are not defined.
 ## Updated 2021-02-20.
-`rbindToDataFrame,list` <-  # nolint
+`rbindToDataFrame,list` <- # nolint
     function(x) {
         assert(hasLength(x))
         ## Don't allow evaluation of top-level S4 elements (e.g. IntegerList).

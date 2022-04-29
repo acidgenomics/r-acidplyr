@@ -34,7 +34,7 @@ test_that("data.frame", {
     x <- head(datasets::mtcars)
     x <- collapseToString(x, sort = TRUE, unique = TRUE)
     x <- x[["mpg"]]
-    expect_identical(object =  x, expected = mpgString)
+    expect_identical(object = x, expected = mpgString)
 })
 
 test_that("DataFrame", {

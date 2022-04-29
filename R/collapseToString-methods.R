@@ -4,11 +4,11 @@
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param sep `character(1)`.
-#'   Separator. Defaults to comma.
+#' Separator. Defaults to comma.
 #' @param unique `logical(1)`.
-#'   Unique values.
+#' Unique values.
 #' @param sort `logical(1)`.
-#'   Sort values.
+#' Sort values.
 #' @param ... Additional arguments.
 #'
 #' @seealso `toString()`.
@@ -48,13 +48,11 @@ NULL
 
 
 ## Updated 2021-02-02.
-`collapseToString,atomic` <-  # nolint
-    function(
-        object,
-        sep = ", ",
-        sort = FALSE,
-        unique = FALSE
-    ) {
+`collapseToString,atomic` <- # nolint
+    function(object,
+             sep = ", ",
+             sort = FALSE,
+             unique = FALSE) {
         assert(
             isAny(object, classes = c("character", "factor", "vector")),
             isString(sep),
@@ -79,13 +77,11 @@ NULL
 
 ## Alternatively, can use `dplyr::summarise_all()` approach.
 ## Updated 2020-02-02.
-`collapseToString,matrix` <-  # nolint
-    function(
-        object,
-        sep = ", ",
-        sort = FALSE,
-        unique = FALSE
-    ) {
+`collapseToString,matrix` <- # nolint
+    function(object,
+             sep = ", ",
+             sort = FALSE,
+             unique = FALSE) {
         assert(hasLength(object))
         x <- object
         x <- as.data.frame(x, stringsAsFactors = FALSE)
@@ -109,11 +105,11 @@ NULL
 
 
 ## Updated 2021-10-14.
-`collapseToString,DataFrame` <-  # nolint
+`collapseToString,DataFrame` <- # nolint
     `collapseToString,matrix`
 
 ## Updated 2019-07-22.
-`collapseToString,data.frame` <-  # nolint
+`collapseToString,data.frame` <- # nolint
     `collapseToString,matrix`
 
 
