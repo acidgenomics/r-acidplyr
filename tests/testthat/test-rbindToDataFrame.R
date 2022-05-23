@@ -1,5 +1,3 @@
-context("rbindToDataFrame")
-
 test_that("Matched and named input", {
     x <- list(
         "aa" = c("a" = 1L, "b" = 2L),

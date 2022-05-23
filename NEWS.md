@@ -1,3 +1,9 @@
+# AcidPlyr 0.3.1 (2022-05-23)
+
+## Minor changes
+
+- Updated lintr checks and testthat unit tests.
+
 # AcidPlyr 0.3.0 (2022-04-29)
 
 ## Major changes
