@@ -1,5 +1,3 @@
-context("select")
-
 x <- as(mtcars, "DataFrame")
 
 test_that("selectIf", {

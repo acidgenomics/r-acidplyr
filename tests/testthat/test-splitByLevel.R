@@ -1,7 +1,5 @@
-context("splitByLevel : DataFrame")
-
 df <- DataFrame(
-    compound = relevel(
+    "compound" = relevel(
         factor(
             c(
                 rep(x = "dmso", each = 3L),
@@ -10,13 +8,13 @@ df <- DataFrame(
         ),
         ref = "dmso"
     ),
-    concentration = factor(
+    "concentration" = factor(
         c(
             rep(x = 0L, each = 3L),
             rep(x = c(0.1, 1L, 10L), each = 3L, times = 2L)
         )
     ),
-    replicate = factor(
+    "replicate" = factor(
         rep(
             seq(from = 1L, to = 3L),
             times = 7L

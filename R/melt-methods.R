@@ -185,7 +185,7 @@ NULL
         melt(object = as.matrix(object), colnames = colnames)
     }
 
-formals(`melt,DataFrame`)[["colnames"]] <-
+formals(`melt,DataFrame`)[["colnames"]] <- # nolint
     formals(`melt,matrix`)[["colnames"]]
 
 

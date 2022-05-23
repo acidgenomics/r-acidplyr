@@ -225,7 +225,7 @@ NULL
         # containing NAs. Will see: "Error: subscript contains NAs." in this
         # case. Here we are coercing mismatched `y` to data.frame, which does
         # allow expansion via indices containing NAs.
-        containsNA <- c("y" = any(is.na(m[[".idy"]])))
+        containsNA <- c("y" = anyNA(m[[".idy"]]))
         if (isTRUE(containsNA[["y"]])) {
             yy <- as.data.frame(y)
             assert(identical(colnames(yy), colnames(y)))
