@@ -97,10 +97,10 @@ NULL
             identical(names(colsList), names(atomicCols)),
             all(bapply(X = colsList, FUN = hasLength, n = length(x)))
         )
-        args <- mapply(
+        args <- Map(
             col = colsList,
             atomic = atomicCols,
-            FUN = function(col, atomic) {
+            f = function(col, atomic) {
                 col <- unname(col)
                 if (isTRUE(atomic)) {
                     do.call(what = c, args = col)
@@ -118,9 +118,7 @@ NULL
                     )
                     do.call(what = I, args = list(I(col)))
                 }
-            },
-            SIMPLIFY = FALSE,
-            USE.NAMES = TRUE
+            }
         )
         if (isFALSE(hasNames[["rows"]])) {
             rowNames <- NULL

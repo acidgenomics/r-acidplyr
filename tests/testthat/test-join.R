@@ -1,5 +1,3 @@
-context("join : Beatles vs. Stones")
-
 data(join, package = "AcidTest", envir = environment())
 
 x <- as(join[["members"]], "DataFrame")
@@ -71,10 +69,6 @@ test_that("antiJoin", {
     )
     expect_identical(object, expected)
 })
-
-
-
-context("join : bioinfo")
 
 test_that("Matched rows", {
     df1 <- DataFrame(

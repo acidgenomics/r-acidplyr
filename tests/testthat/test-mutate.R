@@ -1,5 +1,3 @@
-context("mutate")
-
 x <- as(mtcars, "DataFrame")
 
 test_that("mutateAll", {
