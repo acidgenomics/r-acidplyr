@@ -37,6 +37,8 @@ selectIf(x, predicate = is.factor)
 }
 \seealso{
 These functions are inspired by dplyr. However, they are designed to only
-work on \code{DataFrame} class, and use base R code internally.\if{html}{\out{<div class="sourceCode r">}}\preformatted{`help(topic = "select_all", package = "dplyr")`
+work on \code{DataFrame} class, and use base R code internally.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{`help(topic = "select_all", package = "dplyr")`
 }\if{html}{\out{</div>}}
 }
