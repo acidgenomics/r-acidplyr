@@ -3,6 +3,13 @@
 #' @note Updated 2022-09-16.
 #'
 #' @inheritParams AcidRoxygen::params
+#'
+#' @param colnames `character(1)`.
+#' Name of the column that contains the column name values in long format.
+#'
+#' @param values `character(1)`.
+#' Name of the column that contains the values in long format.
+#'
 #' @param ... Additional arguments.
 #'
 #' @examples
