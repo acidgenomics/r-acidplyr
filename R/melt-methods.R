@@ -1,11 +1,6 @@
-## FIXME What if rownames are not defined here?
-## FIXME This is assigning numeric rownames...need to unit test for this.
-
-
-
 #' @name melt
 #' @inherit AcidGenerics::melt
-#' @note Updated 2021-09-03.
+#' @note Updated 2022-09-16.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
