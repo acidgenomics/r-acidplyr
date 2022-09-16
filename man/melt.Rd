@@ -5,7 +5,7 @@
 \alias{melt,DataFrame-method}
 \alias{melt,matrix-method}
 \alias{melt,table-method}
-\title{Melt columns into key-value pairs}
+\title{Melt data from wide to long format}
 \usage{
 melt(object, ...)
 
@@ -69,23 +69,10 @@ dim(x)
 print(x)
 }
 \seealso{
-tidyr:
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{methods("gather")
-methods("gather_")
-getS3method("gather", "data.frame", envir = asNamespace("tidyr"))
-getS3method("gather_", "data.frame", envir = asNamespace("tidyr"))
-tidyr:::melt_dataframe
-}\if{html}{\out{</div>}}
-
-https://github.com/tidyverse/tidyr/blob/master/src/melt.cpp
-https://github.com/tidyverse/tidyr/blob/master/src/RcppExports.cpp
-
-reshape2 (deprecated):
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{help(topic = "melt.array", package = "reshape2")
-methods("melt")
-getS3method("melt", "data.array", envir = asNamespace("tidyr"))
-getS3method("melt", "data.frame", envir = asNamespace("tidyr"))
-}\if{html}{\out{</div>}}
+\itemize{
+\item https://seananderson.ca/2013/10/19/reshape/
+\item \code{reshape2::melt} (deprecated).
+\item \code{tidyr::pivot_longer}.
+\item Python \code{pandas.melt}.
+}
 }

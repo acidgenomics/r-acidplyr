@@ -3,7 +3,7 @@ Title: Acid Genomics Rectangular Data Plyr
 Description: A dplyr-like grammar for manipulation of S4 rectangular data
   classes, such as DataFrame.
 Version: 0.3.1.9000
-Date: 2022-09-13
+Date: 2022-09-16
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -23,19 +23,20 @@ License: AGPL-3
 Encoding: UTF-8
 Depends: R (>= 4.2)
 Imports:
-    AcidGenerics,
-    BiocGenerics,
-    S4Vectors,
-    goalie,
+    AcidGenerics (>= 0.6.4),
+    BiocGenerics (>= 0.42.0),
+    S4Vectors (>= 0.34.0),
+    goalie (>= 0.6.4),
     methods
 Suggests:
-    AcidCLI,
-    AcidTest,
-    IRanges,
-    dplyr,
-    pipette,
-    purrr,
-    testthat (>= 3.0.0)
+    AcidCLI (>= 0.2.3),
+    AcidTest (>= 0.7.0),
+    IRanges (>= 2.30.1),
+    dplyr (>= 1.0.10),
+    pipette (>= 0.10.0),
+    purrr (>= 0.3.4),
+    testthat (>= 3.0.0),
+    tidyr (>= 1.2.1)
 Additional_repositories: https://r.acidgenomics.com
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
