@@ -1,15 +1,23 @@
+## FIXME What if rownames are not defined here?
+## FIXME This is assigning numeric rownames...need to unit test for this.
+
+
+
 #' @name melt
 #' @inherit AcidGenerics::melt
 #' @note Updated 2021-09-03.
 #'
 #' @inheritParams AcidRoxygen::params
+#'
 #' @param colnames `character(3)`.
 #' Column name mappings for melted data frame return.
+#'
 #' @param min `numeric(1)` or `NULL`.
 #' Minimum count threshold to apply. Filters using "greater than or equal to"
 #' logic internally. Note that this threshold gets applied prior to
 #' logarithmic transformation, when `trans` argument applies.
 #' Use `-Inf` or `NULL` to disable.
+#'
 #' @param minMethod `character(1)`.
 #' Only applies when `min` argument is numeric.
 #' Uses `match.arg()`.
@@ -19,33 +27,12 @@
 #' - `perRow`: Applies cutoff per row (i.e. gene). Internally, `rowSums()`
 #' values are checked against this cutoff threshold prior to the melt
 #' operation.
+#'
 #' @param trans `character(1)`.
 #' Apply a log transformation (e.g. `log2(x + 1L)`) to the count matrix prior
 #' to melting, if desired. Use `"identity"` to return unmodified (default).
+#'
 #' @param ... Additional arguments.
-#'
-#' @seealso
-#' tidyr:
-#'
-#' ```r
-#' methods("gather")
-#' methods("gather_")
-#' getS3method("gather", "data.frame", envir = asNamespace("tidyr"))
-#' getS3method("gather_", "data.frame", envir = asNamespace("tidyr"))
-#' tidyr:::melt_dataframe
-#' ```
-#'
-#' https://github.com/tidyverse/tidyr/blob/master/src/melt.cpp
-#' https://github.com/tidyverse/tidyr/blob/master/src/RcppExports.cpp
-#'
-#' reshape2 (deprecated):
-#'
-#' ```r
-#' help(topic = "melt.array", package = "reshape2")
-#' methods("melt")
-#' getS3method("melt", "data.array", envir = asNamespace("tidyr"))
-#' getS3method("melt", "data.frame", envir = asNamespace("tidyr"))
-#' ```
 #'
 #' @examples
 #' data(matrix, package = "AcidTest")
