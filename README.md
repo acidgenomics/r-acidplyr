@@ -1,5 +1,7 @@
 # AcidPlyr
 
+[![Install with Bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/r-acidplyr/README.html)
+
 A grammar of S4 class data manipulation.
 
 ## Installation
@@ -26,7 +28,7 @@ Configure [Conda][] to use the [Bioconda][] channels.
 
 ```sh
 # Don't install recipe into base environment.
-name="r-acidplyr"
+name='r-acidplyr'
 conda create --name="$name" "$name"
 conda activate "$name"
 R
@@ -35,8 +37,8 @@ R
 ### [Docker][] method
 
 ```sh
-image="acidgenomics/r-acidplyr"
-workdir="/mnt/work"
+image='acidgenomics/r-packages:acidplyr'
+workdir='/mnt/work'
 docker pull "$image"
 docker run -it \
     --volume="${PWD}:${workdir}" \
