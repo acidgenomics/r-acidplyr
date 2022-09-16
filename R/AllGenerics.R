@@ -1,3 +1,9 @@
+#' @rdname cast
+#' @name cast
+#' @usage cast(object, ...)
+#' @export
+NULL
+
 #' @rdname collapseToString
 #' @name collapseToString
 #' @usage collapseToString(object, ...)
