@@ -9,7 +9,10 @@
 #' data(matrix, package = "AcidTest")
 #'
 #' ## DataFrame ====
-#' df <- melt(matrix)
+#' long <- melt(matrix)
+#' print(long)
+#' wide <- cast(long)
+#' print(wide)
 NULL
 
 
