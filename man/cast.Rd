@@ -30,7 +30,10 @@ Updated 2022-09-16.
 data(matrix, package = "AcidTest")
 
 ## DataFrame ====
-df <- melt(matrix)
+long <- melt(matrix)
+print(long)
+wide <- cast(long)
+print(wide)
 }
 \seealso{
 \itemize{
