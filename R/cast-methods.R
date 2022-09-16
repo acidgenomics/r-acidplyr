@@ -24,7 +24,6 @@ NULL
              values = "value") {
         assert(
             requireNamespace("tidyr", quietly = TRUE),
-            validObject(object),
             allAreAtomic(object),
             isString(colnames),
             isString(values),
