@@ -32,11 +32,11 @@ Suggests:
     AcidCLI (>= 0.2.3),
     AcidTest (>= 0.7.0),
     IRanges (>= 2.30.1),
-    dplyr (>= 1.0.10),
+    dplyr (>= 1.0.9),
     pipette (>= 0.9.7),
     purrr (>= 0.3.4),
     testthat (>= 3.0.0),
-    tidyr (>= 1.2.1)
+    tidyr (>= 1.2.0)
 Additional_repositories: https://r.acidgenomics.com
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
