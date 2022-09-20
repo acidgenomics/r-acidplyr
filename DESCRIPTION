@@ -33,7 +33,7 @@ Suggests:
     AcidTest (>= 0.7.0),
     IRanges (>= 2.30.1),
     dplyr (>= 1.0.10),
-    pipette (>= 0.10.0),
+    pipette (>= 0.9.7),
     purrr (>= 0.3.4),
     testthat (>= 3.0.0),
     tidyr (>= 1.2.1)
