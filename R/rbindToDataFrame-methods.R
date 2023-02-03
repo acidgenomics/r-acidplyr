@@ -1,3 +1,8 @@
+## FIXME Rework this using rbindlist approach from data.table?
+## Check Cellosaurus code for example...
+
+
+
 #' @name rbindToDataFrame
 #' @inherit AcidGenerics::mapToDataFrame
 #' @note Updated 2021-02-20.

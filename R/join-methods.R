@@ -1,6 +1,11 @@
+## FIXME Need to allow joining of elements with repeated values.
+
+
+
+
 #' @name join
 #' @inherit AcidGenerics::join
-#' @note Updated 2021-10-14.
+#' @note Updated 2023-03-03.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
