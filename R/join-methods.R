@@ -1,5 +1,4 @@
-## FIXME Need to allow joining of elements with repeated values.
-
+## FIXME Ensure that no values defined in "by" contain NA.
 
 
 
@@ -178,7 +177,10 @@ NULL
 
 
 
-## Updated 2021-10-13.
+## FIXME Need to rework this to allow repeated values in the "by" element
+## in the left column.
+
+## Updated 2023-02-03.
 `leftJoin,DataFrame` <- # nolint
     function(x, y, by) {
         assert(
