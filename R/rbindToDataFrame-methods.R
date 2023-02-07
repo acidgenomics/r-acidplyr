@@ -4,7 +4,7 @@
 
 
 #' @name rbindToDataFrame
-#' @inherit AcidGenerics::mapToDataFrame
+#' @inherit AcidGenerics::rbindToDataFrame
 #' @note Updated 2021-02-20.
 #'
 #' @inheritParams AcidRoxygen::params
@@ -49,18 +49,26 @@ NULL
             hasNames[["rows"]] <- FALSE
             names(x) <- paste0("x", seq_along(x))
         }
-        scalarList <- list()
-        length(scalarList) <- length(x)
-        names(scalarList) <- names(x)
-        for (i in seq_along(x)) {
-            if (!hasNames(x[[i]])) {
-                if (isTRUE(hasNames[["cols"]])) {
-                    hasNames[["cols"]] <- FALSE
-                }
-                names(x[[i]]) <- paste0("x", seq_along(x[[i]]))
-            }
-            scalarList[[i]] <- bapply(X = x[[i]], FUN = isScalarAtomic)
+        if (isTRUE(requireNamespace("parallel", quietly = TRUE))) {
+            .lapply <- parallel::mclapply
+        } else {
+            .lapply <- lapply
         }
+        scalarList <- .lapply(
+            X = x,
+            FUN = function(x) {
+                vapply(
+                    X = x,
+                    FUN = function(x) {
+                        is.atomic(x) && identical(length(x), 1L)
+                    },
+                    FUN.VALUE = logical(1L),
+                    USE.NAMES = TRUE
+                )
+
+            }
+        )
+        names(scalarList) <- names(x)
         dimnames <- list(
             names(x),
             unique(unlist(
@@ -75,6 +83,7 @@ NULL
             ncol = length(dimnames[[2L]]),
             dimnames = dimnames
         )
+        ## FIXME This step is too slow, need to parallelize / rethink.
         for (i in seq_along(scalarList)) {
             for (j in seq_along(scalarList[[i]])) {
                 rn <- names(scalarList)[[i]]
