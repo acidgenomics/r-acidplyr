@@ -1,9 +1,3 @@
-## FIXME Don't merge this update until we can confirm that bcbioBase,
-## bcbioRNASeq, and bcbioSingleCell pass all checks.
-## The bcbio YAML file doesn't contain required names, so need to rethink.
-
-
-
 #' @name rbindToDataFrame
 #' @inherit AcidGenerics::rbindToDataFrame
 #' @note Updated 2023-02-07.
@@ -64,8 +58,6 @@ NULL
 }
 
 
-
-## FIXME Don't require names here, causes bcbioBase to fail...
 
 ## Updated 2023-02-07.
 `rbindToDataFrame,list` <- # nolint
