@@ -13,7 +13,8 @@ NULL
 #' rightJoin selectIf semiJoin splitByLevel transmuteAt transmuteIf
 #' @importFrom BiocGenerics as.data.frame cbind do.call lapply order rbind
 #' rowSums setdiff unique
-#' @importFrom S4Vectors decode expand.grid merge metadata metadata<- na.omit
+#' @importFrom S4Vectors complete.cases decode expand.grid merge metadata
+#' metadata<- na.omit
 NULL
 
 

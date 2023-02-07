@@ -61,8 +61,6 @@ NULL
                 y = colnames(y)
             )
         )
-        x <- as(x, "DataFrame")
-        y <- as(y, "DataFrame")
         assert(
             identical(
                 x = nrow(x),
@@ -84,6 +82,8 @@ NULL
                 "by", "NA"
             )
         )
+        x <- as(x, "DataFrame")
+        y <- as(y, "DataFrame")
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
         m <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)
@@ -97,9 +97,7 @@ NULL
 
 
 
-## FIXME Need to ensure by is unique and doesn't contain NA.
-
-## Updated 2021-10-13.
+## Updated 2023-02-07.
 `fullJoin,DataFrame` <- # nolint
     function(x, y, by) {
         assert(
@@ -123,6 +121,27 @@ NULL
             areDisjointSets(
                 x = c(".idx", ".idy"),
                 y = colnames(y)
+            )
+        )
+        assert(
+            identical(
+                x = nrow(x),
+                y = nrow(unique(x[, by, drop = FALSE]))
+            ),
+            identical(
+                x = nrow(y),
+                y = nrow(unique(y[, by, drop = FALSE]))
+            ),
+            msg = sprintf(
+                "Columns defined in {.var %s} argument are not unique.", "by"
+            )
+        )
+        assert(
+            all(complete.cases(x[, by, drop = FALSE])),
+            all(complete.cases(y[, by, drop = FALSE])),
+            msg = sprintf(
+                "Columns defined in {.var %s} argument contain {.val %s}.",
+                "by", "NA"
             )
         )
         x <- as(x, "DataFrame")
@@ -151,9 +170,7 @@ NULL
 
 
 
-## FIXME Need to ensure by is unique and doesn't contain NA.
-
-## Updated 2021-10-13.
+## Updated 2023-02-07.
 `innerJoin,DataFrame` <- # nolint
     function(x, y, by) {
         assert(
@@ -179,6 +196,27 @@ NULL
                 y = colnames(y)
             )
         )
+        assert(
+            identical(
+                x = nrow(x),
+                y = nrow(unique(x[, by, drop = FALSE]))
+            ),
+            identical(
+                x = nrow(y),
+                y = nrow(unique(y[, by, drop = FALSE]))
+            ),
+            msg = sprintf(
+                "Columns defined in {.var %s} argument are not unique.", "by"
+            )
+        )
+        assert(
+            all(complete.cases(x[, by, drop = FALSE])),
+            all(complete.cases(y[, by, drop = FALSE])),
+            msg = sprintf(
+                "Columns defined in {.var %s} argument contain {.val %s}.",
+                "by", "NA"
+            )
+        )
         x <- as(x, "DataFrame")
         y <- as(y, "DataFrame")
         x[[".idx"]] <- seq_len(nrow(x))
@@ -197,8 +235,6 @@ NULL
     }
 
 
-
-## FIXME Need to ensure by is unique and doesn't contain NA.
 
 ## Updated 2023-02-07.
 `leftJoin,DataFrame` <- # nolint
@@ -226,9 +262,6 @@ NULL
                 y = colnames(y)
             )
         )
-        x <- as(x, "DataFrame")
-        y <- as(y, "DataFrame")
-        y <- unique(y)
         assert(
             identical(
                 x = nrow(y),
@@ -246,6 +279,9 @@ NULL
                 "by", "NA"
             )
         )
+        x <- as(x, "DataFrame")
+        y <- as(y, "DataFrame")
+        y <- unique(y)
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
         m <- merge(x = x, y = y, by = by, all.x = TRUE, sort = FALSE)
@@ -286,9 +322,7 @@ NULL
 
 
 
-## FIXME Need to ensure by is unique and doesn't contain NA.
-
-## Updated 2021-10-13.
+## Updated 2023-02-07.
 `semiJoin,DataFrame` <- # nolint
     function(x, y, by) {
         assert(
@@ -312,6 +346,27 @@ NULL
             areDisjointSets(
                 x = c(".idx", ".idy"),
                 y = colnames(y)
+            )
+        )
+        assert(
+            identical(
+                x = nrow(x),
+                y = nrow(unique(x[, by, drop = FALSE]))
+            ),
+            identical(
+                x = nrow(y),
+                y = nrow(unique(y[, by, drop = FALSE]))
+            ),
+            msg = sprintf(
+                "Columns defined in {.var %s} argument are not unique.", "by"
+            )
+        )
+        assert(
+            all(complete.cases(x[, by, drop = FALSE])),
+            all(complete.cases(y[, by, drop = FALSE])),
+            msg = sprintf(
+                "Columns defined in {.var %s} argument contain {.val %s}.",
+                "by", "NA"
             )
         )
         x <- as(x, "DataFrame")

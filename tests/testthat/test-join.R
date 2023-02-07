@@ -55,7 +55,30 @@ test_that("fullJoin", {
 })
 
 test_that("fullJoin : Duplicate and NA values in 'by'", {
-    ## FIXME
+    x2 <- x
+    x2[[by]][[2L]] <- x2[[by]][[1L]]
+    expect_error(
+        object = fullJoin(x = x2, y = y, by = by),
+        regexp = "not unique"
+    )
+    x2 <- x
+    x2[[by]][[1L]] <- NA
+    expect_error(
+        object = fullJoin(x = x2, y = y, by = by),
+        regexp = "NA"
+    )
+    y2 <- y
+    y2[[by]][[2L]] <- y2[[by]][[1L]]
+    expect_error(
+        object = fullJoin(x = x, y = y2, by = by),
+        regexp = "not unique"
+    )
+    y2 <- y
+    y2[[by]][[1L]] <- NA
+    expect_error(
+        object = fullJoin(x = x, y = y2, by = by),
+        regexp = "NA"
+    )
 })
 
 test_that("innerJoin", {
@@ -70,7 +93,30 @@ test_that("innerJoin", {
 })
 
 test_that("innerJoin : Duplicate and NA values in 'by'", {
-    ## FIXME
+    x2 <- x
+    x2[[by]][[2L]] <- x2[[by]][[1L]]
+    expect_error(
+        object = innerJoin(x = x2, y = y, by = by),
+        regexp = "not unique"
+    )
+    x2 <- x
+    x2[[by]][[1L]] <- NA
+    expect_error(
+        object = innerJoin(x = x2, y = y, by = by),
+        regexp = "NA"
+    )
+    y2 <- y
+    y2[[by]][[2L]] <- y2[[by]][[1L]]
+    expect_error(
+        object = innerJoin(x = x, y = y2, by = by),
+        regexp = "not unique"
+    )
+    y2 <- y
+    y2[[by]][[1L]] <- NA
+    expect_error(
+        object = innerJoin(x = x, y = y2, by = by),
+        regexp = "NA"
+    )
 })
 
 test_that("leftJoin", {
@@ -170,7 +216,30 @@ test_that("semiJoin", {
 })
 
 test_that("semiJoin : Duplicate and NA values in 'by'", {
-    ## FIXME
+    x2 <- x
+    x2[[by]][[2L]] <- x2[[by]][[1L]]
+    expect_error(
+        object = semiJoin(x = x2, y = y, by = by),
+        regexp = "not unique"
+    )
+    x2 <- x
+    x2[[by]][[1L]] <- NA
+    expect_error(
+        object = semiJoin(x = x2, y = y, by = by),
+        regexp = "NA"
+    )
+    y2 <- y
+    y2[[by]][[2L]] <- y2[[by]][[1L]]
+    expect_error(
+        object = semiJoin(x = x, y = y2, by = by),
+        regexp = "not unique"
+    )
+    y2 <- y
+    y2[[by]][[1L]] <- NA
+    expect_error(
+        object = semiJoin(x = x, y = y2, by = by),
+        regexp = "NA"
+    )
 })
 
 test_that("Matched rows", {
