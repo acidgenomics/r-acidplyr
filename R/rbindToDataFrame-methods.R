@@ -77,40 +77,13 @@ NULL
                 use.names = FALSE
             ))
         )
-        scalarMat <- matrix(
-            data = TRUE,
-            nrow = length(dimnames[[1L]]),
-            ncol = length(dimnames[[2L]]),
-            dimnames = dimnames
-        )
-        ## FIXME This step is too slow, need to parallelize / rethink.
-        for (i in seq_along(scalarList)) {
-            for (j in seq_along(scalarList[[i]])) {
-                rn <- names(scalarList)[[i]]
-                cn <- names(scalarList[[i]])[[j]]
-                if (isFALSE(scalarList[[i]][[j]])) {
-                    scalarMat[rn, cn] <- FALSE
-                }
+        atomicCols <- .lapply(
+            X = scalarList,
+            FUN = function(x) {
+                names(x)[x]
             }
-        }
-        atomicCols <- apply(X = scalarMat, MARGIN = 2L, FUN = all)
-        colsList <- list()
-        length(colsList) <- ncol(scalarMat)
-        names(colsList) <- dimnames[[2L]]
-        for (i in dimnames[[1L]]) {
-            for (j in dimnames[[2L]]) {
-                value <- tryCatch(
-                    expr = x[[i]][[j]],
-                    error = function(e) NULL
-                )
-                if (is.null(value)) value <- NA
-                colsList[[j]][[i]] <- value
-            }
-        }
-        assert(
-            identical(names(colsList), names(atomicCols)),
-            all(bapply(X = colsList, FUN = hasLength, n = length(x)))
         )
+        ## FIXME How to regenerate the colsList?
         args <- Map(
             col = colsList,
             atomic = atomicCols,
