@@ -1,9 +1,3 @@
-## FIXME Rework this using list example from Cellosaurus.
-## FIXME Need to explain the difference between this and and `rbindToDataFrame`.
-## Still currently confusing...
-
-
-
 #' @name mapToDataFrame
 #' @inherit AcidGenerics::mapToDataFrame
 #' @note Updated 2021-04-27.
