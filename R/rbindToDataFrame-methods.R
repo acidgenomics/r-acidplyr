@@ -1,7 +1,5 @@
-## NOTE Consider using data.table::rbindlist if everything is scalar and the
-## input dataset is large.
-
-## NOTE Consider using `autopadZeros()` here when names are not defined.
+## FIXME Don't merge this update until we can confirm that bcbioBase,
+## bcbioRNASeq, and bcbioSingleCell pass all checks.
 
 
 
