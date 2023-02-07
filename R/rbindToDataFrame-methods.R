@@ -95,6 +95,7 @@ NULL
         isScalarCols <- as.data.frame(do.call(
             what = rbind, args = isScalarList2
         ))
+        ## FIXME This step is not performant enough and needs optimization.
         colsList <- .mcMap(
             colname = dimnames[[2L]],
             f = function(colname, rownames, lst) {
