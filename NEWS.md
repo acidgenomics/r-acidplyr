@@ -12,6 +12,8 @@ Minor changes:
 
 - Hardened internal assert checks for join functions, to protect against
   unwanted duplicate or `NA` values defined in `"by"` argument.
+- Now using `requireNamespaces` internally (from goalie) for optional package
+  checks.
 
 ## AcidPlyr 0.3.2 (2022-09-16)
 
