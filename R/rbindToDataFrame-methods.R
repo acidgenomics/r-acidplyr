@@ -1,3 +1,8 @@
+## Look to data.table rbindlist C code for performance optimization.
+## https://github.com/Rdatatable/data.table/blob/master/src/rbindlist.c
+
+
+
 #' @name rbindToDataFrame
 #' @inherit AcidGenerics::rbindToDataFrame
 #' @note Updated 2023-02-07.
