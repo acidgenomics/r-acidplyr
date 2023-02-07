@@ -65,10 +65,12 @@ NULL
 
 
 
+## FIXME Don't require names here, causes bcbioBase to fail...
+
 ## Updated 2023-02-07.
 `rbindToDataFrame,list` <- # nolint
     function(x) {
-        assert(hasLength(x), hasNames(x))
+        assert(hasLength(x))
         ## Don't allow evaluation of top-level S4 elements (e.g. IntegerList).
         if (any(bapply(X = x, FUN = isS4))) {
             return(DataFrame("x1" = I(unname(x)), row.names = names(x)))
@@ -82,6 +84,12 @@ NULL
             assert(identical(nrow(df), length(x)))
             rownames(df) <- names(x)
             return(df)
+        }
+        if (hasNames(x)) {
+            hasRownames <- TRUE
+        } else {
+            hasRownames <- FALSE
+            names(x) <- paste0("x", seq_along(x))
         }
         if (isTRUE(requireNamespace("parallel", quietly = TRUE))) {
             .mcMap <- parallel::mcMap  # nolint
@@ -184,12 +192,14 @@ NULL
             },
             USE.NAMES = TRUE
         )
-        args <- append(x = args, values = list("row.names" = dimnames[[1L]]))
+        if (isTRUE(hasRownames)) {
+            rownames <- dimnames[[1L]]
+        } else {
+            rownames <- NULL
+        }
+        args <- append(x = args, values = list("row.names" = rownames))
         df <- do.call(what = DataFrame, args = args)
-        assert(
-            identical(nrow(df), length(x)),
-            identical(length(dimnames[[2L]]), ncol(df))
-        )
+        assert(identical(nrow(df), length(x)))
         df
     }
 
