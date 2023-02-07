@@ -21,7 +21,7 @@ mapToDataFrame(x, ...)
 Map elements to a data frame by row binding
 }
 \note{
-Updated 2021-04-27.
+Updated 2023-02-07.
 }
 \examples{
 x <- list(

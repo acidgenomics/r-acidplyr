@@ -168,7 +168,7 @@ NULL
             ),
             USE.NAMES = TRUE
         )
-        ## FIXME This isn't mapping the bcbio nested metadata correctly.
+        assert(areSameLength(colsList, isScalarCols))
         args <- .mcMap(
             col = colsList,
             isScalar = isScalarCols,
