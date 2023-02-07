@@ -32,6 +32,7 @@ Suggests:
     AcidCLI (>= 0.2.6),
     AcidTest (>= 0.7.0),
     IRanges (>= 2.32.0),
+    data.table (>= 1.14.6),
     dplyr (>= 1.1.0),
     pipette (>= 0.10.2),
     purrr (>= 1.0.1),
