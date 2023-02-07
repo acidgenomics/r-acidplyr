@@ -40,6 +40,8 @@ NULL
 
 
 
+## FIXME Need to ensure by is unique and doesn't contain NA.
+
 ## Updated 2021-10-13.
 `antiJoin,DataFrame` <- # nolint
     function(x, y, by) {
@@ -80,6 +82,8 @@ NULL
     }
 
 
+
+## FIXME Need to ensure by is unique and doesn't contain NA.
 
 ## Updated 2021-10-13.
 `fullJoin,DataFrame` <- # nolint
@@ -133,6 +137,8 @@ NULL
 
 
 
+## FIXME Need to ensure by is unique and doesn't contain NA.
+
 ## Updated 2021-10-13.
 `innerJoin,DataFrame` <- # nolint
     function(x, y, by) {
@@ -178,10 +184,9 @@ NULL
 
 
 
-## FIXME Need to rework this to allow repeated values in the "by" element
-## in the left column.
+## FIXME Need to ensure by is unique and doesn't contain NA.
 
-## Updated 2023-02-03.
+## Updated 2023-02-07.
 `leftJoin,DataFrame` <- # nolint
     function(x, y, by) {
         assert(
@@ -216,7 +221,15 @@ NULL
                 y = nrow(unique(y[, by, drop = FALSE]))
             ),
             msg = sprintf(
-                "Columns defined in '%s' argument are not unique.", "by"
+                "Columns defined in {.var %s} argument are not unique.", "by"
+            )
+        )
+        assert(
+            all(complete.cases(x[, by, drop = FALSE])),
+            all(complete.cases(y[, by, drop = FALSE])),
+            msg = sprintf(
+                "Columns defined in {.var %s} argument contain {.val %s}.",
+                "by", "NA"
             )
         )
         x[[".idx"]] <- seq_len(nrow(x))
@@ -258,6 +271,8 @@ NULL
     }
 
 
+
+## FIXME Need to ensure by is unique and doesn't contain NA.
 
 ## Updated 2021-10-13.
 `semiJoin,DataFrame` <- # nolint
