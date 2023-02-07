@@ -137,8 +137,8 @@ NULL
         )
         ## Need to coerce to data.frame here, otherwise matrix won't be sized
         ## correctly in downstream `Map` call.
-        isScalarCols <- as.data.frame(t(
-            do.call(what = rbind, args = isScalarList2)
+        isScalarCols <- as.data.frame(do.call(
+            what = rbind, args = isScalarList2
         ))
         colsList <- .mcMap(
             colname = dimnames[[2L]],
@@ -168,6 +168,7 @@ NULL
             ),
             USE.NAMES = TRUE
         )
+        ## FIXME This isn't mapping the bcbio nested metadata correctly.
         args <- .mcMap(
             col = colsList,
             isScalar = isScalarCols,
