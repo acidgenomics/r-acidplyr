@@ -34,66 +34,71 @@ NULL
 
 
 
+#' Enable alternative nested list processing with data.table package
+#'
+#' This can be way more performative for large lists that don't contain any
+#' complex S4 data.
+#'
+#' @note Updated 2023-02-07.
+#' @noRd
+.enableRbindlist <- function(x) {
+    ok <- isTRUE(requireNamespace("data.table", quietly = TRUE))
+    if (isFALSE(ok)) {
+        return(FALSE)
+    }
+    ok <- is.list(x[[1L]])
+    if (isFALSE(ok)) {
+        return(FALSE)
+    }
+    ok <- !any(bapply(
+        X = unlist(x, recursive = TRUE, use.names = FALSE),
+        FUN = isS4
+    ))
+    if (isFALSE(ok)) {
+        return(FALSE)
+    }
+    TRUE
+}
+
+
+
 ## Updated 2023-02-07.
 `rbindToDataFrame,list` <- # nolint
     function(x) {
-        assert(hasLength(x))
+        assert(hasLength(x), hasNames(x))
         ## Don't allow evaluation of top-level S4 elements (e.g. IntegerList).
         if (any(bapply(X = x, FUN = isS4))) {
             return(DataFrame("x1" = I(unname(x)), row.names = names(x)))
         }
-        if (isTRUE(requireNamespace("parallel", quietly = TRUE))) {
-            .Map <- parallel::mcMap  # nolint
-            .lapply <- parallel::mclapply
-        } else {
-            .Map <- Map # nolint
-            .lapply <- lapply
-        }
-        anyS4 <- any(unlist(.lapply(
-            X = x,
-            FUN = function(x) {
-                bapply(X = x, FUN = isS4)
-            }
-        )))
-        if (
-            isFALSE(anyS4) &&
-            isTRUE(requireNamespace("data.table", quietly = TRUE))
-        ) {
-            df <- data.table::rbindlist(l = x, use.names = TRUE, fill = FALSE)
+        if (isTRUE(.enableRbindlist(x))) {
+            requireNamespace("data.table", quietly = TRUE)
+            df <- data.table::rbindlist(l = x, use.names = TRUE, fill = TRUE)
             df <- as(df, "DataFrame")
             assert(identical(nrow(df), length(x)))
             rownames(df) <- names(x)
             return(df)
         }
-        if (hasNames(x)) {
-            setRownames <- TRUE
+        if (isTRUE(requireNamespace("parallel", quietly = TRUE))) {
+            .mcMap <- parallel::mcMap  # nolint
+            .mclapply <- parallel::mclapply
         } else {
-            setRownames <- FALSE
-            names(x) <- paste0("x", seq_along(x))
+            .mcMap <- Map # nolint
+            .mclapply <- lapply
         }
-
-
-
-
-        isScalarList <- .lapply(
+        isScalarList <- .mclapply(
             X = x,
             FUN = function(x) {
-                x <- vapply(
+                vapply(
                     X = x,
                     FUN = function(x) {
-                        ## FIXME This is too slow: isScalarAtomic(x)
+                        ## Much slower when using `isScalarAtomic` here.
                         is.atomic(x) && identical(length(x), 1L)
                     },
                     FUN.VALUE = logical(1L),
                     USE.NAMES = TRUE
                 )
-                if (!hasNames(x)) {
-                    names(x) <- paste0("x", seq_along(x))
-                }
-                x
             }
         )
-        names(isScalarList) <- names(x)
         dimnames <- list(
             names(x),
             unique(unlist(
@@ -102,59 +107,79 @@ NULL
                 use.names = FALSE
             ))
         )
-        isScalarList2 <- .lapply(
-            X = isScalarList,
-            colnames = dimnames[[2L]],
-            FUN = function(x, colnames) {
-                x <- colnames %in% names(x)[x]
-                names(x) <- colnames
-                x
-            }
+        assert(
+            !is.null(dimnames[[2L]]),
+            msg = "Nested list elements are not named."
         )
-        isScalarMat <- do.call(what = rbind, args = isScalarList2)
-        ## FIXME If this returns true and data.table is installed, try
-        ## using that first.
-
-
-        colsList <- list()
-        length(colsList) <- ncol(isScalarMat)
-        names(colsList) <- dimnames[[2L]]
-        ## FIXME This is still quite a bit slower compared to rbindlist.
-        ## FIXME Need to rework our NULL handling here?
-        colsList <- .lapply(
-            X = dimnames[[2L]],
-            rownames = dimnames[[1L]],
-            lst = x,
-            FUN = function(j, rownames, lst) {
-                lapply(
-                    X = rownames,
-                    j = j,
-                    lst = lst,
-                    FUN = function(i, j, lst) {
-                        lst[[i]][[j]]
-                    }
+        y <- rep(TRUE, length(dimnames[[2L]]))
+        names(y) <- dimnames[[2L]]
+        isScalarList2 <- .mcMap(
+            x = isScalarList,
+            f = function(x, y) {
+                y[names(x)] <- x
+                y
+            },
+            MoreArgs = list("y" = y),
+            USE.NAMES = TRUE
+        )
+        ## Need to coerce to data.frame here, otherwise matrix won't be sized
+        ## correctly in downstream `Map` call.
+        isScalarCols <- as.data.frame(t(
+            do.call(what = rbind, args = isScalarList2)
+        ))
+        colsList <- .mcMap(
+            colname = dimnames[[2L]],
+            f = function(colname, rownames, lst) {
+                Map(
+                    rowname = rownames,
+                    f = function(rowname, colname, lst) {
+                        value <- tryCatch(
+                            expr = lst[[rowname]][[colname]],
+                            error = function(e) NULL
+                        )
+                        if (is.null(value)) {
+                            value <- NA
+                        }
+                        value
+                    },
+                    MoreArgs = list(
+                        "colname" = colname,
+                        "lst" = lst
+                    ),
+                    USE.NAMES = TRUE
                 )
-            }
+            },
+            MoreArgs = list(
+                "rownames" = dimnames[[1L]],
+                "lst" = x
+            ),
+            USE.NAMES = TRUE
         )
-        names(colsList) <- dimnames[[2L]]
-        args <- .Map(
+        args <- .mcMap(
             col = colsList,
-            isScalar = isScalarMat,
+            isScalar = isScalarCols,
             f = function(col, isScalar) {
                 col <- unname(col)
                 if (all(isScalar)) {
                     do.call(what = c, args = col)
                 } else {
+                    # Replace any nested NAs with NULL for lists.
+                    col <- lapply(
+                        X = col,
+                        FUN = function(x) {
+                            if (identical(x, NA)) {
+                                NULL
+                            } else {
+                                x
+                            }
+                        }
+                    )
                     do.call(what = I, args = list(I(col)))
                 }
-            }
+            },
+            USE.NAMES = TRUE
         )
-        if (isTRUE(setRownames)) {
-            rowNames <- dimnames[[1L]]
-        } else {
-            rowNames <- NULL
-        }
-        args <- append(x = args, values = list("row.names" = rowNames))
+        args <- append(x = args, values = list("row.names" = dimnames[[1L]]))
         df <- do.call(what = DataFrame, args = args)
         assert(
             identical(nrow(df), length(x)),
