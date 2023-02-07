@@ -53,6 +53,23 @@ NULL
             .mcMap <- Map # nolint
             .mclapply <- lapply
         }
+        dimnames <- list(
+            names(x),
+            unique(unlist(
+                x = lapply(X = x, FUN = names),
+                recursive = FALSE,
+                use.names = FALSE
+            ))
+        )
+        assert(
+            !is.null(dimnames[[2L]]),
+            msg = "Nested list elements are not named."
+        )
+
+
+
+
+
         isScalarList <- .mclapply(
             X = x,
             FUN = function(x) {
@@ -67,18 +84,8 @@ NULL
                 )
             }
         )
-        dimnames <- list(
-            names(x),
-            unique(unlist(
-                lapply(X = isScalarList, FUN = names),
-                recursive = FALSE,
-                use.names = FALSE
-            ))
-        )
-        assert(
-            !is.null(dimnames[[2L]]),
-            msg = "Nested list elements are not named."
-        )
+
+
         y <- rep(TRUE, length(dimnames[[2L]]))
         names(y) <- dimnames[[2L]]
         isScalarList2 <- .mcMap(
