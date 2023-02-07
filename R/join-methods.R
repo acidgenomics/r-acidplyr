@@ -35,9 +35,7 @@ NULL
 
 
 
-## FIXME Need to ensure by is unique and doesn't contain NA.
-
-## Updated 2021-10-13.
+## Updated 2023-02-07.
 `antiJoin,DataFrame` <- # nolint
     function(x, y, by) {
         assert(
@@ -65,6 +63,27 @@ NULL
         )
         x <- as(x, "DataFrame")
         y <- as(y, "DataFrame")
+        assert(
+            identical(
+                x = nrow(x),
+                y = nrow(unique(x[, by, drop = FALSE]))
+            ),
+            identical(
+                x = nrow(y),
+                y = nrow(unique(y[, by, drop = FALSE]))
+            ),
+            msg = sprintf(
+                "Columns defined in {.var %s} argument are not unique.", "by"
+            )
+        )
+        assert(
+            all(complete.cases(x[, by, drop = FALSE])),
+            all(complete.cases(y[, by, drop = FALSE])),
+            msg = sprintf(
+                "Columns defined in {.var %s} argument contain {.val %s}.",
+                "by", "NA"
+            )
+        )
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
         m <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)

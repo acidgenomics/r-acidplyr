@@ -17,7 +17,30 @@ test_that("antiJoin", {
 })
 
 test_that("antiJoin : Duplicate and NA values in 'by'", {
-    ## FIXME
+    x2 <- x
+    x2[[by]][[2L]] <- x2[[by]][[1L]]
+    expect_error(
+        object = antiJoin(x = x2, y = y, by = by),
+        regexp = "not unique"
+    )
+    x2 <- x
+    x2[[by]][[1L]] <- NA
+    expect_error(
+        object = antiJoin(x = x2, y = y, by = by),
+        regexp = "NA"
+    )
+    y2 <- y
+    y2[[by]][[2L]] <- y2[[by]][[1L]]
+    expect_error(
+        object = antiJoin(x = x, y = y2, by = by),
+        regexp = "not unique"
+    )
+    y2 <- y
+    y2[[by]][[1L]] <- NA
+    expect_error(
+        object = antiJoin(x = x, y = y2, by = by),
+        regexp = "NA"
+    )
 })
 
 test_that("fullJoin", {
