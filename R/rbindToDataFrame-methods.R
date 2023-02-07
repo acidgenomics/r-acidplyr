@@ -97,7 +97,14 @@ NULL
         isScalarCols <- as.data.frame(do.call(
             what = rbind, args = isScalarList2
         ))
-        colsList <- .mcMap(
+        ## FIXME Show a progress bar of really large list processing...
+        ## how to speed up?
+        .mcMap2 <- pbapply::pbMap # FIXME
+        ## FIXME This is the step that isn't performant with Cellosaurus list.
+        ## data.table::rbindlist currently crushes this, by comparison.
+        ## How to speed up?
+        ## FIXME Should we just use an lapply here? Faster?
+        colsList <- .mcMap2(
             colname = dimnames[[2L]],
             f = function(colname, rownames, lst) {
                 Map(
