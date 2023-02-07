@@ -1,7 +1,3 @@
-## FIXME Can we just make this more performant, so we don't need data.table?
-
-
-
 #' @name rbindToDataFrame
 #' @inherit AcidGenerics::rbindToDataFrame
 #' @note Updated 2023-02-07.
@@ -30,9 +26,6 @@
 NULL
 
 
-
-## FIXME Need to test processing of cellosaurus list with this.
-## How can we make more performant without C++?
 
 ## Updated 2023-02-07.
 `rbindToDataFrame,list` <- # nolint
@@ -97,17 +90,20 @@ NULL
         isScalarCols <- as.data.frame(do.call(
             what = rbind, args = isScalarList2
         ))
-        ## FIXME Need to make this way more performant.
         colsList <- .mcMap(
             colname = dimnames[[2L]],
             f = function(colname, rownames, lst) {
                 Map(
                     rowname = rownames,
                     f = function(rowname, colname, lst) {
-                        tryCatch(
+                        value <- tryCatch(
                             expr = lst[[rowname]][[colname]],
                             error = function(e) NULL
                         )
+                        if (is.null(value)) {
+                            value <- NA
+                        }
+                        value
                     },
                     MoreArgs = list(
                         "colname" = colname,
@@ -131,6 +127,17 @@ NULL
                 if (all(isScalar)) {
                     do.call(what = c, args = col)
                 } else {
+                    # Replace any nested NAs with NULL for lists.
+                    col <- lapply(
+                        X = col,
+                        FUN = function(x) {
+                            if (identical(x, NA)) {
+                                NULL
+                            } else {
+                                x
+                            }
+                        }
+                    )
                     do.call(what = I, args = list(I(col)))
                 }
             },
