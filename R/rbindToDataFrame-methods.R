@@ -1,3 +1,7 @@
+## FIXME Can we just make this more performant, so we don't need data.table?
+
+
+
 #' @name rbindToDataFrame
 #' @inherit AcidGenerics::rbindToDataFrame
 #' @note Updated 2023-02-07.
@@ -27,37 +31,8 @@ NULL
 
 
 
-#' Enable alternative nested list processing with data.table package
-#'
-#' This can be way more performative for large lists that don't contain any
-#' complex S4 data.
-#'
-#' @note Updated 2023-02-07.
-#' @noRd
-.enableRbindlist <- function(x) {
-    ok <- isTRUE(requireNamespace("data.table", quietly = TRUE))
-    if (isFALSE(ok)) {
-        return(FALSE)
-    }
-    ok <- is.list(x[[1L]])
-    if (isFALSE(ok)) {
-        return(FALSE)
-    }
-    ## > ok <- !all(bapply(X = x, FUN = is.list))
-    ## > if (isFALSE(ok)) {
-    ## >     return(FALSE)
-    ## > }
-    ok <- !any(bapply(
-        X = unlist(x, recursive = TRUE, use.names = FALSE),
-        FUN = isS4
-    ))
-    if (isFALSE(ok)) {
-        return(FALSE)
-    }
-    TRUE
-}
-
-
+## FIXME Need to test processing of cellosaurus list with this.
+## How can we make more performant without C++?
 
 ## Updated 2023-02-07.
 `rbindToDataFrame,list` <- # nolint
@@ -67,24 +42,6 @@ NULL
         if (any(bapply(X = x, FUN = isS4))) {
             return(DataFrame("x1" = I(unname(x)), row.names = names(x)))
         }
-        ## FIXME This fails for Cellosaurus, which we don't want...argh...
-        ## Handoff to data.table is useful for very large datasets, such as
-        ## the nested Cellosaurus metadata file.
-        if (isTRUE(.enableRbindlist(x))) {
-            assert(requireNamespaces("AcidCLI"))
-            AcidCLI::alert(sprintf(
-                "Coercing {.cls %s} to {.cls %s} using {.pkg %s}::{.fun %s}.",
-                "list", "DataFrame", "data.table", "rbindlist"
-            ))
-            assert(requireNamespaces("data.table"))
-            df <- data.table::rbindlist(l = x, use.names = TRUE, fill = TRUE)
-            df <- as(df, "DataFrame")
-            assert(identical(nrow(df), length(x)))
-            rownames(df) <- names(x)
-            return(df)
-        }
-        ## FIXME Test the cellosaurus processing steps to ensure that this
-        ## works anyway, but slower...
         if (hasNames(x)) {
             hasRownames <- TRUE
         } else {
