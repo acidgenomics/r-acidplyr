@@ -33,16 +33,16 @@ test_that("Unmatched input", {
 
 test_that("List nested down 2 levels", {
     object <- list(
-        "list" = list(
-            "a" = list(
+        "SimpleList" = list(
+            "a" = SimpleList(
                 "aa" = seq(from = 1L, to = 3L),
                 "bb" = seq(from = 4L, to = 6L)
             ),
-            "b" = list(
+            "b" = SimpleList(
                 "cc" = seq(from = 7L, to = 9L),
                 "dd" = seq(from = 10L, to = 12L)
             ),
-            "c" = list(
+            "c" = SimpleList(
                 "ee" = seq(from = 13L, to = 15L),
                 "ff" = seq(from = 16L, to = 18L)
             )
@@ -62,38 +62,39 @@ test_that("List nested down 2 levels", {
             )
         )
     )
+    ## FIXME Not sure how to construct this to get checks to pass.
     expected <- list(
-        "list" = DataFrame(
-            "aa" = I(list(
+        "SimpleList" = DataFrame(
+            "aa" = SimpleList(
                 seq(from = 1L, to = 3L),
                 NULL,
                 NULL
-            )),
-            "bb" = I(list(
+            ),
+            "bb" = SimpleList(
                 seq(from = 4L, to = 6L),
                 NULL,
                 NULL
-            )),
-            "cc" = I(list(
+            ),
+            "cc" = SimpleList(
                 NULL,
                 seq(from = 7L, to = 9L),
                 NULL
-            )),
-            "dd" = I(list(
+            ),
+            "dd" = SimpleList(
                 NULL,
                 seq(from = 10L, to = 12L),
                 NULL
-            )),
-            "ee" = I(list(
+            ),
+            "ee" = SimpleList(
                 NULL,
                 NULL,
                 seq(from = 13L, to = 15L)
-            )),
-            "ff" = I(list(
+            ),
+            "ff" = SimpleList(
                 NULL,
                 NULL,
                 seq(from = 16L, to = 18L)
-            )),
+            ),
             row.names = c("a", "b", "c")
         ),
         "IntegerList" = DataFrame(
@@ -124,23 +125,23 @@ test_that("List nested down 2 levels", {
 
 test_that("List nested down 3 levels", {
     object <- list(
-        "list" = list(
+        "SimpleList" = list(
             "a" = list(
-                "aa1" = list(
+                "aa1" = SimpleList(
                     "aaa1" = seq(from = 1L, to = 3L),
                     "aaa2" = seq(from = 4L, to = 6L)
                 ),
-                "aa2" = list(
+                "aa2" = SimpleList(
                     "aaa3" = seq(from = 7L, to = 9L),
                     "aaa4" = seq(from = 10L, to = 12L)
                 )
             ),
             "b" = list(
-                "bb1" = list(
+                "bb1" = SimpleList(
                     "bbb1" = seq(from = 13L, to = 15L),
                     "bbb2" = seq(from = 16L, to = 18L)
                 ),
-                "bb2" = list(
+                "bb2" = SimpleList(
                     "bbb3" = seq(from = 19L, to = 21L),
                     "bbb4" = seq(from = 22L, to = 24L)
                 )
@@ -170,16 +171,16 @@ test_that("List nested down 3 levels", {
         )
     )
     expected <- list(
-        "integer" = DataFrame(
+        "SimpleList" = DataFrame(
             "aa1" = I(list(
-                list(
+                SimpleList(
                     "aaa1" = seq(from = 1L, to = 3L),
                     "aaa2" = seq(from = 4L, to = 6L)
                 ),
                 NULL
             )),
             "aa2" = I(list(
-                list(
+                SimpleList(
                     "aaa3" = seq(from = 7L, to = 9L),
                     "aaa4" = seq(from = 10L, to = 12L)
                 ),
@@ -187,14 +188,14 @@ test_that("List nested down 3 levels", {
             )),
             "bb1" = I(list(
                 NULL,
-                list(
+                SimpleList(
                     "bbb1" = seq(from = 13L, to = 15L),
                     "bbb2" = seq(from = 16L, to = 18L)
                 )
             )),
             "bb2" = I(list(
                 NULL,
-                list(
+                SimpleList(
                     "bbb3" = seq(from = 19L, to = 21L),
                     "bbb4" = seq(from = 22L, to = 24L)
                 )

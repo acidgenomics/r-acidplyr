@@ -43,10 +43,10 @@ NULL
     if (isFALSE(ok)) {
         return(FALSE)
     }
-    ok <- !all(bapply(X = x, FUN = is.list))
-    if (isFALSE(ok)) {
-        return(FALSE)
-    }
+    ## > ok <- !all(bapply(X = x, FUN = is.list))
+    ## > if (isFALSE(ok)) {
+    ## >     return(FALSE)
+    ## > }
     ok <- !any(bapply(
         X = unlist(x, recursive = TRUE, use.names = FALSE),
         FUN = isS4
@@ -67,9 +67,15 @@ NULL
         if (any(bapply(X = x, FUN = isS4))) {
             return(DataFrame("x1" = I(unname(x)), row.names = names(x)))
         }
+        ## FIXME This fails for Cellosaurus, which we don't want...argh...
         ## Handoff to data.table is useful for very large datasets, such as
         ## the nested Cellosaurus metadata file.
         if (isTRUE(.enableRbindlist(x))) {
+            assert(requireNamespaces("AcidCLI"))
+            AcidCLI::alert(sprintf(
+                "Coercing {.cls %s} to {.cls %s} using {.pkg %s}::{.fun %s}.",
+                "list", "DataFrame", "data.table", "rbindlist"
+            ))
             assert(requireNamespaces("data.table"))
             df <- data.table::rbindlist(l = x, use.names = TRUE, fill = TRUE)
             df <- as(df, "DataFrame")
@@ -77,6 +83,8 @@ NULL
             rownames(df) <- names(x)
             return(df)
         }
+        ## FIXME Test the cellosaurus processing steps to ensure that this
+        ## works anyway, but slower...
         if (hasNames(x)) {
             hasRownames <- TRUE
         } else {
