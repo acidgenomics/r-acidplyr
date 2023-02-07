@@ -1,8 +1,3 @@
-## FIXME Ensure that no values defined in "by" contain NA.
-## For joins, ensure that there are no repetitive values.
-
-
-
 #' @name join
 #' @inherit AcidGenerics::join
 #' @note Updated 2023-02-07.
