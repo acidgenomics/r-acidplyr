@@ -1,5 +1,7 @@
-## FIXME Consider using data.table::rbindlist if everything is scalar and the
+## NOTE Consider using data.table::rbindlist if everything is scalar and the
 ## input dataset is large.
+
+## NOTE Consider using `autopadZeros()` here when names are not defined.
 
 
 
@@ -32,23 +34,13 @@ NULL
 
 
 
-## Consider using `autopadZeros()` here when names are not defined.
 ## Updated 2023-02-07.
 `rbindToDataFrame,list` <- # nolint
     function(x) {
         assert(hasLength(x))
         ## Don't allow evaluation of top-level S4 elements (e.g. IntegerList).
         if (any(bapply(X = x, FUN = isS4))) {
-            return(DataFrame(
-                "x1" = I(unname(x)),
-                row.names = names(x)
-            ))
-        }
-        if (hasNames(x)) {
-            setRownames <- TRUE
-        } else {
-            setRownames <- FALSE
-            names(x) <- paste0("x", seq_along(x))
+            return(DataFrame("x1" = I(unname(x)), row.names = names(x)))
         }
         if (isTRUE(requireNamespace("parallel", quietly = TRUE))) {
             .Map <- parallel::mcMap  # nolint
@@ -57,12 +49,39 @@ NULL
             .Map <- Map # nolint
             .lapply <- lapply
         }
+        anyS4 <- any(unlist(.lapply(
+            X = x,
+            FUN = function(x) {
+                bapply(X = x, FUN = isS4)
+            }
+        )))
+        if (
+            isFALSE(anyS4) &&
+            isTRUE(requireNamespace("data.table", quietly = TRUE))
+        ) {
+            df <- data.table::rbindlist(l = x, use.names = TRUE, fill = FALSE)
+            df <- as(df, "DataFrame")
+            assert(identical(nrow(df), length(x)))
+            rownames(df) <- names(x)
+            return(df)
+        }
+        if (hasNames(x)) {
+            setRownames <- TRUE
+        } else {
+            setRownames <- FALSE
+            names(x) <- paste0("x", seq_along(x))
+        }
+
+
+
+
         isScalarList <- .lapply(
             X = x,
             FUN = function(x) {
                 x <- vapply(
                     X = x,
                     FUN = function(x) {
+                        ## FIXME This is too slow: isScalarAtomic(x)
                         is.atomic(x) && identical(length(x), 1L)
                     },
                     FUN.VALUE = logical(1L),
@@ -93,6 +112,10 @@ NULL
             }
         )
         isScalarMat <- do.call(what = rbind, args = isScalarList2)
+        ## FIXME If this returns true and data.table is installed, try
+        ## using that first.
+
+
         colsList <- list()
         length(colsList) <- ncol(isScalarMat)
         names(colsList) <- dimnames[[2L]]
