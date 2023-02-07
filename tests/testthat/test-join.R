@@ -1,3 +1,11 @@
+## FIXME Add a test for NA or repeated values in desired join column.
+## FIXME Don't allow repeated values in by operation.
+
+## FIXME innerJoin
+## FIXME fullJoin
+## FIXME semiJoin
+## FIXME antiJoin
+
 data(join, package = "AcidTest", envir = environment())
 
 x <- as(join[["members"]], "DataFrame")
@@ -26,6 +34,21 @@ test_that("leftJoin", {
         row.names = c("Mick", "John", "Paul")
     )
     expect_identical(object, expected)
+})
+
+test_that("leftJoin : duplicates and NA in 'by'", {
+    y2 <- y
+    y2[[by]][[2L]] <- y2[[by]][[1L]]
+    expect_error(
+        object = leftJoin(x = x, y = y2, by = by),
+        regexp = "not unique"
+    )
+    y2 <- y
+    y2[[by]][[1L]] <- NA
+    expect_error(
+        object = leftJoin(x = x, y = y2, by = by),
+        regexp = "NA"
+    )
 })
 
 test_that("rightJoin", {
