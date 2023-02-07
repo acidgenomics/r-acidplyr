@@ -50,6 +50,10 @@ NULL
     if (isFALSE(ok)) {
         return(FALSE)
     }
+    ok <- !all(bapply(X = x, FUN = is.list))
+    if (isFALSE(ok)) {
+        return(FALSE)
+    }
     ok <- !any(bapply(
         X = unlist(x, recursive = TRUE, use.names = FALSE),
         FUN = isS4
@@ -70,6 +74,8 @@ NULL
         if (any(bapply(X = x, FUN = isS4))) {
             return(DataFrame("x1" = I(unname(x)), row.names = names(x)))
         }
+        ## Handoff to data.table is useful for very large datasets, such as
+        ## the nested Cellosaurus metadata file.
         if (isTRUE(.enableRbindlist(x))) {
             requireNamespace("data.table", quietly = TRUE)
             df <- data.table::rbindlist(l = x, use.names = TRUE, fill = TRUE)
