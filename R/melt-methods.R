@@ -62,6 +62,9 @@ NULL
             isNumber(min, nullOK = TRUE)
         )
         hasCli <- isInstalled("AcidCLI")
+        if (isTRUE(hasCli)) {
+            assert(requireNamespaces("AcidCLI"))
+        }
         minMethod <- match.arg(minMethod)
         trans <- match.arg(trans)
         if (
@@ -70,7 +73,6 @@ NULL
         ) {
             keep <- rowSums(object) >= min
             if (isTRUE(hasCli)) {
-                assert(requireNamespace("AcidCLI", quietly = TRUE))
                 AcidCLI::alertInfo(sprintf(
                     "%d / %d %s passed {.arg %s} >= {.val %s} cutoff.",
                     sum(keep, na.rm = TRUE),
@@ -106,7 +108,6 @@ NULL
             keep <- df[[valueCol]] >= min
             df <- df[keep, , drop = FALSE]
             if (isTRUE(hasCli)) {
-                assert(requireNamespace("AcidCLI", quietly = TRUE))
                 AcidCLI::alertInfo(sprintf(
                     paste(
                         "%d / %d %s passed {.arg %s} >= {.val %s}",
@@ -128,7 +129,6 @@ NULL
         if (!identical(trans, "identity")) {
             assert(isInt(min))
             if (isTRUE(hasCli)) {
-                assert(requireNamespace("AcidCLI", quietly = TRUE))
                 AcidCLI::alert(sprintf(
                     "Applying {.code %s(x + 1L)} transformation.", trans
                 ))

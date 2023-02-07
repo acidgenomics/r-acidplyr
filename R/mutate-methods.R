@@ -1,6 +1,6 @@
 #' @name mutate
 #' @inherit AcidGenerics::mutate
-#' @note Updated 2021-10-14.
+#' @note Updated 2023-02-07.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -19,11 +19,11 @@ NULL
 
 
 ## Loop across the columns and then each row internally.
-## Updated 2022-04-29.
+## Updated 2023-02-07.
 `mutateAll,DataFrame` <- # nolint
     function(object, fun, ...) {
         assert(
-            requireNamespace("pipette", quietly = TRUE),
+            requireNamespaces("pipette"),
             is.function(fun)
         )
         rn <- rownames(object)

@@ -1,6 +1,6 @@
 #' @name cast
 #' @inherit AcidGenerics::cast
-#' @note Updated 2022-09-16.
+#' @note Updated 2023-02-07.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -24,13 +24,13 @@ NULL
 
 
 
-## Updated 2022-09-16.
+## Updated 2023-02-07.
 `cast,DataFrame` <- # nolint
     function(object,
              colnames = "colname",
              values = "value") {
         assert(
-            requireNamespace("tidyr", quietly = TRUE),
+            requireNamespaces("tidyr"),
             allAreAtomic(object),
             isString(colnames),
             isString(values),

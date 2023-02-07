@@ -1,5 +1,18 @@
 # Release notes
 
+## AcidPlyr 0.3.3 (2023-02-07)
+
+Major changes:
+
+- `rbindToDataFrame`: Reworked internal code to hand off to data.table
+  `rbindlist` function internally when possible, to speed up processing of large
+  datasets, such as the `"cellosaurus.txt"` file in the Cellosaurus R package.
+
+Minor changes:
+
+- Hardened internal assert checks for join functions, to protect against
+  unwanted duplicate or `NA` values defined in `"by"` argument.
+
 ## AcidPlyr 0.3.2 (2022-09-16)
 
 New functions:
