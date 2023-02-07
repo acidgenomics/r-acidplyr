@@ -3,7 +3,7 @@
 \name{rbindToDataFrame}
 \alias{rbindToDataFrame}
 \alias{rbindToDataFrame,list-method}
-\title{Map elements to a data frame by row binding}
+\title{Row bind elements 1:1 to a data frame}
 \usage{
 rbindToDataFrame(x, ...)
 
@@ -18,7 +18,7 @@ rbindToDataFrame(x, ...)
 \code{DataFrame}.
 }
 \description{
-Map elements to a data frame by row binding
+Row bind elements 1:1 to a data frame
 }
 \note{
 Updated 2021-02-20.
@@ -44,8 +44,6 @@ print(y)
 }
 \seealso{
 \itemize{
-\item \code{purrr::map_dfr()}.
-\item \code{data.table::rbindlist()}.
-\item \code{rbindToDataFrame()}.
+\item \code{mapToDataFrame()}.
 }
 }
