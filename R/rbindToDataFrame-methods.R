@@ -42,7 +42,7 @@ NULL
             names(x) <- paste0("x", seq_along(x))
         }
         if (isTRUE(requireNamespace("parallel", quietly = TRUE))) {
-            .mcMap <- parallel::mcMap  # nolint
+            .mcMap <- parallel::mcMap # nolint
             .mclapply <- parallel::mclapply
         } else {
             .mcMap <- Map # nolint
