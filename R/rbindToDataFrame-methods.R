@@ -1,9 +1,8 @@
-## Look to data.table rbindlist C code for performance optimization.
-## https://github.com/Rdatatable/data.table/blob/master/src/rbindlist.c
-
-## https://stackoverflow.com/questions/45734380/transpose-nested-list
-## https://github.com/tidyverse/purrr/blob/main/R/list-transpose.R
-## https://github.com/tidyverse/purrr/blob/main/src/transpose.c
+## See also:
+## - https://stackoverflow.com/questions/45734380/transpose-nested-list
+## - https://github.com/Rdatatable/data.table/blob/master/src/rbindlist.c
+## - https://github.com/tidyverse/purrr/blob/main/R/list-transpose.R
+## - https://github.com/tidyverse/purrr/blob/main/src/transpose.c
 
 
 
@@ -39,14 +38,26 @@ NULL
 ## Updated 2023-02-07.
 `rbindToDataFrame,list` <- # nolint
     function(x) {
+        assert(hasLength(x))
         ## Don't allow evaluation of top-level S4 elements (e.g. IntegerList).
         if (any(bapply(X = x, FUN = isS4))) {
             return(DataFrame("x1" = I(unname(x)), row.names = names(x)))
         }
-        assert(
-            hasLength(x),
-            requireNamespaces("purrr")
-        )
+        if (hasNames(x)) {
+            hasRownames <- TRUE
+        } else {
+            hasRownames <- FALSE
+            names(x) <- paste0("x", seq_along(x))
+        }
+        if (isTRUE(requireNamespace("parallel", quietly = TRUE))) {
+            .mcMap <- parallel::mcMap # nolint
+            .mclapply <- parallel::mclapply
+        } else {
+            .mcMap <- Map # nolint
+            .mclapply <- lapply
+        }
+        ## Need to go with a non-dimnames approach...
+        names(x) <- paste0("x", seq_along(x))  # FIXME
         dimnames <- list(
             names(x),
             unique(unlist(
@@ -55,10 +66,106 @@ NULL
                 use.names = FALSE
             ))
         )
-        lt <- purrr::list_transpose(x)
-        mat <- do.call(what = cbind, args = lt)
-        df <- as(mat, "DataFrame")
-        rownames(df) <- dimnames[[1L]]
+        assert(
+            !is.null(dimnames[[2L]]),
+            msg = "Nested list elements are not named."
+        )
+        xt <- .mcMap(
+            j = dimnames[[2L]],
+            f = function(j, i, x) {
+                Map(
+                    i = i,
+                    f = function(i, j, x) {
+                        value <- tryCatch(
+                            expr = x[[i]][[j]],
+                            error = function(e) NULL
+                        )
+                        if (is.null(value)) {
+                            value <- NA
+                        }
+                        value
+                    },
+                    MoreArgs = list(
+                        "j" = j,
+                        "x" = x
+                    ),
+                    USE.NAMES = TRUE
+                )
+            },
+            MoreArgs = list(
+                "i" = seq_along(x),
+                "x" = x
+            ),
+            USE.NAMES = TRUE
+        )
+
+
+
+
+        isScalarList <- .mclapply(
+            X = x,
+            FUN = function(x) {
+                vapply(
+                    X = x,
+                    FUN = function(x) {
+                        ## Much slower when using `isScalarAtomic` here.
+                        is.atomic(x) && identical(length(x), 1L)
+                    },
+                    FUN.VALUE = logical(1L),
+                    USE.NAMES = TRUE
+                )
+            }
+        )
+        y <- rep(TRUE, length(dimnames[[2L]]))
+        names(y) <- dimnames[[2L]]
+        isScalarList2 <- .mcMap(
+            x = isScalarList,
+            f = function(x, y) {
+                y[names(x)] <- x
+                y
+            },
+            MoreArgs = list("y" = y),
+            USE.NAMES = TRUE
+        )
+        ## Need to coerce to data.frame here, otherwise matrix won't be sized
+        ## correctly in downstream `Map` call.
+        isScalarCols <- as.data.frame(do.call(
+            what = rbind, args = isScalarList2
+        ))
+        ## FIXME This step is not performant enough and needs optimization.
+
+        assert(areSameLength(colsList, isScalarCols))
+        args <- .mcMap(
+            col = colsList,
+            isScalar = isScalarCols,
+            f = function(col, isScalar) {
+                col <- unname(col)
+                if (all(isScalar)) {
+                    do.call(what = c, args = col)
+                } else {
+                    # Replace any nested NAs with NULL for lists.
+                    col <- lapply(
+                        X = col,
+                        FUN = function(x) {
+                            if (identical(x, NA)) {
+                                NULL
+                            } else {
+                                x
+                            }
+                        }
+                    )
+                    do.call(what = I, args = list(I(col)))
+                }
+            },
+            USE.NAMES = TRUE
+        )
+        if (isTRUE(hasRownames)) {
+            rownames <- dimnames[[1L]]
+        } else {
+            rownames <- NULL
+        }
+        args <- append(x = args, values = list("row.names" = rownames))
+        df <- do.call(what = DataFrame, args = args)
         assert(identical(nrow(df), length(x)))
         df
     }
