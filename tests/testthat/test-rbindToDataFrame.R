@@ -1,4 +1,4 @@
-test_that("Matched and named input", {
+test_that("Matched input", {
     x <- list(
         "aa" = c("a" = 1L, "b" = 2L),
         "bb" = c("a" = 3L, "b" = 4L)
@@ -12,17 +12,21 @@ test_that("Matched and named input", {
     expect_identical(object, expected)
 })
 
-test_that("Unnamed and unmatched input", {
+test_that("Unmatched input", {
     x <- list(
-        seq(from = 1L, to = 3L),
-        seq(from = 4L, to = 7L)
+        "aa" = seq(from = 1L, to = 3L),
+        "bb" = seq(from = 4L, to = 7L)
     )
+    names(x[["aa"]]) <- c("a", "b", "c")
+    names(x[["bb"]]) <- c("b", "c", "d", "e")
     object <- rbindToDataFrame(x)
     expected <- DataFrame(
-        "x1" = c(1L, 4L),
-        "x2" = c(2L, 5L),
-        "x3" = c(3L, 6L),
-        "x4" = c(NA_integer_, 7L)
+        "a" = c(1L, NA_integer_),
+        "b" = c(2L, 4L),
+        "c" = c(3L, 5L),
+        "d" = c(NA_integer_, 6L),
+        "e" = c(NA_integer_, 7L),
+        row.names = c("aa", "bb")
     )
     expect_identical(object, expected)
 })
