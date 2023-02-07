@@ -150,7 +150,7 @@ NULL
             }
         )
         if (isTRUE(setRownames)) {
-            rowNames <- names(x)
+            rowNames <- dimnames[[1L]]
         } else {
             rowNames <- NULL
         }
