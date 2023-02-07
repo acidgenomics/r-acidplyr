@@ -1,11 +1,3 @@
-## FIXME Add a test for NA or repeated values in desired join column.
-## FIXME Don't allow repeated values in by operation.
-
-## FIXME innerJoin
-## FIXME fullJoin
-## FIXME semiJoin
-## FIXME antiJoin
-
 data(join, package = "AcidTest", envir = environment())
 
 x <- as(join[["members"]], "DataFrame")
@@ -13,6 +5,35 @@ y <- as(join[["instruments"]], "DataFrame")
 rownames(x) <- x[["name"]]
 rownames(y) <- y[["name"]]
 by <- "name"
+
+test_that("antiJoin", {
+    object <- antiJoin(x = x, y = y, by = by)
+    expected <- DataFrame(
+        "name" = "Mick",
+        "band" = "Stones",
+        row.names = "Mick"
+    )
+    expect_identical(object, expected)
+})
+
+test_that("antiJoin : Duplicate and NA values in 'by'", {
+    ## FIXME
+})
+
+test_that("fullJoin", {
+    object <- fullJoin(x = x, y = y, by = by)
+    expected <- DataFrame(
+        "name" = c("Mick", "John", "Paul", "Keith"),
+        "band" = c("Stones", "Beatles", "Beatles", NA),
+        "plays" = c(NA, "guitar", "bass", "guitar"),
+        row.names = c("Mick", "John", "Paul", "Keith")
+    )
+    expect_identical(object, expected)
+})
+
+test_that("fullJoin : Duplicate and NA values in 'by'", {
+    ## FIXME
+})
 
 test_that("innerJoin", {
     object <- innerJoin(x = x, y = y, by = by)
@@ -23,6 +44,10 @@ test_that("innerJoin", {
         row.names = c("John", "Paul")
     )
     expect_identical(object, expected)
+})
+
+test_that("innerJoin : Duplicate and NA values in 'by'", {
+    ## FIXME
 })
 
 test_that("leftJoin", {
@@ -36,7 +61,24 @@ test_that("leftJoin", {
     expect_identical(object, expected)
 })
 
-test_that("leftJoin : duplicates and NA in 'by'", {
+test_that("leftJoin : Duplicate and NA values in 'by'", {
+    x2 <- x
+    x2[[by]][[2L]] <- x2[[by]][[1L]]
+    expect_identical(
+        object = leftJoin(x = x2, y = y, by = by),
+        expected = DataFrame(
+            "name" = c("Mick", "Mick", "Paul"),
+            "band" = c("Stones", "Beatles", "Beatles"),
+            "plays" = c(NA, NA, "bass"),
+            row.names = c("Mick", "John", "Paul")
+        )
+    )
+    x2 <- x
+    x2[[by]][[1L]] <- NA
+    expect_error(
+        object = leftJoin(x = x2, y = y, by = by),
+        regexp = "NA"
+    )
     y2 <- y
     y2[[by]][[2L]] <- y2[[by]][[1L]]
     expect_error(
@@ -62,15 +104,8 @@ test_that("rightJoin", {
     expect_identical(object, expected)
 })
 
-test_that("fullJoin", {
-    object <- fullJoin(x = x, y = y, by = by)
-    expected <- DataFrame(
-        "name" = c("Mick", "John", "Paul", "Keith"),
-        "band" = c("Stones", "Beatles", "Beatles", NA),
-        "plays" = c(NA, "guitar", "bass", "guitar"),
-        row.names = c("Mick", "John", "Paul", "Keith")
-    )
-    expect_identical(object, expected)
+test_that("rightJoin : Duplicate and NA values in 'by'", {
+    ## FIXME
 })
 
 test_that("semiJoin", {
@@ -83,14 +118,8 @@ test_that("semiJoin", {
     expect_identical(object, expected)
 })
 
-test_that("antiJoin", {
-    object <- antiJoin(x = x, y = y, by = by)
-    expected <- DataFrame(
-        "name" = "Mick",
-        "band" = "Stones",
-        row.names = "Mick"
-    )
-    expect_identical(object, expected)
+test_that("semiJoin : Duplicate and NA values in 'by'", {
+    ## FIXME
 })
 
 test_that("Matched rows", {
