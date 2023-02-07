@@ -1,11 +1,11 @@
-## FIXME Rework this using rbindlist approach from data.table?
-## Check Cellosaurus code for example...
+## FIXME Consider using data.table::rbindlist if everything is scalar and the
+## input dataset is large.
 
 
 
 #' @name rbindToDataFrame
 #' @inherit AcidGenerics::rbindToDataFrame
-#' @note Updated 2021-02-20.
+#' @note Updated 2023-02-07.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -33,7 +33,7 @@ NULL
 
 
 ## Consider using `autopadZeros()` here when names are not defined.
-## Updated 2021-02-20.
+## Updated 2023-02-07.
 `rbindToDataFrame,list` <- # nolint
     function(x) {
         assert(hasLength(x))
@@ -44,20 +44,23 @@ NULL
                 row.names = names(x)
             ))
         }
-        hasNames <- c("rows" = TRUE, "cols" = TRUE)
-        if (!hasNames(x)) {
-            hasNames[["rows"]] <- FALSE
+        if (hasNames(x)) {
+            setRownames <- TRUE
+        } else {
+            setRownames <- FALSE
             names(x) <- paste0("x", seq_along(x))
         }
         if (isTRUE(requireNamespace("parallel", quietly = TRUE))) {
+            .Map <- parallel::mcMap  # nolint
             .lapply <- parallel::mclapply
         } else {
+            .Map <- Map # nolint
             .lapply <- lapply
         }
-        scalarList <- .lapply(
+        isScalarList <- .lapply(
             X = x,
             FUN = function(x) {
-                vapply(
+                x <- vapply(
                     X = x,
                     FUN = function(x) {
                         is.atomic(x) && identical(length(x), 1L)
@@ -65,52 +68,68 @@ NULL
                     FUN.VALUE = logical(1L),
                     USE.NAMES = TRUE
                 )
-
+                if (!hasNames(x)) {
+                    names(x) <- paste0("x", seq_along(x))
+                }
+                x
             }
         )
-        names(scalarList) <- names(x)
+        names(isScalarList) <- names(x)
         dimnames <- list(
             names(x),
             unique(unlist(
-                lapply(X = scalarList, FUN = names),
+                lapply(X = isScalarList, FUN = names),
                 recursive = FALSE,
                 use.names = FALSE
             ))
         )
-        atomicCols <- .lapply(
-            X = scalarList,
-            FUN = function(x) {
-                names(x)[x]
+        isScalarList2 <- .lapply(
+            X = isScalarList,
+            colnames = dimnames[[2L]],
+            FUN = function(x, colnames) {
+                x <- colnames %in% names(x)[x]
+                names(x) <- colnames
+                x
             }
         )
-        ## FIXME How to regenerate the colsList?
-        args <- Map(
+        isScalarMat <- do.call(what = rbind, args = isScalarList2)
+        colsList <- list()
+        length(colsList) <- ncol(isScalarMat)
+        names(colsList) <- dimnames[[2L]]
+        ## FIXME This is still quite a bit slower compared to rbindlist.
+        ## FIXME Need to rework our NULL handling here?
+        colsList <- .lapply(
+            X = dimnames[[2L]],
+            rownames = dimnames[[1L]],
+            lst = x,
+            FUN = function(j, rownames, lst) {
+                lapply(
+                    X = rownames,
+                    j = j,
+                    lst = lst,
+                    FUN = function(i, j, lst) {
+                        lst[[i]][[j]]
+                    }
+                )
+            }
+        )
+        names(colsList) <- dimnames[[2L]]
+        args <- .Map(
             col = colsList,
-            atomic = atomicCols,
-            f = function(col, atomic) {
+            isScalar = isScalarMat,
+            f = function(col, isScalar) {
                 col <- unname(col)
-                if (isTRUE(atomic)) {
+                if (all(isScalar)) {
                     do.call(what = c, args = col)
                 } else {
-                    ## Replace any nested NAs with NULL for lists.
-                    col <- lapply(
-                        X = col,
-                        FUN = function(x) {
-                            if (identical(x, NA)) {
-                                NULL
-                            } else {
-                                x
-                            }
-                        }
-                    )
                     do.call(what = I, args = list(I(col)))
                 }
             }
         )
-        if (isFALSE(hasNames[["rows"]])) {
-            rowNames <- NULL
+        if (isTRUE(setRownames)) {
+            rowNames <- names(x)
         } else {
-            rowNames <- dimnames[[1L]]
+            rowNames <- NULL
         }
         args <- append(x = args, values = list("row.names" = rowNames))
         df <- do.call(what = DataFrame, args = args)
