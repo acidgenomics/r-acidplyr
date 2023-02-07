@@ -27,7 +27,7 @@ Name of the column that contains the values in long format.}
 Pivot column data from long format to wide format.
 }
 \note{
-Updated 2022-09-16.
+Updated 2023-02-07.
 }
 \examples{
 data(matrix, package = "AcidTest")
