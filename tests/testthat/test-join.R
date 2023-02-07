@@ -105,7 +105,35 @@ test_that("rightJoin", {
 })
 
 test_that("rightJoin : Duplicate and NA values in 'by'", {
-    ## FIXME
+    x2 <- x
+    x2[[by]][[2L]] <- x2[[by]][[1L]]
+    expect_error(
+        object = rightJoin(x = x2, y = y, by = by),
+        regexp = "not unique"
+    )
+    x2 <- x
+    x2[[by]][[1L]] <- NA
+    expect_error(
+        object = rightJoin(x = x2, y = y, by = by),
+        regexp = "NA"
+    )
+    y2 <- y
+    y2[[by]][[2L]] <- y2[[by]][[1L]]
+    expect_identical(
+        object = rightJoin(x = x, y = y2, by = by),
+        expected = DataFrame(
+            "name" = c("John", "John", "Keith"),
+            "plays" = c("guitar", "bass", "guitar"),
+            "band" = c("Beatles", "Beatles", NA),
+            row.names = c("John", "Paul", "Keith")
+        )
+    )
+    y2 <- y
+    y2[[by]][[1L]] <- NA
+    expect_error(
+        object = rightJoin(x = x, y = y2, by = by),
+        regexp = "NA"
+    )
 })
 
 test_that("semiJoin", {
