@@ -1,5 +1,6 @@
 ## FIXME Don't merge this update until we can confirm that bcbioBase,
 ## bcbioRNASeq, and bcbioSingleCell pass all checks.
+## The bcbio YAML file doesn't contain required names, so need to rethink.
 
 
 
