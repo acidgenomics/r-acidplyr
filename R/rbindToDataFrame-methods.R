@@ -43,21 +43,6 @@ NULL
         if (any(bapply(X = x, FUN = isS4))) {
             return(DataFrame("x1" = I(unname(x)), row.names = names(x)))
         }
-        if (hasNames(x)) {
-            hasRownames <- TRUE
-        } else {
-            hasRownames <- FALSE
-            names(x) <- paste0("x", seq_along(x))
-        }
-        if (isTRUE(requireNamespace("parallel", quietly = TRUE))) {
-            .mcMap <- parallel::mcMap # nolint
-            .mclapply <- parallel::mclapply
-        } else {
-            .mcMap <- Map # nolint
-            .mclapply <- lapply
-        }
-        ## Need to go with a non-dimnames approach...
-        names(x) <- paste0("x", seq_along(x))  # FIXME
         dimnames <- list(
             names(x),
             unique(unlist(
@@ -70,17 +55,16 @@ NULL
             !is.null(dimnames[[2L]]),
             msg = "Nested list elements are not named."
         )
-        xt <- .mcMap(
+        ## Transpose the list.
+        xt <- Map(
             j = dimnames[[2L]],
             f = function(j, i, x) {
                 Map(
                     i = i,
                     f = function(i, j, x) {
-                        value <- tryCatch(
-                            expr = x[[i]][[j]],
-                            error = function(e) NULL
-                        )
-                        if (is.null(value)) {
+                        if (j %in% names(x[[i]])) {
+                            value <- x[[i]][[j]]
+                        } else {
                             value <- NA
                         }
                         value
@@ -98,54 +82,23 @@ NULL
             ),
             USE.NAMES = TRUE
         )
-
-
-
-
-        isScalarList <- .mclapply(
-            X = x,
+        isAtomic <- bapply(
+            X = xt,
             FUN = function(x) {
-                vapply(
-                    X = x,
-                    FUN = function(x) {
-                        ## Much slower when using `isScalarAtomic` here.
-                        is.atomic(x) && identical(length(x), 1L)
-                    },
-                    FUN.VALUE = logical(1L),
-                    USE.NAMES = TRUE
-                )
+                is.atomic(unlist(x, recursive = FALSE, use.names = FALSE))
             }
         )
-        y <- rep(TRUE, length(dimnames[[2L]]))
-        names(y) <- dimnames[[2L]]
-        isScalarList2 <- .mcMap(
-            x = isScalarList,
-            f = function(x, y) {
-                y[names(x)] <- x
-                y
-            },
-            MoreArgs = list("y" = y),
-            USE.NAMES = TRUE
-        )
-        ## Need to coerce to data.frame here, otherwise matrix won't be sized
-        ## correctly in downstream `Map` call.
-        isScalarCols <- as.data.frame(do.call(
-            what = rbind, args = isScalarList2
-        ))
-        ## FIXME This step is not performant enough and needs optimization.
-
-        assert(areSameLength(colsList, isScalarCols))
-        args <- .mcMap(
-            col = colsList,
-            isScalar = isScalarCols,
-            f = function(col, isScalar) {
-                col <- unname(col)
-                if (all(isScalar)) {
-                    do.call(what = c, args = col)
+        args <- Map(
+            x = xt,
+            isAtomic = isAtomic,
+            f = function(x, isAtomic) {
+                x <- unname(x)
+                if (isTRUE(isAtomic)) {
+                    do.call(what = c, args = x)
                 } else {
                     # Replace any nested NAs with NULL for lists.
-                    col <- lapply(
-                        X = col,
+                    x <- lapply(
+                        X = x,
                         FUN = function(x) {
                             if (identical(x, NA)) {
                                 NULL
@@ -154,17 +107,11 @@ NULL
                             }
                         }
                     )
-                    do.call(what = I, args = list(I(col)))
+                    do.call(what = I, args = list(I(x)))
                 }
-            },
-            USE.NAMES = TRUE
+            }
         )
-        if (isTRUE(hasRownames)) {
-            rownames <- dimnames[[1L]]
-        } else {
-            rownames <- NULL
-        }
-        args <- append(x = args, values = list("row.names" = rownames))
+        args <- append(x = args, values = list("row.names" = dimnames[[1L]]))
         df <- do.call(what = DataFrame, args = args)
         assert(identical(nrow(df), length(x)))
         df
