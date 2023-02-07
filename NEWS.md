@@ -4,9 +4,8 @@
 
 Major changes:
 
-- `rbindToDataFrame`: Reworked internal code to hand off to data.table
-  `rbindlist` function internally when possible, to speed up processing of large
-  datasets, such as the `"cellosaurus.txt"` file in the Cellosaurus R package.
+- `rbindToDataFrame`: Reworked internal code. For very large nested lists,
+  consider using data.table `rbindlist` instead, which is very performant.
 
 Minor changes:
 
