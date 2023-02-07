@@ -77,7 +77,7 @@ NULL
         ## Handoff to data.table is useful for very large datasets, such as
         ## the nested Cellosaurus metadata file.
         if (isTRUE(.enableRbindlist(x))) {
-            requireNamespace("data.table", quietly = TRUE)
+            assert(requireNamespaces("data.table"))
             df <- data.table::rbindlist(l = x, use.names = TRUE, fill = TRUE)
             df <- as(df, "DataFrame")
             assert(identical(nrow(df), length(x)))

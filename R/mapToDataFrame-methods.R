@@ -1,6 +1,6 @@
 #' @name mapToDataFrame
 #' @inherit AcidGenerics::mapToDataFrame
-#' @note Updated 2021-04-27.
+#' @note Updated 2023-02-07.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -53,12 +53,11 @@ NULL
 
 
 
-## Updated 2021-05-18.
+## Updated 2023-02-07.
 `mapToDataFrame,list` <- # nolint
     function(x) {
         assert(
-            requireNamespace("dplyr", quietly = TRUE),
-            requireNamespace("purrr", quietly = TRUE),
+            requireNamespaces(c("dplyr", "purrr")),
             hasLength(x)
         )
         x <- .decodeNestedList(x)

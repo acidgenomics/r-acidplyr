@@ -26,7 +26,7 @@ Imports:
     AcidGenerics (>= 0.6.5),
     BiocGenerics (>= 0.44.0),
     S4Vectors (>= 0.36.0),
-    goalie (>= 0.6.7),
+    goalie (>= 0.6.8),
     methods
 Suggests:
     AcidCLI (>= 0.2.6),
