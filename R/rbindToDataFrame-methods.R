@@ -8,7 +8,7 @@
 
 #' @name rbindToDataFrame
 #' @inherit AcidGenerics::rbindToDataFrame
-#' @note Updated 2023-02-07.
+#' @note Updated 2023-02-08.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -35,7 +35,7 @@ NULL
 
 
 
-## Updated 2023-02-07.
+## Updated 2023-02-08.
 `rbindToDataFrame,list` <- # nolint
     function(x) {
         assert(hasLength(x))
@@ -82,18 +82,23 @@ NULL
             ),
             USE.NAMES = TRUE
         )
-        isAtomic <- bapply(
+        isScalarAtomic <- bapply(
             X = xt,
             FUN = function(x) {
-                is.atomic(unlist(x, recursive = FALSE, use.names = FALSE))
+                all(bapply(
+                    X = x,
+                    FUN = function(x) {
+                        is.atomic(x) && identical(length(x), 1L)
+                    }
+                ))
             }
         )
         args <- Map(
             x = xt,
-            isAtomic = isAtomic,
-            f = function(x, isAtomic) {
+            isScalarAtomic = isScalarAtomic,
+            f = function(x, isScalarAtomic) {
                 x <- unname(x)
-                if (isTRUE(isAtomic)) {
+                if (isTRUE(isScalarAtomic)) {
                     do.call(what = c, args = x)
                 } else {
                     # Replace any nested NAs with NULL for lists.
@@ -109,7 +114,8 @@ NULL
                     )
                     do.call(what = I, args = list(I(x)))
                 }
-            }
+            },
+            USE.NAMES = TRUE
         )
         args <- append(x = args, values = list("row.names" = dimnames[[1L]]))
         df <- do.call(what = DataFrame, args = args)
