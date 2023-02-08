@@ -46,12 +46,6 @@ NULL
 #' @export
 NULL
 
-#' @rdname mapToDataFrame
-#' @name mapToDataFrame
-#' @usage mapToDataFrame(x, ...)
-#' @export
-NULL
-
 #' @rdname melt
 #' @name melt
 #' @usage melt(object, ...)

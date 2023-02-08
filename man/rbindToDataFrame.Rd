@@ -21,7 +21,7 @@ rbindToDataFrame(x, ...)
 Row bind elements 1:1 to a data frame
 }
 \note{
-Updated 2023-02-07.
+Updated 2023-02-08.
 }
 \examples{
 x <- list(
@@ -44,6 +44,7 @@ print(y)
 }
 \seealso{
 \itemize{
-\item \code{mapToDataFrame()}.
+\item \code{data.table::rbindlist}.
+\item \code{purrr::list_transpose}.
 }
 }
