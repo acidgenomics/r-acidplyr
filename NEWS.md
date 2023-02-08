@@ -1,5 +1,12 @@
 # Release notes
 
+## AcidPlyr 0.3.4 (2023-02-08)
+
+Minor changes:
+
+- `rbindToDataFrame`: Simplified internal logic to speed up function quite a
+  bit. Now supports processing of `"cellosaurus.txt"` file.
+
 ## AcidPlyr 0.3.3 (2023-02-07)
 
 Major changes:
