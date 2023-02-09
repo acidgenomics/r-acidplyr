@@ -1,5 +1,13 @@
 # Release notes
 
+## AcidPlyr 0.3.5 (2023-02-09)
+
+Major changes:
+
+- Removed `mapToDataFrame`, in favor of only supporting `rbindToDataFrame`
+  function. This helps lighten the package a bit by removing suggested
+  purrr and dplyr packages.
+
 ## AcidPlyr 0.3.4 (2023-02-08)
 
 Minor changes:
