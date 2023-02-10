@@ -20,10 +20,9 @@ NULL
 
 ## Standard functions ==========================================================
 
-#' @importFrom S4Vectors DataFrame SimpleList
-#' @importFrom goalie allAreAtomic areDisjointSets areSameLength assert bapply
-#' hasColnames hasDims hasLength hasNames hasNoDuplicates hasRownames isAny
-#' isCharacter isFlag isInstalled isInt isNumber isScalar isScalarAtomic
-#' isString isSubset requireNamespaces
+#' @importFrom S4Vectors DataFrame
+#' @importFrom goalie allAreAtomic areDisjointSets assert bapply hasColnames
+#' hasDims hasLength hasNoDuplicates hasRownames isAny isCharacter isFlag
+#' isInstalled isInt isNumber isScalar isString isSubset requireNamespaces
 #' @importFrom methods as is setMethod signature
 NULL
