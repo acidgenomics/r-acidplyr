@@ -1,14 +1,6 @@
-## See also:
-## - https://stackoverflow.com/questions/45734380/transpose-nested-list
-## - https://github.com/Rdatatable/data.table/blob/master/src/rbindlist.c
-## - https://github.com/tidyverse/purrr/blob/main/R/list-transpose.R
-## - https://github.com/tidyverse/purrr/blob/main/src/transpose.c
-
-
-
 #' @name rbindToDataFrame
 #' @inherit AcidGenerics::rbindToDataFrame
-#' @note Updated 2023-02-08.
+#' @note Updated 2023-02-10.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -35,7 +27,7 @@ NULL
 
 
 
-## Updated 2023-02-08.
+## Updated 2023-02-10.
 `rbindToDataFrame,list` <- # nolint
     function(x) {
         assert(hasLength(x))
@@ -112,7 +104,7 @@ NULL
                             }
                         }
                     )
-                    do.call(what = I, args = list(I(x)))
+                    I(unlist(x, recursive = FALSE, use.names = FALSE))
                 }
             },
             USE.NAMES = TRUE
