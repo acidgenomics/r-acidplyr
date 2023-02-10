@@ -93,8 +93,7 @@ NULL
                 if (isTRUE(isScalarAtomic)) {
                     do.call(what = c, args = x)
                 } else {
-                    # Replace any nested NAs with NULL for lists.
-                    x <- lapply(
+                    I(lapply(
                         X = x,
                         FUN = function(x) {
                             if (identical(x, NA)) {
@@ -103,8 +102,7 @@ NULL
                                 x
                             }
                         }
-                    )
-                    I(unlist(x, recursive = FALSE, use.names = FALSE))
+                    ))
                 }
             },
             USE.NAMES = TRUE
