@@ -77,31 +77,8 @@ NULL
         df <- as(do.call(what = cbind, args = xt), "DataFrame")
         assert(identical(nrow(df), length(x)))
         dimnames(df) <- dimnames
-        isScalarAtomic <- bapply(
-            X = df,
-            FUN = function(x) {
-                all(bapply(
-                    X = x,
-                    FUN = function(x) {
-                        is.atomic(x) && identical(length(x), 1L)
-                    }
-                ))
-            }
-        )
-        for (pos in which(isScalarAtomic)) {
-            df[[pos]] <- unlist(df[[pos]], recursive = FALSE, use.names = FALSE)
-        }
-        for (pos in which(!isScalarAtomic)) {
-            df[[pos]] <- lapply(
-                X = df[[pos]],
-                FUN = function(x) {
-                    if (identical(x, NA)) {
-                        NULL
-                    } else {
-                        x
-                    }
-                }
-            )
+        for (i in seq_along(df)) {
+            df[[i]] <- unlist(df[[i]], recursive = FALSE, use.names = FALSE)
         }
         df
     }
