@@ -106,11 +106,11 @@ NULL
                 }
                 x
             },
-            USE.NAMES = TRUE
+            USE.NAMES = FALSE
         )
         mat <- do.call(what = cbind, args = args)
-        dimnames(mat) <- dimnames
         df <- as(mat, "DataFrame")
+        dimnames(df) <- dimnames
         assert(identical(nrow(df), length(x)))
         df
     }
