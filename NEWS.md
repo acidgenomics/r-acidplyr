@@ -1,5 +1,11 @@
 # Release notes
 
+## AcidPlyr 0.3.6 (2023-02-10)
+
+Major changes:
+
+- `rbindToDataFrame`: Improved nesting of list columns.
+
 ## AcidPlyr 0.3.5 (2023-02-09)
 
 Major changes:
