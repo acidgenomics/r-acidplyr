@@ -91,9 +91,9 @@ NULL
             f = function(x, isScalarAtomic) {
                 x <- unname(x)
                 if (isTRUE(isScalarAtomic)) {
-                    do.call(what = c, args = x)
+                    x <- do.call(what = c, args = x)
                 } else {
-                    I(lapply(
+                    x <- lapply(
                         X = x,
                         FUN = function(x) {
                             if (identical(x, NA)) {
@@ -102,13 +102,15 @@ NULL
                                 x
                             }
                         }
-                    ))
+                    )
                 }
+                x
             },
             USE.NAMES = TRUE
         )
-        args <- append(x = args, values = list("row.names" = dimnames[[1L]]))
-        df <- do.call(what = DataFrame, args = args)
+        mat <- do.call(what = cbind, args = args)
+        dimnames(mat) <- dimnames
+        df <- as(mat, "DataFrame")
         assert(identical(nrow(df), length(x)))
         df
     }
