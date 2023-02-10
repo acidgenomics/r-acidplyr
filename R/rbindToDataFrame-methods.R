@@ -74,8 +74,11 @@ NULL
             ),
             USE.NAMES = TRUE
         )
+        df <- as(do.call(what = cbind, args = xt), "DataFrame")
+        assert(identical(nrow(df), length(x)))
+        dimnames(df) <- dimnames
         isScalarAtomic <- bapply(
-            X = xt,
+            X = df,
             FUN = function(x) {
                 all(bapply(
                     X = x,
@@ -85,33 +88,21 @@ NULL
                 ))
             }
         )
-        args <- Map(
-            x = xt,
-            isScalarAtomic = isScalarAtomic,
-            f = function(x, isScalarAtomic) {
-                x <- unname(x)
-                if (isTRUE(isScalarAtomic)) {
-                    x <- do.call(what = c, args = x)
-                } else {
-                    x <- lapply(
-                        X = x,
-                        FUN = function(x) {
-                            if (identical(x, NA)) {
-                                NULL
-                            } else {
-                                x
-                            }
-                        }
-                    )
+        for (pos in which(isScalarAtomic)) {
+            df[[pos]] <- unlist(df[[pos]], recursive = FALSE, use.names = FALSE)
+        }
+        for (pos in which(!isScalarAtomic)) {
+            df[[pos]] <- lapply(
+                X = x,
+                FUN = function(x) {
+                    if (identical(x, NA)) {
+                        NULL
+                    } else {
+                        x
+                    }
                 }
-                x
-            },
-            USE.NAMES = FALSE
-        )
-        mat <- do.call(what = cbind, args = args)
-        df <- as(mat, "DataFrame")
-        dimnames(df) <- dimnames
-        assert(identical(nrow(df), length(x)))
+            )
+        }
         df
     }
 
