@@ -93,7 +93,7 @@ NULL
         }
         for (pos in which(!isScalarAtomic)) {
             df[[pos]] <- lapply(
-                X = x,
+                X = df[[pos]],
                 FUN = function(x) {
                     if (identical(x, NA)) {
                         NULL
