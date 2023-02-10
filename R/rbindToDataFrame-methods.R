@@ -75,7 +75,6 @@ NULL
             USE.NAMES = TRUE
         )
         df <- as(do.call(what = cbind, args = xt), "DataFrame")
-        assert(identical(nrow(df), length(x)))
         dimnames(df) <- dimnames
         for (i in seq_along(df)) {
             df[[i]] <- unlist(df[[i]], recursive = FALSE, use.names = FALSE)
