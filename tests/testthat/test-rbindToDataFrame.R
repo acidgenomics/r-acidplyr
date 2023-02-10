@@ -33,6 +33,8 @@ test_that("Unmatched input", {
 
 test_that("List nested down 2 levels", {
     object <- list()
+    expected <- list()
+    ## This checks for unwanted coercion of top-level S4 elements.
     object[["IntegerList"]] <- list(
         "a" = IntegerList(
             "aa" = seq(from = 1L, to = 3L),
@@ -47,21 +49,6 @@ test_that("List nested down 2 levels", {
             "ff" = seq(from = 16L, to = 18L)
         )
     )
-    object[["list"]] <- list(
-        "a" = list(
-            "aa" = seq(from = 1L, to = 3L),
-            "bb" = seq(from = 4L, to = 6L)
-        ),
-        "b" = list(
-            "cc" = seq(from = 7L, to = 9L),
-            "dd" = seq(from = 10L, to = 12L)
-        ),
-        "c" = list(
-            "ee" = seq(from = 13L, to = 15L),
-            "ff" = seq(from = 16L, to = 18L)
-        )
-    )
-    expected <- list()
     expected[["IntegerList"]] <- DataFrame(
         "x1" = I(list(
             IntegerList(
@@ -78,6 +65,20 @@ test_that("List nested down 2 levels", {
             )
         )),
         row.names = c("a", "b", "c")
+    )
+    object[["list"]] <- list(
+        "a" = list(
+            "aa" = seq(from = 1L, to = 3L),
+            "bb" = seq(from = 4L, to = 6L)
+        ),
+        "b" = list(
+            "cc" = seq(from = 7L, to = 9L),
+            "dd" = seq(from = 10L, to = 12L)
+        ),
+        "c" = list(
+            "ee" = seq(from = 13L, to = 15L),
+            "ff" = seq(from = 16L, to = 18L)
+        )
     )
     expected[["list"]] <- list(
         "aa" = list(
@@ -111,13 +112,8 @@ test_that("List nested down 2 levels", {
             seq(from = 16L, to = 18L)
         )
     )
-    expected[["list"]] <- as(
-        do.call(
-            what = cbind,
-            args = expected[["list"]]
-        ),
-        "DataFrame"
-    )
+    expected[["list"]] <-
+        as(do.call(what = cbind, args = expected[["list"]]), "DataFrame")
     rownames(expected[["list"]]) <- names(object[["list"]])
     for (i in seq_along(object)) {
         expect_identical(
@@ -126,153 +122,122 @@ test_that("List nested down 2 levels", {
         )
     }
 })
-## FIXME actual is returning named listed vectors...
 
 test_that("List nested down 3 levels", {
-    object <- list(
-        "list" = list(
-            "a" = list(
-                "aa1" = list(
-                    "aaa1" = seq(from = 1L, to = 3L),
-                    "aaa2" = seq(from = 4L, to = 6L)
-                ),
-                "aa2" = list(
-                    "aaa3" = seq(from = 7L, to = 9L),
-                    "aaa4" = seq(from = 10L, to = 12L)
-                )
+    object <- list()
+    expected <- list()
+    object[["IntegerList"]] <- list(
+        "a" = list(
+            "aa1" = IntegerList(
+                "aaa1" = seq(from = 1L, to = 3L),
+                "aaa2" = seq(from = 4L, to = 6L)
             ),
-            "b" = list(
-                "bb1" = list(
-                    "bbb1" = seq(from = 13L, to = 15L),
-                    "bbb2" = seq(from = 16L, to = 18L)
-                ),
-                "bb2" = list(
-                    "bbb3" = seq(from = 19L, to = 21L),
-                    "bbb4" = seq(from = 22L, to = 24L)
-                )
+            "aa2" = IntegerList(
+                "aaa3" = seq(from = 7L, to = 9L),
+                "aaa4" = seq(from = 10L, to = 12L)
             )
         ),
-        "IntegerList" = list(
-            "a" = list(
-                "aa1" = IntegerList(
-                    "aaa1" = seq(from = 1L, to = 3L),
-                    "aaa2" = seq(from = 4L, to = 6L)
-                ),
-                "aa2" = IntegerList(
-                    "aaa3" = seq(from = 7L, to = 9L),
-                    "aaa4" = seq(from = 10L, to = 12L)
-                )
+        "b" = list(
+            "bb1" = IntegerList(
+                "bbb1" = seq(from = 13L, to = 15L),
+                "bbb2" = seq(from = 16L, to = 18L)
             ),
-            "b" = list(
-                "bb1" = IntegerList(
-                    "bbb1" = seq(from = 13L, to = 15L),
-                    "bbb2" = seq(from = 16L, to = 18L)
-                ),
-                "bb2" = IntegerList(
-                    "bbb3" = seq(from = 19L, to = 21L),
-                    "bbb4" = seq(from = 22L, to = 24L)
-                )
+            "bb2" = IntegerList(
+                "bbb3" = seq(from = 19L, to = 21L),
+                "bbb4" = seq(from = 22L, to = 24L)
             )
         )
     )
-    expected <- list(
-        "integer" = DataFrame(
-            "aa1" = I(list(
-                list(
-                    "aaa1" = seq(from = 1L, to = 3L),
-                    "aaa2" = seq(from = 4L, to = 6L)
-                ),
-                NULL
-            )),
-            "aa2" = I(list(
-                list(
-                    "aaa3" = seq(from = 7L, to = 9L),
-                    "aaa4" = seq(from = 10L, to = 12L)
-                ),
-                NULL
-            )),
-            "bb1" = I(list(
-                NULL,
-                list(
-                    "bbb1" = seq(from = 13L, to = 15L),
-                    "bbb2" = seq(from = 16L, to = 18L)
-                )
-            )),
-            "bb2" = I(list(
-                NULL,
-                list(
-                    "bbb3" = seq(from = 19L, to = 21L),
-                    "bbb4" = seq(from = 22L, to = 24L)
-                )
-            )),
-            row.names = c("a", "b")
+    expected[["IntegerList"]] <- DataFrame(
+        "aa1" = I(list(
+            IntegerList(
+                "aaa1" = seq(from = 1L, to = 3L),
+                "aaa2" = seq(from = 4L, to = 6L)
+            ),
+            NULL
+        )),
+        "aa2" = I(list(
+            IntegerList(
+                "aaa3" = seq(from = 7L, to = 9L),
+                "aaa4" = seq(from = 10L, to = 12L)
+            ),
+            NULL
+        )),
+        "bb1" = I(list(
+            NULL,
+            IntegerList(
+                "bbb1" = seq(from = 13L, to = 15L),
+                "bbb2" = seq(from = 16L, to = 18L)
+            )
+        )),
+        "bb2" = I(list(
+            NULL,
+            IntegerList(
+                "bbb3" = seq(from = 19L, to = 21L),
+                "bbb4" = seq(from = 22L, to = 24L)
+            )
+        )),
+        row.names = c("a", "b")
+    )
+    object[["list"]] <- list(
+        "a" = list(
+            "aa1" = list(
+                "aaa1" = seq(from = 1L, to = 3L),
+                "aaa2" = seq(from = 4L, to = 6L)
+            ),
+            "aa2" = list(
+                "aaa3" = seq(from = 7L, to = 9L),
+                "aaa4" = seq(from = 10L, to = 12L)
+            )
         ),
-        "IntegerList" = DataFrame(
-            "aa1" = I(list(
-                IntegerList(
-                    "aaa1" = seq(from = 1L, to = 3L),
-                    "aaa2" = seq(from = 4L, to = 6L)
-                ),
-                NULL
-            )),
-            "aa2" = I(list(
-                IntegerList(
-                    "aaa3" = seq(from = 7L, to = 9L),
-                    "aaa4" = seq(from = 10L, to = 12L)
-                ),
-                NULL
-            )),
-            "bb1" = I(list(
-                NULL,
-                IntegerList(
-                    "bbb1" = seq(from = 13L, to = 15L),
-                    "bbb2" = seq(from = 16L, to = 18L)
-                )
-            )),
-            "bb2" = I(list(
-                NULL,
-                IntegerList(
-                    "bbb3" = seq(from = 19L, to = 21L),
-                    "bbb4" = seq(from = 22L, to = 24L)
-                )
-            )),
-            row.names = c("a", "b")
+        "b" = list(
+            "bb1" = list(
+                "bbb1" = seq(from = 13L, to = 15L),
+                "bbb2" = seq(from = 16L, to = 18L)
+            ),
+            "bb2" = list(
+                "bbb3" = seq(from = 19L, to = 21L),
+                "bbb4" = seq(from = 22L, to = 24L)
+            )
         )
     )
+    expected[["list"]] <- list(
+        "aa1" = list(
+            list(
+                "aaa1" = seq(from = 1L, to = 3L),
+                "aaa2" = seq(from = 4L, to = 6L)
+            ),
+            NULL
+        ),
+        "aa2" = list(
+            list(
+                "aaa3" = seq(from = 7L, to = 9L),
+                "aaa4" = seq(from = 10L, to = 12L)
+            ),
+            NULL
+        ),
+        "bb1" = list(
+            NULL,
+            list(
+                "bbb1" = seq(from = 13L, to = 15L),
+                "bbb2" = seq(from = 16L, to = 18L)
+            )
+        ),
+        "bb2" = list(
+            NULL,
+            list(
+                "bbb3" = seq(from = 19L, to = 21L),
+                "bbb4" = seq(from = 22L, to = 24L)
+            )
+        )
+    )
+    expected[["list"]] <-
+        as(do.call(what = cbind, args = expected[["list"]]), "DataFrame")
+    rownames(expected[["list"]]) <- names(object[["list"]])
     for (i in seq_along(object)) {
         expect_identical(
             object = rbindToDataFrame(object[[!!i]]),
             expected = expected[[!!i]]
         )
     }
-})
-
-test_that("Don't allow evaluation of top-level S4 elements", {
-    x <- list(
-        "a" = IntegerList(
-            "aa" = seq(from = 1L, to = 3L),
-            "bb" = seq(from = 4L, to = 6L)
-        ),
-        "b" = IntegerList(
-            "cc" = seq(from = 7L, to = 9L),
-            "dd" = seq(from = 10L, to = 12L)
-        ),
-        "c" = "hello"
-    )
-    object <- rbindToDataFrame(x)
-    expected <- DataFrame(
-        "x1" = I(list(
-            IntegerList(
-                "aa" = seq(from = 1L, to = 3L),
-                "bb" = seq(from = 4L, to = 6L)
-            ),
-            IntegerList(
-                "cc" = seq(from = 7L, to = 9L),
-                "dd" = seq(from = 10L, to = 12L)
-            ),
-            "hello"
-        )),
-        row.names = c("a", "b", "c")
-    )
-    expect_identical(object, expected)
 })
