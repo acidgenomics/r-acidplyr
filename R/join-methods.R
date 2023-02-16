@@ -1,3 +1,8 @@
+## FIXME Improve the error message when there are extra columns not defined in
+## "by".
+
+
+
 #' @name join
 #' @inherit AcidGenerics::join
 #' @note Updated 2023-02-07.
