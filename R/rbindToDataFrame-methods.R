@@ -27,7 +27,7 @@ NULL
 
 
 
-## Updated 2023-02-10.
+## Updated 2023-02-22.
 `rbindToDataFrame,list` <- # nolint
     function(x) {
         assert(hasLength(x))
@@ -74,7 +74,8 @@ NULL
             ),
             USE.NAMES = TRUE
         )
-        df <- as(do.call(what = cbind, args = xt), "DataFrame")
+        ## Refer to `pipette::as.DataFrame` for inspiration on this approach.
+        df <- new(Class = "DFrame", listData = xt, nrows = length(xt[[1L]]))
         assert(identical(nrow(df), length(x)))
         dimnames(df) <- dimnames
         isScalarAtomic <- bapply(
