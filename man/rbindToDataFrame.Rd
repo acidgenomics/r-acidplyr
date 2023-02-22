@@ -21,7 +21,7 @@ rbindToDataFrame(x, ...)
 Row bind elements 1:1 to a data frame
 }
 \note{
-Updated 2023-02-10.
+Updated 2023-02-22.
 }
 \examples{
 x <- list(

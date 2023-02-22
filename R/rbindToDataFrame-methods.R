@@ -1,6 +1,6 @@
 #' @name rbindToDataFrame
 #' @inherit AcidGenerics::rbindToDataFrame
-#' @note Updated 2023-02-10.
+#' @note Updated 2023-02-22.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
