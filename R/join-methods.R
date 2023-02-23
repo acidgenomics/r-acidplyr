@@ -1,11 +1,6 @@
-## FIXME Improve the error message when there are extra columns not defined in
-## "by".
-
-
-
 #' @name join
 #' @inherit AcidGenerics::join
-#' @note Updated 2023-02-07.
+#' @note Updated 2023-02-23.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -40,7 +35,7 @@ NULL
 
 
 
-## Updated 2023-02-07.
+## Updated 2023-02-23.
 `antiJoin,DataFrame` <- # nolint
     function(x, y, by) {
         assert(
@@ -48,10 +43,6 @@ NULL
             hasColnames(y),
             isSubset(x = by, y = colnames(x)),
             isSubset(x = by, y = colnames(y)),
-            identical(
-                x = intersect(x = colnames(x), y = colnames(y)),
-                y = by
-            ),
             areDisjointSets(
                 x = setdiff(x = colnames(x), y = by),
                 y = setdiff(x = colnames(y), y = by)
@@ -102,7 +93,7 @@ NULL
 
 
 
-## Updated 2023-02-07.
+## Updated 2023-02-23.
 `fullJoin,DataFrame` <- # nolint
     function(x, y, by) {
         assert(
@@ -110,10 +101,6 @@ NULL
             hasColnames(y),
             isSubset(x = by, y = colnames(x)),
             isSubset(x = by, y = colnames(y)),
-            identical(
-                x = intersect(x = colnames(x), y = colnames(y)),
-                y = by
-            ),
             areDisjointSets(
                 x = setdiff(x = colnames(x), y = by),
                 y = setdiff(x = colnames(y), y = by)
@@ -175,7 +162,7 @@ NULL
 
 
 
-## Updated 2023-02-07.
+## Updated 2023-02-23.
 `innerJoin,DataFrame` <- # nolint
     function(x, y, by) {
         assert(
@@ -183,10 +170,6 @@ NULL
             hasColnames(y),
             isSubset(x = by, y = colnames(x)),
             isSubset(x = by, y = colnames(y)),
-            identical(
-                x = intersect(x = colnames(x), y = colnames(y)),
-                y = by
-            ),
             areDisjointSets(
                 x = setdiff(x = colnames(x), y = by),
                 y = setdiff(x = colnames(y), y = by)
@@ -241,7 +224,12 @@ NULL
 
 
 
-## Updated 2023-02-07.
+## S4Vectors (i.e. `DataFrame`) doesn't support expansion via indices containing
+## NAs. Will see: "Error: subscript contains NAs." in this case. Here we are
+## coercing mismatched `y` to data.frame, which does allow expansion via indices
+## containing NAs.
+
+## Updated 2023-02-23.
 `leftJoin,DataFrame` <- # nolint
     function(x, y, by) {
         assert(
@@ -249,10 +237,6 @@ NULL
             hasColnames(y),
             isSubset(x = by, y = colnames(x)),
             isSubset(x = by, y = colnames(y)),
-            identical(
-                x = intersect(x = colnames(x), y = colnames(y)),
-                y = by
-            ),
             areDisjointSets(
                 x = setdiff(x = colnames(x), y = by),
                 y = setdiff(x = colnames(y), y = by)
@@ -297,10 +281,6 @@ NULL
         m <- m[, c(".idx", ".idy"), drop = FALSE]
         y <- y[, setdiff(colnames(y), colnames(x)), drop = FALSE]
         x <- x[m[[".idx"]], , drop = FALSE]
-        # S4Vectors (i.e. `DataFrame`) doesn't support expansion via indices
-        # containing NAs. Will see: "Error: subscript contains NAs." in this
-        # case. Here we are coercing mismatched `y` to data.frame, which does
-        # allow expansion via indices containing NAs.
         containsNA <- c("y" = anyNA(m[[".idy"]]))
         if (isTRUE(containsNA[["y"]])) {
             yy <- as.data.frame(y)
@@ -327,7 +307,7 @@ NULL
 
 
 
-## Updated 2023-02-07.
+## Updated 2023-02-23.
 `semiJoin,DataFrame` <- # nolint
     function(x, y, by) {
         assert(
@@ -335,10 +315,6 @@ NULL
             hasColnames(y),
             isSubset(x = by, y = colnames(x)),
             isSubset(x = by, y = colnames(y)),
-            identical(
-                x = intersect(x = colnames(x), y = colnames(y)),
-                y = by
-            ),
             areDisjointSets(
                 x = setdiff(x = colnames(x), y = by),
                 y = setdiff(x = colnames(y), y = by)
