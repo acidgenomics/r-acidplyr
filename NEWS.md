@@ -7,6 +7,8 @@ Minor changes:
 - `rbindToDataFrame`: Simplified internal construction of `DataFrame` from
   `list`, using `new` instead of `matrix` coercion internally. This same
   approach is now used for `as.DataFrame` `list` method in pipette.
+- `leftJoin` and other join functions: Improved error message handling when
+  `x` and `y` contain overlapping columns not defined in `by` argument.
 
 ## AcidPlyr 0.3.6 (2023-02-10)
 
