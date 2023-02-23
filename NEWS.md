@@ -1,5 +1,13 @@
 # Release notes
 
+## AcidPlyr 0.3.7 (2023-02-23)
+
+Minor changes:
+
+- `rbindToDataFrame`: Simplified internal construction of `DataFrame` from
+  `list`, using `new` instead of `matrix` coercion internally. This same
+  approach is now used for `as.DataFrame` `list` method in pipette.
+
 ## AcidPlyr 0.3.6 (2023-02-10)
 
 Major changes:
