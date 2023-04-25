@@ -24,5 +24,5 @@ NULL
 #' @importFrom goalie allAreAtomic areDisjointSets assert bapply hasColnames
 #' hasDims hasLength hasNoDuplicates hasRownames isAny isCharacter isFlag
 #' isInstalled isInt isNumber isScalar isString isSubset requireNamespaces
-#' @importFrom methods as is setMethod signature
+#' @importFrom methods as is new setMethod signature
 NULL
