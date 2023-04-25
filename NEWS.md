@@ -1,5 +1,12 @@
 # Release notes
 
+## AcidPlyr 0.3.8 (2023-04-25)
+
+Minor changes:
+
+- No longer importing `rowSums` into NAMESPACE, which has been removed from
+  BiocGenerics in Bioconductor 3.17 update.
+
 ## AcidPlyr 0.3.7 (2023-02-23)
 
 Minor changes:
