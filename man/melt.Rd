@@ -2,14 +2,14 @@
 % Please edit documentation in R/AllGenerics.R, R/melt-methods.R
 \name{melt}
 \alias{melt}
-\alias{melt,DataFrame-method}
+\alias{melt,DFrame-method}
 \alias{melt,matrix-method}
 \alias{melt,table-method}
 \title{Melt data from wide to long format}
 \usage{
 melt(object, ...)
 
-\S4method{melt}{DataFrame}(object, colnames = c("rowname", "colname", "value"))
+\S4method{melt}{DFrame}(object, colnames = c("rowname", "colname", "value"))
 
 \S4method{melt}{matrix}(
   object,

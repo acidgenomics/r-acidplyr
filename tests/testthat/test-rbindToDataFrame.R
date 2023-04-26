@@ -113,7 +113,7 @@ test_that("List nested down 2 levels", {
         )
     )
     expected[["list"]] <-
-        as(do.call(what = cbind, args = expected[["list"]]), "DataFrame")
+        as(do.call(what = cbind, args = expected[["list"]]), "DFrame")
     rownames(expected[["list"]]) <- names(object[["list"]])
     for (i in seq_along(object)) {
         expect_identical(
@@ -232,7 +232,7 @@ test_that("List nested down 3 levels", {
         )
     )
     expected[["list"]] <-
-        as(do.call(what = cbind, args = expected[["list"]]), "DataFrame")
+        as(do.call(what = cbind, args = expected[["list"]]), "DFrame")
     rownames(expected[["list"]]) <- names(object[["list"]])
     for (i in seq_along(object)) {
         expect_identical(

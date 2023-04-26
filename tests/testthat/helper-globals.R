@@ -1,7 +1,7 @@
 ## nolint start
 
 data(
-    DataFrame, matrix,
+    DFrame, matrix,
     package = "AcidTest",
     envir = environment()
 )
@@ -11,7 +11,7 @@ data(
     envir = environment()
 )
 
-df <- DataFrame
+df <- DFrame
 mat <- matrix
 
 DataFrame <- S4Vectors::DataFrame

@@ -14,15 +14,15 @@
 #' @section Row names:
 #'
 #' Unlike the S3 methods defined in dplyr, the join methods defined here for
-#' `DataFrame` always preserve row names.
+#' `DFrame` always preserve row names.
 #'
 #' @examples
 #' data(join, package = "AcidTest")
 #'
-#' ## DataFrame ====
-#' x <- as(join[["members"]], "DataFrame")
+#' ## DFrame ====
+#' x <- as(join[["members"]], "DFrame")
 #' print(x)
-#' y <- as(join[["instruments"]], "DataFrame")
+#' y <- as(join[["instruments"]], "DFrame")
 #' print(y)
 #' by <- "name"
 #' innerJoin(x = x, y = y, by = by)
@@ -35,8 +35,8 @@ NULL
 
 
 
-## Updated 2023-02-23.
-`antiJoin,DataFrame` <- # nolint
+## Updated 2023-04-26.
+`antiJoin,DFrame` <- # nolint
     function(x, y, by) {
         assert(
             hasColnames(x),
@@ -78,12 +78,12 @@ NULL
                 "by", "NA"
             )
         )
-        x <- as(x, "DataFrame")
-        y <- as(y, "DataFrame")
+        x <- as(x, "DFrame")
+        y <- as(y, "DFrame")
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
         m <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)
-        assert(is(m, "DataFrame"))
+        assert(is(m, "DFrame"))
         m <- m[, c(".idx", ".idy"), drop = FALSE]
         rows <- order(setdiff(x[[".idx"]], m[[".idx"]]))
         cols <- setdiff(colnames(x), ".idx")
@@ -93,8 +93,8 @@ NULL
 
 
 
-## Updated 2023-02-23.
-`fullJoin,DataFrame` <- # nolint
+## Updated 2023-04-26.
+`fullJoin,DFrame` <- # nolint
     function(x, y, by) {
         assert(
             hasColnames(x),
@@ -136,12 +136,12 @@ NULL
                 "by", "NA"
             )
         )
-        x <- as(x, "DataFrame")
-        y <- as(y, "DataFrame")
+        x <- as(x, "DFrame")
+        y <- as(y, "DFrame")
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
         out <- merge(x = x, y = y, by = by, all = TRUE, sort = FALSE)
-        assert(is(out, "DataFrame"))
+        assert(is(out, "DFrame"))
         out <- out[order(out[[".idx"]], out[[".idy"]]), , drop = FALSE]
         if (hasRownames(x) && hasRownames(y)) {
             rnx <- rownames(x)[order(out[[".idx"]])]
@@ -162,8 +162,8 @@ NULL
 
 
 
-## Updated 2023-02-23.
-`innerJoin,DataFrame` <- # nolint
+## Updated 2023-04-26.
+`innerJoin,DFrame` <- # nolint
     function(x, y, by) {
         assert(
             hasColnames(x),
@@ -205,12 +205,12 @@ NULL
                 "by", "NA"
             )
         )
-        x <- as(x, "DataFrame")
-        y <- as(y, "DataFrame")
+        x <- as(x, "DFrame")
+        y <- as(y, "DFrame")
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
         m <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)
-        assert(is(m, "DataFrame"))
+        assert(is(m, "DFrame"))
         m <- m[, c(".idx", ".idy"), drop = FALSE]
         y <- y[, setdiff(colnames(y), colnames(x)), drop = FALSE]
         x <- x[m[[".idx"]], , drop = FALSE]
@@ -224,13 +224,13 @@ NULL
 
 
 
-## S4Vectors (i.e. `DataFrame`) doesn't support expansion via indices containing
+## S4Vectors (i.e. `DFrame`) doesn't support expansion via indices containing
 ## NAs. Will see: "Error: subscript contains NAs." in this case. Here we are
 ## coercing mismatched `y` to data.frame, which does allow expansion via indices
 ## containing NAs.
 
-## Updated 2023-02-23.
-`leftJoin,DataFrame` <- # nolint
+## Updated 2023-04-26.
+`leftJoin,DFrame` <- # nolint
     function(x, y, by) {
         assert(
             hasColnames(x),
@@ -268,14 +268,14 @@ NULL
                 "by", "NA"
             )
         )
-        x <- as(x, "DataFrame")
-        y <- as(y, "DataFrame")
+        x <- as(x, "DFrame")
+        y <- as(y, "DFrame")
         y <- unique(y)
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
         m <- merge(x = x, y = y, by = by, all.x = TRUE, sort = FALSE)
         assert(
-            is(m, "DataFrame"),
+            is(m, "DFrame"),
             identical(nrow(x), nrow(m))
         )
         m <- m[, c(".idx", ".idy"), drop = FALSE]
@@ -286,7 +286,7 @@ NULL
             yy <- as.data.frame(y)
             assert(identical(colnames(yy), colnames(y)))
             yy <- yy[m[[".idy"]], , drop = FALSE]
-            y <- as(yy, "DataFrame")
+            y <- as(yy, "DFrame")
         } else {
             y <- y[m[[".idy"]], , drop = FALSE]
         }
@@ -299,16 +299,16 @@ NULL
 
 
 
-## Updated 2021-10-13.
-`rightJoin,DataFrame` <- # nolint
+## Updated 2023-04-26.
+`rightJoin,DFrame` <- # nolint
     function(x, y, by) {
         leftJoin(x = y, y = x, by = by)
     }
 
 
 
-## Updated 2023-02-23.
-`semiJoin,DataFrame` <- # nolint
+## Updated 2023-04-26.
+`semiJoin,DFrame` <- # nolint
     function(x, y, by) {
         assert(
             hasColnames(x),
@@ -350,14 +350,14 @@ NULL
                 "by", "NA"
             )
         )
-        x <- as(x, "DataFrame")
-        y <- as(y, "DataFrame")
+        x <- as(x, "DFrame")
+        y <- as(y, "DFrame")
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
         m <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)
-        assert(is(m, "DataFrame"))
+        assert(is(m, "DFrame"))
         m <- m[, c(".idx", ".idy"), drop = FALSE]
-        assert(is(m, "DataFrame"))
+        assert(is(m, "DFrame"))
         rows <- m[[".idx"]]
         cols <- setdiff(colnames(x), ".idx")
         out <- x[rows, cols, drop = FALSE]
@@ -371,11 +371,11 @@ NULL
 setMethod(
     f = "antiJoin",
     signature = signature(
-        x = "DataFrame",
-        y = "DataFrame",
+        x = "DFrame",
+        y = "DFrame",
         by = "character"
     ),
-    definition = `antiJoin,DataFrame`
+    definition = `antiJoin,DFrame`
 )
 
 #' @rdname join
@@ -383,11 +383,11 @@ setMethod(
 setMethod(
     f = "fullJoin",
     signature = signature(
-        x = "DataFrame",
-        y = "DataFrame",
+        x = "DFrame",
+        y = "DFrame",
         by = "character"
     ),
-    definition = `fullJoin,DataFrame`
+    definition = `fullJoin,DFrame`
 )
 
 #' @rdname join
@@ -395,11 +395,11 @@ setMethod(
 setMethod(
     f = "innerJoin",
     signature = signature(
-        x = "DataFrame",
-        y = "DataFrame",
+        x = "DFrame",
+        y = "DFrame",
         by = "character"
     ),
-    definition = `innerJoin,DataFrame`
+    definition = `innerJoin,DFrame`
 )
 
 #' @rdname join
@@ -407,11 +407,11 @@ setMethod(
 setMethod(
     f = "leftJoin",
     signature = signature(
-        x = "DataFrame",
-        y = "DataFrame",
+        x = "DFrame",
+        y = "DFrame",
         by = "character"
     ),
-    definition = `leftJoin,DataFrame`
+    definition = `leftJoin,DFrame`
 )
 
 #' @rdname join
@@ -419,11 +419,11 @@ setMethod(
 setMethod(
     f = "rightJoin",
     signature = signature(
-        x = "DataFrame",
-        y = "DataFrame",
+        x = "DFrame",
+        y = "DFrame",
         by = "character"
     ),
-    definition = `rightJoin,DataFrame`
+    definition = `rightJoin,DFrame`
 )
 
 #' @rdname join
@@ -431,9 +431,9 @@ setMethod(
 setMethod(
     f = "semiJoin",
     signature = signature(
-        x = "DataFrame",
-        y = "DataFrame",
+        x = "DFrame",
+        y = "DFrame",
         by = "character"
     ),
-    definition = `semiJoin,DataFrame`
+    definition = `semiJoin,DFrame`
 )

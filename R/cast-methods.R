@@ -1,6 +1,6 @@
 #' @name cast
 #' @inherit AcidGenerics::cast
-#' @note Updated 2023-02-07.
+#' @note Updated 2023-04-26.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -15,7 +15,7 @@
 #' @examples
 #' data(matrix, package = "AcidTest")
 #'
-#' ## DataFrame ====
+#' ## DFrame ====
 #' long <- melt(matrix)
 #' print(long)
 #' wide <- cast(long)
@@ -24,8 +24,8 @@ NULL
 
 
 
-## Updated 2023-02-07.
-`cast,DataFrame` <- # nolint
+## Updated 2023-04-26.
+`cast,DFrame` <- # nolint
     function(object,
              colnames = "colname",
              values = "value") {
@@ -44,7 +44,7 @@ NULL
             values_from = values,
             values_fill = NULL
         )
-        x <- as(x, "DataFrame")
+        x <- as(x, "DFrame")
         if (isSubset("rowname", colnames(x))) {
             rownames(x) <- x[["rowname"]]
             x[["rowname"]] <- NULL
@@ -58,6 +58,6 @@ NULL
 #' @export
 setMethod(
     f = "cast",
-    signature = signature(object = "DataFrame"),
-    definition = `cast,DataFrame`
+    signature = signature(object = "DFrame"),
+    definition = `cast,DFrame`
 )
