@@ -8,12 +8,12 @@
 \alias{semiJoin}
 \alias{antiJoin}
 \alias{join}
-\alias{antiJoin,DataFrame,DataFrame,character-method}
-\alias{fullJoin,DataFrame,DataFrame,character-method}
-\alias{innerJoin,DataFrame,DataFrame,character-method}
-\alias{leftJoin,DataFrame,DataFrame,character-method}
-\alias{rightJoin,DataFrame,DataFrame,character-method}
-\alias{semiJoin,DataFrame,DataFrame,character-method}
+\alias{antiJoin,DFrame,DFrame,character-method}
+\alias{fullJoin,DFrame,DFrame,character-method}
+\alias{innerJoin,DFrame,DFrame,character-method}
+\alias{leftJoin,DFrame,DFrame,character-method}
+\alias{rightJoin,DFrame,DFrame,character-method}
+\alias{semiJoin,DFrame,DFrame,character-method}
 \title{Join operations}
 \usage{
 innerJoin(x, y, by, ...)
@@ -28,17 +28,17 @@ semiJoin(x, y, by, ...)
 
 antiJoin(x, y, by, ...)
 
-\S4method{antiJoin}{DataFrame,DataFrame,character}(x, y, by)
+\S4method{antiJoin}{DFrame,DFrame,character}(x, y, by)
 
-\S4method{fullJoin}{DataFrame,DataFrame,character}(x, y, by)
+\S4method{fullJoin}{DFrame,DFrame,character}(x, y, by)
 
-\S4method{innerJoin}{DataFrame,DataFrame,character}(x, y, by)
+\S4method{innerJoin}{DFrame,DFrame,character}(x, y, by)
 
-\S4method{leftJoin}{DataFrame,DataFrame,character}(x, y, by)
+\S4method{leftJoin}{DFrame,DFrame,character}(x, y, by)
 
-\S4method{rightJoin}{DataFrame,DataFrame,character}(x, y, by)
+\S4method{rightJoin}{DFrame,DFrame,character}(x, y, by)
 
-\S4method{semiJoin}{DataFrame,DataFrame,character}(x, y, by)
+\S4method{semiJoin}{DFrame,DFrame,character}(x, y, by)
 }
 \arguments{
 \item{x}{Object.}
@@ -71,16 +71,16 @@ setting an internal \code{.idx} column that we can use to reorder the rows after
 
 
 Unlike the S3 methods defined in dplyr, the join methods defined here for
-\code{DataFrame} always preserve row names.
+\code{DFrame} always preserve row names.
 }
 
 \examples{
 data(join, package = "AcidTest")
 
-## DataFrame ====
-x <- as(join[["members"]], "DataFrame")
+## DFrame ====
+x <- as(join[["members"]], "DFrame")
 print(x)
-y <- as(join[["instruments"]], "DataFrame")
+y <- as(join[["instruments"]], "DFrame")
 print(y)
 by <- "name"
 innerJoin(x = x, y = y, by = by)

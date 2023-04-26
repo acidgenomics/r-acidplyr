@@ -7,11 +7,11 @@
 \alias{transmuteAt}
 \alias{transmuteIf}
 \alias{mutate}
-\alias{mutateAll,DataFrame,function-method}
-\alias{mutateAt,DataFrame,character,function-method}
-\alias{mutateIf,DataFrame,function,function-method}
-\alias{transmuteAt,DataFrame,character,function-method}
-\alias{transmuteIf,DataFrame,function,function-method}
+\alias{mutateAll,DFrame,function-method}
+\alias{mutateAt,DFrame,character,function-method}
+\alias{mutateIf,DFrame,function,function-method}
+\alias{transmuteAt,DFrame,character,function-method}
+\alias{transmuteIf,DFrame,function,function-method}
 \title{Mutate multiple columns}
 \usage{
 mutateAll(object, fun, ...)
@@ -24,15 +24,15 @@ transmuteAt(object, vars, fun, ...)
 
 transmuteIf(object, predicate, fun, ...)
 
-\S4method{mutateAll}{DataFrame,`function`}(object, fun, ...)
+\S4method{mutateAll}{DFrame,`function`}(object, fun, ...)
 
-\S4method{mutateAt}{DataFrame,character,`function`}(object, vars, fun, ...)
+\S4method{mutateAt}{DFrame,character,`function`}(object, vars, fun, ...)
 
-\S4method{mutateIf}{DataFrame,`function`,`function`}(object, predicate, fun, ...)
+\S4method{mutateIf}{DFrame,`function`,`function`}(object, predicate, fun, ...)
 
-\S4method{transmuteAt}{DataFrame,character,`function`}(object, vars, fun, ...)
+\S4method{transmuteAt}{DFrame,character,`function`}(object, vars, fun, ...)
 
-\S4method{transmuteIf}{DataFrame,`function`,`function`}(object, predicate, fun, ...)
+\S4method{transmuteIf}{DFrame,`function`,`function`}(object, predicate, fun, ...)
 }
 \arguments{
 \item{object}{Object.}
@@ -61,8 +61,8 @@ Updated 2023-02-07.
 \examples{
 data(mtcars, package = "datasets")
 
-## DataFrame ====
-x <- as(mtcars, "DataFrame")
+## DFrame ====
+x <- as(mtcars, "DFrame")
 mutateAll(x, fun = log, base = 2L)
 mutateAt(x, vars = c("mpg", "cyl"), fun = log, base = 2L)
 mutateIf(x, predicate = is.double, fun = as.integer)
