@@ -1,7 +1,7 @@
 data(join, package = "AcidTest", envir = environment())
 
-x <- as(join[["members"]], "DataFrame")
-y <- as(join[["instruments"]], "DataFrame")
+x <- as(join[["members"]], "DFrame")
+y <- as(join[["instruments"]], "DFrame")
 rownames(x) <- x[["name"]]
 rownames(y) <- y[["name"]]
 by <- "name"

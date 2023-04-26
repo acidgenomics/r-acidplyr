@@ -2,12 +2,12 @@
 % Please edit documentation in R/AllGenerics.R, R/cast-methods.R
 \name{cast}
 \alias{cast}
-\alias{cast,DataFrame-method}
+\alias{cast,DFrame-method}
 \title{Cast data from long to wide format}
 \usage{
 cast(object, ...)
 
-\S4method{cast}{DataFrame}(object, colnames = "colname", values = "value")
+\S4method{cast}{DFrame}(object, colnames = "colname", values = "value")
 }
 \arguments{
 \item{object}{Object.}
@@ -27,12 +27,12 @@ Name of the column that contains the values in long format.}
 Pivot column data from long format to wide format.
 }
 \note{
-Updated 2023-02-07.
+Updated 2023-04-26.
 }
 \examples{
 data(matrix, package = "AcidTest")
 
-## DataFrame ====
+## DFrame ====
 long <- melt(matrix)
 print(long)
 wide <- cast(long)

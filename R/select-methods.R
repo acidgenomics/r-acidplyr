@@ -11,7 +11,7 @@
 #'
 #' @seealso
 #' These functions are inspired by dplyr. However, they are designed to only
-#' work on `DataFrame` class, and use base R code internally.
+#' work on `DFrame` class, and use base R code internally.
 #'
 #' ```r
 #' `help(topic = "select_all", package = "dplyr")`
@@ -20,15 +20,15 @@
 #' @examples
 #' data(iris, package = "datasets")
 #'
-#' ## DataFrame ====
-#' x <- as(iris, "DataFrame")
+#' ## DFrame ====
+#' x <- as(iris, "DFrame")
 #' selectIf(x, predicate = is.factor)
 NULL
 
 
 
-## Updated 2021-10-14.
-`selectIf,DataFrame` <- # nolint
+## Updated 2023-04-26.
+`selectIf,DFrame` <- # nolint
     function(object, predicate) {
         keep <- bapply(X = object, FUN = predicate)
         object[, keep, drop = FALSE]
@@ -41,8 +41,8 @@ NULL
 setMethod(
     f = "selectIf",
     signature = signature(
-        object = "DataFrame",
+        object = "DFrame",
         predicate = "function"
     ),
-    definition = `selectIf,DataFrame`
+    definition = `selectIf,DFrame`
 )
