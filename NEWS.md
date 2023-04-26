@@ -1,5 +1,11 @@
 # Release notes
 
+## AcidPlyr 0.3.9 (2023-04-26)
+
+Minor changes:
+
+- Dispatch on `DFrame` instead of `DataFrame` virtual class.
+
 ## AcidPlyr 0.3.8 (2023-04-25)
 
 Minor changes:
