@@ -1,5 +1,12 @@
 # Release notes
 
+## AcidPlyr 0.3.10 (2023-04-27)
+
+Minor changes:
+
+- `melt`: Need to dynamically use Matrix `rowSums` generic internally when
+  applicable, to avoid issues parsing `sparseMatrix` objects.
+
 ## AcidPlyr 0.3.9 (2023-04-26)
 
 Minor changes:
