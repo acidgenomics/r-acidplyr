@@ -1,6 +1,6 @@
 #' @name melt
 #' @inherit AcidGenerics::melt
-#' @note Updated 2022-09-16.
+#' @note Updated 2023-04-27.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -41,7 +41,9 @@ NULL
 
 
 
-## Updated 2022-04-29.
+## NOTE Matrix method is defined in AcidExperiment and inherits matrix method.
+
+## Updated 2023-04-27.
 `melt,matrix` <- # nolint
     function(object,
              colnames = c("rowname", "colname", "value"),
@@ -71,6 +73,10 @@ NULL
             identical(minMethod, "perRow") &&
                 isTRUE(is.finite(min))
         ) {
+            if (is(object, "Matrix")) {
+                assert(requireNamespaces("Matrix"))
+                rowSums <- Matrix::rowSums
+            }
             keep <- rowSums(object) >= min
             if (isTRUE(hasCli)) {
                 AcidCLI::alertInfo(sprintf(
