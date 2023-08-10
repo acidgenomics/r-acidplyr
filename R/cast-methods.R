@@ -41,7 +41,7 @@ NULL
         x <- tidyr::pivot_wider(
             data = x,
             ## `tidy-select` is required here.
-            ## See `tidyr::tidyr_tidy_select` for details.
+            ## See `help("tidyr_tidy_select", "tidyr")` for details.
             names_from = {{ colnames }},
             values_from = {{ values }},
             values_fill = NULL
