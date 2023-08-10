@@ -1,5 +1,7 @@
 ## nolint start
 
+data <- utils::data
+
 data(
     DFrame, matrix,
     package = "AcidTest",
