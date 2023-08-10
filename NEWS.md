@@ -1,5 +1,17 @@
 # Release notes
 
+## AcidPlyr 0.3.11 (2023-08-10)
+
+Major changes:
+
+- Now requiring R 4.3.
+
+Minor changes:
+
+- `cast`: Now using tidy-select internally with `{{`. This is now required for
+  breaking change update with tidyselect 1.2.0.
+- Unit tests are now performed in parallel.
+
 ## AcidPlyr 0.3.10 (2023-04-27)
 
 Minor changes:
