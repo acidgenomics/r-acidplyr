@@ -40,6 +40,8 @@ NULL
         assert(identical(dim(x), dim(object)))
         x <- tidyr::pivot_wider(
             data = x,
+            ## `tidy-select` is required here.
+            ## See `tidyr::tidyr_tidy_select` for details.
             names_from = {{ colnames }},
             values_from = {{ values }},
             values_fill = NULL
