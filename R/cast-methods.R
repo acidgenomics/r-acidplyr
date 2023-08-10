@@ -40,8 +40,8 @@ NULL
         assert(identical(dim(x), dim(object)))
         x <- tidyr::pivot_wider(
             data = x,
-            names_from = colnames,
-            values_from = values,
+            names_from = {{ colnames }},
+            values_from = {{ values }},
             values_fill = NULL
         )
         x <- as(x, "DFrame")
