@@ -26,8 +26,11 @@ Name of the column that contains the values in long format.}
 \description{
 Pivot column data from long format to wide format.
 }
+\details{
+Requires the tidyr package to be installed.
+}
 \note{
-Updated 2023-04-26.
+Updated 2023-08-11.
 }
 \examples{
 data(matrix, package = "AcidTest")

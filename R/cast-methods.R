@@ -1,6 +1,9 @@
 #' @name cast
 #' @inherit AcidGenerics::cast
-#' @note Updated 2023-04-26.
+#' @note Updated 2023-08-11.
+#'
+#' @details
+#' Requires the tidyr package to be installed.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
