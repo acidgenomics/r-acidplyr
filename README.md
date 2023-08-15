@@ -1,7 +1,6 @@
 # AcidPlyr
 
-![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-green.svg)
-[![Install with Bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/r-acidplyr/README.html)
+[![Install with Bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg)](http://bioconda.github.io/recipes/r-acidplyr/README.html) ![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-green.svg)
 
 A grammar of S4 class data manipulation.
 
