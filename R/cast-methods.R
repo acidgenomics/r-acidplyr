@@ -1,4 +1,8 @@
 ## FIXME Need to rework this to not depend on tidyr.
+## FIXME Need to simulate extra columns to fill.
+## > long[["extra"]] <- toupper(long[["rowname"]])
+## FIXME Need to check fill order here, what about flipped factor levels?
+## Consider coercing factor to character or something...
 
 
 
@@ -31,29 +35,27 @@ NULL
 
 
 
-## Updated 2023-04-26.
+## Updated 2023-08-23.
 `cast,DFrame` <- # nolint
     function(object,
              colnames = "colname",
              values = "value") {
         assert(
-            requireNamespaces("tidyr"),
-            allAreAtomic(object),
             isString(colnames),
             isString(values),
-            isSubset(c(colnames, values), colnames(object))
+            isSubset(c(colnames, values), colnames(object)),
+            is.factor(object[[colnames]]),
+            is.atomic(object[[values]])
         )
-        x <- as.data.frame(object)
-        assert(identical(dim(x), dim(object)))
-        x <- tidyr::pivot_wider(
-            data = x,
-            ## `tidy-select` is required here.
-            ## See `help("tidyr_tidy_select", "tidyr")` for details.
-            names_from = {{ colnames }},
-            values_from = {{ values }},
-            values_fill = NULL
-        )
-        x <- as(x, "DFrame")
+        spl <- split(x = object[[values]], f = object[[colnames]])
+        df <- do.call(what = cbind, args = spl)
+        df <- as(df, "DFrame")
+
+
+        ## Need to handle any remaining columns.
+        ## Ensure columns return sorted alphabetically.
+
+
         if (isSubset("rowname", colnames(x))) {
             rownames(x) <- x[["rowname"]]
             x[["rowname"]] <- NULL
