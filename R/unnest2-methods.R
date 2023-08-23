@@ -1,5 +1,9 @@
+## FIXME Need to rework this to not depend on tidyr.
+
+
+
 #' @name unnest2
-#' @inherit AcidGenerics::unnest2 description title
+#' @inherit AcidGenerics::unnest2
 #' @note Updated 2023-08-23.
 #'
 #' @param col `character(1)`.
@@ -16,7 +20,17 @@ NULL
 ## Updated 2023-08-23.
 `unnest2,DFrame` <-
     function(object, col) {
-        assert(isScalar(col))
+        assert(
+            requireNamespaces("tidyr"),
+            isString(col),
+            isSubset(col, colnames(object))
+        )
+        out <- tidyr::unnest(
+            data = as.data.frame(object),
+            col = {{ col }}
+        )
+        out <- as(out, "DFrame")
+        out
     }
 
 

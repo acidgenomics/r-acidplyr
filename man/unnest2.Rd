@@ -10,10 +10,16 @@ unnest2(object, ...)
 \S4method{unnest2}{DFrame}(object, col)
 }
 \arguments{
+\item{object}{Object.}
+
 \item{col}{\code{character(1)}.
 Name of the list-column to unnest into long format.}
 
 \item{...}{Additional arguments.}
+}
+\value{
+Modified object, with a single unnested list-column expanded into
+rows.
 }
 \description{
 Unnest a single list-column into expanded rows
@@ -23,4 +29,9 @@ Updated 2023-08-23.
 }
 \examples{
 ## DFrame ====
+}
+\seealso{
+\itemize{
+\item \code{tidyr::unnest()}.
+}
 }

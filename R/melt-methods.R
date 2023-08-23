@@ -161,13 +161,13 @@ NULL
 
 
 
-## Updated 2023-04-26.
+## Updated 2023-08-23.
 `melt,DFrame` <- # nolint
     function(object,
              colnames = c("rowname", "colname", "value")) {
         assert(
             hasColnames(object),
-            all(bapply(object, is.atomic)),
+            allAreAtomic(object),
             hasLength(unlist(unique(lapply(object, class))), n = 1L)
         )
         melt(object = as.matrix(object), colnames = colnames)
