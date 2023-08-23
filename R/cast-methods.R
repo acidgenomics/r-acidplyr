@@ -6,9 +6,11 @@
 #'
 #' @param colnames `character(1)`.
 #' Name of the column that contains the column name values in long format.
+#' Must define an unordered `factor` column.
 #'
 #' @param values `character(1)`.
 #' Name of the column that contains the values in long format.
+#' Must define an `atomic` column that is not `factor`.
 #'
 #' @param ... Additional arguments.
 #'
@@ -39,7 +41,8 @@ NULL
                 x = levels(object[[colnames]]),
                 y = sort(levels(object[[colnames]]))
             ),
-            is.atomic(object[[values]])
+            is.atomic(object[[values]]),
+            !is.factor(object[[values]])
         )
         spl <- split(x = object[[values]], f = object[[colnames]])
         df <- do.call(what = cbind, args = spl)
