@@ -1,6 +1,10 @@
+## FIXME Need to rework this to not depend on tidyr.
+
+
+
 #' @name cast
 #' @inherit AcidGenerics::cast
-#' @note Updated 2023-08-11.
+#' @note Updated 2023-08-23.
 #'
 #' @details
 #' Requires the tidyr package to be installed.
