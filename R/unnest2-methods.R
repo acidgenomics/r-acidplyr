@@ -25,11 +25,13 @@ NULL
             isString(col),
             isSubset(col, colnames(object))
         )
+        rownames(object) <- NULL
         out <- tidyr::unnest(
             data = as.data.frame(object),
             col = {{ col }}
         )
         out <- as(out, "DFrame")
+        rownames(out) <- NULL
         out
     }
 
