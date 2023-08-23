@@ -26,10 +26,12 @@ NULL
             isSubset(col, colnames(object))
         )
         rownames(object) <- NULL
-        out <- tidyr::unnest(
-            data = as.data.frame(object),
-            col = {{ col }}
+        data <- as.data.frame(object)
+        assert(
+            is.list(object[[col]]),
+            msg = sprintf("{.var %s} is not a list-column.", col)
         )
+        out <- tidyr::unnest(data = data, col = {{ col }})
         out <- as(out, "DFrame")
         rownames(out) <- NULL
         out
