@@ -29,6 +29,28 @@ Updated 2023-08-23.
 }
 \examples{
 ## DFrame ====
+suppressPackageStartupMessages({
+    library(IRanges)
+    library(pipette)
+})
+object <- as.DataFrame(list(
+    "col1" = CharacterList(
+        c("a", "b", "c", "d"),
+        c("e", "f", "g"),
+        c("h", "i")
+    ),
+    "col2" = IntegerList(
+        seq(from = 1L, to = 2L),
+        seq(from = 3L, to = 4L),
+        seq(from = 5L, to = 6L)
+    ),
+    "col3" = c("a", "b", "c")
+))
+print(object)
+x <- unnest2(object, col = "col1")
+print(x)
+y <- unnest2(object, col = "col2")
+print(y)
 }
 \seealso{
 \itemize{
