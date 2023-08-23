@@ -57,8 +57,7 @@ NULL
                     use.names = FALSE
                 )
                 row <- row[
-                    rep(seq_len(nrow(row)), each = length(vals)),
-                    ,
+                    rep(seq_len(nrow(row)), each = length(vals)), ,
                     drop = FALSE
                 ]
                 row[[col]] <- vals
