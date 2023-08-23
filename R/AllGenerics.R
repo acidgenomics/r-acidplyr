@@ -99,3 +99,9 @@ NULL
 #' @usage splitByLevel(x, f, ref = FALSE, ...)
 #' @export
 NULL
+
+#' @rdname unnest2
+#' @name unnest2
+#' @usage unnest2(object, ...)
+#' @export
+NULL
