@@ -30,7 +30,7 @@ Pivot column data from long format to wide format.
 Requires the tidyr package to be installed.
 }
 \note{
-Updated 2023-08-11.
+Updated 2023-08-23.
 }
 \examples{
 data(matrix, package = "AcidTest")
