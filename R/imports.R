@@ -9,7 +9,7 @@ NULL
 
 #' @importFrom AcidGenerics antiJoin cast collapseToString fullJoin innerJoin
 #' leftJoin melt mutateAll mutateAt mutateIf rbindToDataFrame rightJoin selectIf
-#' semiJoin splitByLevel transmuteAt transmuteIf
+#' semiJoin splitByLevel transmuteAt transmuteIf unnest2
 #' @importFrom BiocGenerics as.data.frame cbind do.call lapply order setdiff
 #' unique unlist
 #' @importFrom S4Vectors complete.cases decode expand.grid merge metadata
