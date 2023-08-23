@@ -53,4 +53,8 @@ test_that("DFrame", {
             "col3" = rep(c("a", "b", "c"), each = 2L)
         ))
     )
+    expect_error(
+        object = unnest2(object, col = "col3"),
+        regexp = "list-column"
+    )
 })
