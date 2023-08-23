@@ -1,17 +1,6 @@
-## FIXME Need to rework this to not depend on tidyr.
-## FIXME Need to simulate extra columns to fill.
-## > long[["extra"]] <- toupper(long[["rowname"]])
-## FIXME Need to check fill order here, what about flipped factor levels?
-## Consider coercing factor to character or something...
-
-
-
 #' @name cast
 #' @inherit AcidGenerics::cast
 #' @note Updated 2023-08-23.
-#'
-#' @details
-#' Requires the tidyr package to be installed.
 #'
 #' @inheritParams AcidRoxygen::params
 #'
@@ -45,22 +34,32 @@ NULL
             isString(values),
             isSubset(c(colnames, values), colnames(object)),
             is.factor(object[[colnames]]),
+            isFALSE(is.ordered(object[[colnames]])),
+            identical(
+                x = levels(object[[colnames]]),
+                y = sort(levels(object[[colnames]]))
+            ),
             is.atomic(object[[values]])
         )
         spl <- split(x = object[[values]], f = object[[colnames]])
         df <- do.call(what = cbind, args = spl)
         df <- as(df, "DFrame")
-
-
-        ## Need to handle any remaining columns.
-        ## Ensure columns return sorted alphabetically.
-
-
-        if (isSubset("rowname", colnames(x))) {
-            rownames(x) <- x[["rowname"]]
-            x[["rowname"]] <- NULL
+        extraCols <- setdiff(colnames(object), c(colnames, values))
+        if (hasLength(extraCols)) {
+            df2 <- object[
+                seq_len(nlevels(object[[colnames]])),
+                extraCols,
+                drop = FALSE
+            ]
+            df <- cbind(df, df2)
         }
-        x
+        if (isSubset("rowname", colnames(df))) {
+            assert(hasNoDuplicates(df[["rowname"]]))
+            rownames(df) <- df[["rowname"]]
+            df[["rowname"]] <- NULL
+        }
+        df <- df[, sort(colnames(df)), drop = FALSE]
+        df
     }
 
 
