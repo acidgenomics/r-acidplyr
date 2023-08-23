@@ -13,10 +13,12 @@ cast(object, ...)
 \item{object}{Object.}
 
 \item{colnames}{\code{character(1)}.
-Name of the column that contains the column name values in long format.}
+Name of the column that contains the column name values in long format.
+Must define an unordered \code{factor} column.}
 
 \item{values}{\code{character(1)}.
-Name of the column that contains the values in long format.}
+Name of the column that contains the values in long format.
+Must define an \code{atomic} column that is not \code{factor}.}
 
 \item{...}{Additional arguments.}
 }
