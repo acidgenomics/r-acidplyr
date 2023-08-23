@@ -36,7 +36,7 @@ NULL
 
 
 ## Updated 2023-08-23.
-`unnest2,DFrame` <-
+`unnest2,DFrame` <- # nolint
     function(object, col) {
         assert(
             isString(col),
