@@ -1,5 +1,20 @@
 # Release notes
 
+## AcidPlyr 0.4.0 (UNRELEASED)
+
+New functions:
+
+- `unnest2`: This is a simpler variant of tidyr `unnest` that is intended to
+  work directly on S4 `DFrame` without coercion to `data.frame`. It supports
+  unnesting of a single list-column by design, and is intended to be as
+  simple as possible.
+
+Major changes:
+
+- `cast`: No longer requires tidyr internally. We reworked the internal code of
+  this function to use base R syntax with full Bioconductor S4 class support.
+  No internal coercion to `data.frame` is performed.
+
 ## AcidPlyr 0.3.11 (2023-08-10)
 
 Major changes:
