@@ -1,6 +1,15 @@
 # Release notes
 
-## AcidPlyr 0.4.0 (UNRELEASED)
+## AcidPlyr 0.4.1 (2023-08-24)
+
+Minor changes:
+
+- `unnest2`: Reworked internal code on `SplitDFrame` that now only attempts to
+  recycle rows when length is greater than 1. Additionally, the function now
+  consistently sets `NA` when length is 0. Removed unnecessary internal call
+  to `unlist` -- we can just access the values directly.
+
+## AcidPlyr 0.4.0 (2023-08-23)
 
 New functions:
 
