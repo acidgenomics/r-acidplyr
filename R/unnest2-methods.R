@@ -1,6 +1,6 @@
 #' @name unnest2
 #' @inherit AcidGenerics::unnest2
-#' @note Updated 2023-08-23.
+#' @note Updated 2023-08-24.
 #'
 #' @param col `character(1)`.
 #' Name of the list-column to unnest into long format.
@@ -35,7 +35,7 @@ NULL
 
 
 
-## Updated 2023-08-23.
+## Updated 2023-08-24.
 `unnest2,DFrame` <- # nolint
     function(object, col) {
         assert(
@@ -51,15 +51,16 @@ NULL
         lst <- lapply(
             X = spl,
             FUN = function(row) {
-                vals <- unlist(
-                    x = row[[col]],
-                    recursive = FALSE,
-                    use.names = FALSE
-                )
-                row <- row[
-                    rep(seq_len(nrow(row)), each = length(vals)), ,
-                    drop = FALSE
-                ]
+                vals <- row[[col]][[1L]]
+                if (length(vals) == 0L) {
+                    vals <- NA
+                }
+                if (length(vals) > 1L) {
+                    row <- row[
+                        rep(seq_len(nrow(row)), each = length(vals)), ,
+                        drop = FALSE
+                    ]
+                }
                 row[[col]] <- vals
                 row
             }
