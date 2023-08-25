@@ -1,6 +1,10 @@
+## FIXME Need to rework these to allow joins when by contains NA.
+
+
+
 #' @name join
 #' @inherit AcidGenerics::join
-#' @note Updated 2023-02-23.
+#' @note Updated 2023-08-25.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -35,7 +39,7 @@ NULL
 
 
 
-## Updated 2023-04-26.
+## Updated 2023-08-25.
 `antiJoin,DFrame` <- # nolint
     function(x, y, by) {
         assert(
@@ -55,7 +59,9 @@ NULL
             areDisjointSets(
                 x = c(".idx", ".idy"),
                 y = colnames(y)
-            )
+            ),
+            allAreAtomic(x[, by, drop = FALSE]),
+            allAreAtomic(y[, by, drop = FALSE])
         )
         assert(
             identical(
@@ -93,7 +99,7 @@ NULL
 
 
 
-## Updated 2023-04-26.
+## Updated 2023-08-25.
 `fullJoin,DFrame` <- # nolint
     function(x, y, by) {
         assert(
@@ -113,7 +119,9 @@ NULL
             areDisjointSets(
                 x = c(".idx", ".idy"),
                 y = colnames(y)
-            )
+            ),
+            allAreAtomic(x[, by, drop = FALSE]),
+            allAreAtomic(y[, by, drop = FALSE])
         )
         assert(
             identical(
@@ -162,7 +170,7 @@ NULL
 
 
 
-## Updated 2023-04-26.
+## Updated 2023-08-25.
 `innerJoin,DFrame` <- # nolint
     function(x, y, by) {
         assert(
@@ -182,7 +190,9 @@ NULL
             areDisjointSets(
                 x = c(".idx", ".idy"),
                 y = colnames(y)
-            )
+            ),
+            allAreAtomic(x[, by, drop = FALSE]),
+            allAreAtomic(y[, by, drop = FALSE])
         )
         assert(
             identical(
@@ -229,7 +239,7 @@ NULL
 ## coercing mismatched `y` to data.frame, which does allow expansion via indices
 ## containing NAs.
 
-## Updated 2023-04-26.
+## Updated 2023-08-25.
 `leftJoin,DFrame` <- # nolint
     function(x, y, by) {
         assert(
@@ -249,7 +259,9 @@ NULL
             areDisjointSets(
                 x = c(".idx", ".idy"),
                 y = colnames(y)
-            )
+            ),
+            allAreAtomic(x[, by, drop = FALSE]),
+            allAreAtomic(y[, by, drop = FALSE])
         )
         assert(
             identical(
@@ -260,6 +272,8 @@ NULL
                 "Columns defined in {.var %s} argument are not unique.", "by"
             )
         )
+        ## FIXME Need to rethink this assert check. We need to allow join
+        ## when by column contains NA.
         assert(
             all(complete.cases(x[, by, drop = FALSE])),
             all(complete.cases(y[, by, drop = FALSE])),
@@ -307,7 +321,7 @@ NULL
 
 
 
-## Updated 2023-04-26.
+## Updated 2023-08-25.
 `semiJoin,DFrame` <- # nolint
     function(x, y, by) {
         assert(
@@ -327,7 +341,9 @@ NULL
             areDisjointSets(
                 x = c(".idx", ".idy"),
                 y = colnames(y)
-            )
+            ),
+            allAreAtomic(x[, by, drop = FALSE]),
+            allAreAtomic(y[, by, drop = FALSE])
         )
         assert(
             identical(
