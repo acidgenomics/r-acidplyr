@@ -1,6 +1,6 @@
 #' @name unnest2
 #' @inherit AcidGenerics::unnest2
-#' @note Updated 2023-08-24.
+#' @note Updated 2023-08-25.
 #'
 #' @param col `character(1)`.
 #' Name of the list-column to unnest into long format.
