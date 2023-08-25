@@ -1,7 +1,3 @@
-## FIXME Need to rework these to allow joins when by contains NA.
-
-
-
 #' @name join
 #' @inherit AcidGenerics::join
 #' @note Updated 2023-08-25.
@@ -273,6 +269,7 @@ NULL
             )
         )
         assert(
+            any(complete.cases(x[, by, drop = FALSE])),
             all(complete.cases(y[, by, drop = FALSE])),
             msg = sprintf(
                 "Columns defined in {.var %s} argument contain {.val %s}.",
