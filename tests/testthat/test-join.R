@@ -189,7 +189,6 @@ test_that("rightJoin", {
     )
 })
 
-## FIXME Need to double check our not unique and NA handling here.
 test_that("rightJoin : Duplicate and NA values in 'by'", {
     x2 <- x
     x2[[by]][[2L]] <- x2[[by]][[1L]]
@@ -216,9 +215,14 @@ test_that("rightJoin : Duplicate and NA values in 'by'", {
     )
     y2 <- y
     y2[[by]][[1L]] <- NA
-    expect_error(
+    expect_identical(
         object = rightJoin(x = x, y = y2, by = by),
-        regexp = "NA"
+        expected = DataFrame(
+            "name" = c(NA, "Paul", "Keith"),
+            "plays" = c("guitar", "bass", "guitar"),
+            "band" = c(NA, "Beatles", NA),
+            row.names = c("John", "Paul", "Keith")
+        )
     )
 })
 
