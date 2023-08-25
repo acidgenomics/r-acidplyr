@@ -48,7 +48,16 @@ NULL
             msg = sprintf("{.var %s} is not a list-column.", col)
         )
         spl <- split(x = object, f = seq_len(nrow(object)))
-        lst <- lapply(
+        if (length(spl) >= 1000L) {
+            hasCli <- isInstalled("AcidCLI")
+            if (isTRUE(hasCli)) {
+                assert(requireNamespaces("AcidCLI"))
+            }
+            if (isTRUE(hasCli)) {
+                AcidCLI::alert(sprintf("Unnesting %d rows.", length(spl)))
+            }
+        }
+        lst <- mclapply(
             X = spl,
             FUN = function(row) {
                 vals <- row[[col]][[1L]]

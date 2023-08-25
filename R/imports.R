@@ -26,4 +26,5 @@ NULL
 #' isFlag isInstalled isInt isNumber isScalar isString isSubset
 #' requireNamespaces
 #' @importFrom methods as is new setMethod signature
+#' @importFrom parallel mclapply
 NULL
