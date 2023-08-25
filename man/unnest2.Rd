@@ -25,7 +25,7 @@ rows.
 Unnest a single list-column into expanded rows
 }
 \note{
-Updated 2023-08-23.
+Updated 2023-08-24.
 }
 \examples{
 ## DFrame ====
