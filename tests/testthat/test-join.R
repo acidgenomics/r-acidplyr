@@ -7,13 +7,14 @@ rownames(y) <- y[["name"]]
 by <- "name"
 
 test_that("antiJoin", {
-    object <- antiJoin(x = x, y = y, by = by)
-    expected <- DataFrame(
-        "name" = "Mick",
-        "band" = "Stones",
-        row.names = "Mick"
+    expect_identical(
+        object = antiJoin(x = x, y = y, by = by),
+        expected = DataFrame(
+            "name" = "Mick",
+            "band" = "Stones",
+            row.names = "Mick"
+        )
     )
-    expect_identical(object, expected)
 })
 
 test_that("antiJoin : Duplicate and NA values in 'by'", {
@@ -44,14 +45,15 @@ test_that("antiJoin : Duplicate and NA values in 'by'", {
 })
 
 test_that("fullJoin", {
-    object <- fullJoin(x = x, y = y, by = by)
-    expected <- DataFrame(
-        "name" = c("Mick", "John", "Paul", "Keith"),
-        "band" = c("Stones", "Beatles", "Beatles", NA),
-        "plays" = c(NA, "guitar", "bass", "guitar"),
-        row.names = c("Mick", "John", "Paul", "Keith")
+    expect_identical(
+        object = fullJoin(x = x, y = y, by = by),
+        expected = DataFrame(
+            "name" = c("Mick", "John", "Paul", "Keith"),
+            "band" = c("Stones", "Beatles", "Beatles", NA),
+            "plays" = c(NA, "guitar", "bass", "guitar"),
+            row.names = c("Mick", "John", "Paul", "Keith")
+        )
     )
-    expect_identical(object, expected)
 })
 
 test_that("fullJoin : Duplicate and NA values in 'by'", {
@@ -82,14 +84,15 @@ test_that("fullJoin : Duplicate and NA values in 'by'", {
 })
 
 test_that("innerJoin", {
-    object <- innerJoin(x = x, y = y, by = by)
-    expected <- DataFrame(
-        "name" = c("John", "Paul"),
-        "band" = c("Beatles", "Beatles"),
-        "plays" = c("guitar", "bass"),
-        row.names = c("John", "Paul")
+    expect_identical(
+        object = innerJoin(x = x, y = y, by = by),
+        expected = DataFrame(
+            "name" = c("John", "Paul"),
+            "band" = c("Beatles", "Beatles"),
+            "plays" = c("guitar", "bass"),
+            row.names = c("John", "Paul")
+        )
     )
-    expect_identical(object, expected)
 })
 
 test_that("innerJoin : Duplicate and NA values in 'by'", {
@@ -120,14 +123,15 @@ test_that("innerJoin : Duplicate and NA values in 'by'", {
 })
 
 test_that("leftJoin", {
-    object <- leftJoin(x = x, y = y, by = by)
-    expected <- DataFrame(
-        "name" = c("Mick", "John", "Paul"),
-        "band" = c("Stones", "Beatles", "Beatles"),
-        "plays" = c(NA, "guitar", "bass"),
-        row.names = c("Mick", "John", "Paul")
+    expect_identical(
+        object = leftJoin(x = x, y = y, by = by),
+        expected = DataFrame(
+            "name" = c("Mick", "John", "Paul"),
+            "band" = c("Stones", "Beatles", "Beatles"),
+            "plays" = c(NA, "guitar", "bass"),
+            row.names = c("Mick", "John", "Paul")
+        )
     )
-    expect_identical(object, expected)
 })
 
 test_that("leftJoin : Duplicate and NA values in 'by'", {
@@ -143,10 +147,28 @@ test_that("leftJoin : Duplicate and NA values in 'by'", {
         )
     )
     x2 <- x
-    x2[[by]][[1L]] <- NA
+    x2[[by]] <- NA
     expect_error(
         object = leftJoin(x = x2, y = y, by = by),
         regexp = "NA"
+    )
+    x2 <- x
+    x2[[by]][[1L]] <- NA
+    expect_identical(
+        object = leftJoin(x = x2, y = y, by = by),
+        expected = DataFrame(
+            "name" = c(NA, "John", "Paul"),
+            "band" = c("Stones", "Beatles", "Beatles"),
+            "plays" = c(NA, "guitar", "bass"),
+            row.names = c("Mick", "John", "Paul")
+        )
+    )
+    ## FIXME This situation is incorrect I think, argh.
+    x2 <- x
+    x2[[by]][[2L]] <- x2[[by]][[1L]]
+    expect_error(
+        object = leftJoin(x = x2, y = y, by = by),
+        regexp = "not unique"
     )
     y2 <- y
     y2[[by]][[2L]] <- y2[[by]][[1L]]
@@ -163,16 +185,18 @@ test_that("leftJoin : Duplicate and NA values in 'by'", {
 })
 
 test_that("rightJoin", {
-    object <- rightJoin(x = x, y = y, by = by)
-    expected <- DataFrame(
-        "name" = c("John", "Paul", "Keith"),
-        "plays" = c("guitar", "bass", "guitar"),
-        "band" = c("Beatles", "Beatles", NA),
-        row.names = c("John", "Paul", "Keith")
+    expect_identical(
+        object = rightJoin(x = x, y = y, by = by),
+        expected = DataFrame(
+            "name" = c("John", "Paul", "Keith"),
+            "plays" = c("guitar", "bass", "guitar"),
+            "band" = c("Beatles", "Beatles", NA),
+            row.names = c("John", "Paul", "Keith")
+        )
     )
-    expect_identical(object, expected)
 })
 
+## FIXME Need to double check our not unique and NA handling here.
 test_that("rightJoin : Duplicate and NA values in 'by'", {
     x2 <- x
     x2[[by]][[2L]] <- x2[[by]][[1L]]
@@ -206,13 +230,14 @@ test_that("rightJoin : Duplicate and NA values in 'by'", {
 })
 
 test_that("semiJoin", {
-    object <- semiJoin(x = x, y = y, by = by)
-    expected <- DataFrame(
-        "name" = c("John", "Paul"),
-        "band" = c("Beatles", "Beatles"),
-        row.names = c("John", "Paul")
+    expect_identical(
+        object = semiJoin(x = x, y = y, by = by),
+        expected = DataFrame(
+            "name" = c("John", "Paul"),
+            "band" = c("Beatles", "Beatles"),
+            row.names = c("John", "Paul")
+        )
     )
-    expect_identical(object, expected)
 })
 
 test_that("semiJoin : Duplicate and NA values in 'by'", {
