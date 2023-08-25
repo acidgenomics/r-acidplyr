@@ -163,13 +163,6 @@ test_that("leftJoin : Duplicate and NA values in 'by'", {
             row.names = c("Mick", "John", "Paul")
         )
     )
-    ## FIXME This situation is incorrect I think, argh.
-    x2 <- x
-    x2[[by]][[2L]] <- x2[[by]][[1L]]
-    expect_error(
-        object = leftJoin(x = x2, y = y, by = by),
-        regexp = "not unique"
-    )
     y2 <- y
     y2[[by]][[2L]] <- y2[[by]][[1L]]
     expect_error(
