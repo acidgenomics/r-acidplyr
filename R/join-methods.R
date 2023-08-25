@@ -272,10 +272,7 @@ NULL
                 "Columns defined in {.var %s} argument are not unique.", "by"
             )
         )
-        ## FIXME Need to rethink this assert check. We need to allow join
-        ## when by column contains NA.
         assert(
-            all(complete.cases(x[, by, drop = FALSE])),
             all(complete.cases(y[, by, drop = FALSE])),
             msg = sprintf(
                 "Columns defined in {.var %s} argument contain {.val %s}.",
@@ -288,6 +285,10 @@ NULL
         x[[".idx"]] <- seq_len(nrow(x))
         y[[".idy"]] <- seq_len(nrow(y))
         m <- merge(x = x, y = y, by = by, all.x = TRUE, sort = FALSE)
+        ## Handle case when x by column contains NA.
+        if (!all(complete.cases(x[, by, drop = FALSE]))) {
+            m <- m[!duplicated(m[[".idx"]]), , drop = FALSE]
+        }
         assert(
             is(m, "DFrame"),
             identical(nrow(x), nrow(m))
