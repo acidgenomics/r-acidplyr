@@ -1,5 +1,17 @@
 # Release notes
 
+## AcidPlyr 0.4.2 (2023-08-26)
+
+Minor changes:
+
+- `leftJoin` and `rightJoin` now allow for `NA` values defined in the `by`
+  column for the `x` side of the join. This was required for OncoTree metadata
+  additions in the pending Cellosaurus package update.
+- All join operations now check to see if the `by` columns are atomic.
+- `unnest2` now uses parallell `mclapply` for the main unnest step, which speeds
+  up expansion of large data frames significantly. We have added an alert
+  message for data frames with at least 1000 rows.
+
 ## AcidPlyr 0.4.1 (2023-08-24)
 
 Minor changes:
