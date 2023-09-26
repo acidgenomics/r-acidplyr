@@ -27,7 +27,7 @@ NULL
 
 
 
-## Updated 2023-02-22.
+## Updated 2023-09-25.
 `rbindToDataFrame,list` <- # nolint
     function(x) {
         assert(hasLength(x))
@@ -45,6 +45,7 @@ NULL
         )
         assert(
             !is.null(dimnames[[2L]]),
+            !anyNA(dimnames[[2L]]),
             msg = "Nested list elements are not named."
         )
         ## Transpose the list.
