@@ -3,7 +3,7 @@ Title: Acid Genomics Rectangular Data Plyr
 Description: A dplyr-like grammar for manipulation of S4 rectangular data
   classes, such as DFrame.
 Version: 0.4.3.9000
-Date: 2023-09-25
+Date: 2023-09-27
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",

@@ -61,7 +61,7 @@ NULL
             isCharacter(colnames),
             hasLength(colnames, n = 3L),
             areDisjointSets(colnames, colnames(object)),
-            isNumber(min, nullOK = TRUE)
+            isNumber(min, nullOk = TRUE)
         )
         hasCli <- isInstalled("AcidCLI")
         if (isTRUE(hasCli)) {
