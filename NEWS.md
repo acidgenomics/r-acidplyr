@@ -1,5 +1,16 @@
 # Release notes
 
+## AcidPlyr 0.5.0 (2023-10-03)
+
+Major changes:
+
+- New release series, indicating significant changes in Acid Genomics dependency
+  packages.
+
+Minor changes:
+
+- `rbindToDataFrame`: Added an additional assert check.
+
 ## AcidPlyr 0.4.2 (2023-08-26)
 
 Minor changes:
