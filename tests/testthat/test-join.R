@@ -25,7 +25,7 @@ test_that("antiJoin : Duplicate and NA values in 'by'", {
         regexp = "not unique"
     )
     x2 <- x
-    x2[[by]][[1L]] <- NA
+    x2[[by]][[1L]] <- NA_character_
     expect_error(
         object = antiJoin(x = x2, y = y, by = by),
         regexp = "NA"
@@ -37,7 +37,7 @@ test_that("antiJoin : Duplicate and NA values in 'by'", {
         regexp = "not unique"
     )
     y2 <- y
-    y2[[by]][[1L]] <- NA
+    y2[[by]][[1L]] <- NA_character_
     expect_error(
         object = antiJoin(x = x, y = y2, by = by),
         regexp = "NA"
@@ -64,7 +64,7 @@ test_that("fullJoin : Duplicate and NA values in 'by'", {
         regexp = "not unique"
     )
     x2 <- x
-    x2[[by]][[1L]] <- NA
+    x2[[by]][[1L]] <- NA_character_
     expect_error(
         object = fullJoin(x = x2, y = y, by = by),
         regexp = "NA"
@@ -76,7 +76,7 @@ test_that("fullJoin : Duplicate and NA values in 'by'", {
         regexp = "not unique"
     )
     y2 <- y
-    y2[[by]][[1L]] <- NA
+    y2[[by]][[1L]] <- NA_character_
     expect_error(
         object = fullJoin(x = x, y = y2, by = by),
         regexp = "NA"
@@ -103,7 +103,7 @@ test_that("innerJoin : Duplicate and NA values in 'by'", {
         regexp = "not unique"
     )
     x2 <- x
-    x2[[by]][[1L]] <- NA
+    x2[[by]][[1L]] <- NA_character_
     expect_error(
         object = innerJoin(x = x2, y = y, by = by),
         regexp = "NA"
@@ -115,7 +115,7 @@ test_that("innerJoin : Duplicate and NA values in 'by'", {
         regexp = "not unique"
     )
     y2 <- y
-    y2[[by]][[1L]] <- NA
+    y2[[by]][[1L]] <- NA_character_
     expect_error(
         object = innerJoin(x = x, y = y2, by = by),
         regexp = "NA"
@@ -147,13 +147,13 @@ test_that("leftJoin : Duplicate and NA values in 'by'", {
         )
     )
     x2 <- x
-    x2[[by]] <- NA
+    x2[[by]] <- NA_character_
     expect_error(
         object = leftJoin(x = x2, y = y, by = by),
         regexp = "NA"
     )
     x2 <- x
-    x2[[by]][[1L]] <- NA
+    x2[[by]][[1L]] <- NA_character_
     expect_identical(
         object = leftJoin(x = x2, y = y, by = by),
         expected = DataFrame(
@@ -170,7 +170,7 @@ test_that("leftJoin : Duplicate and NA values in 'by'", {
         regexp = "not unique"
     )
     y2 <- y
-    y2[[by]][[1L]] <- NA
+    y2[[by]][[1L]] <- NA_character_
     expect_error(
         object = leftJoin(x = x, y = y2, by = by),
         regexp = "NA"
@@ -197,7 +197,7 @@ test_that("rightJoin : Duplicate and NA values in 'by'", {
         regexp = "not unique"
     )
     x2 <- x
-    x2[[by]][[1L]] <- NA
+    x2[[by]][[1L]] <- NA_character_
     expect_error(
         object = rightJoin(x = x2, y = y, by = by),
         regexp = "NA"
@@ -214,7 +214,7 @@ test_that("rightJoin : Duplicate and NA values in 'by'", {
         )
     )
     y2 <- y
-    y2[[by]][[1L]] <- NA
+    y2[[by]][[1L]] <- NA_character_
     expect_identical(
         object = rightJoin(x = x, y = y2, by = by),
         expected = DataFrame(
@@ -245,7 +245,7 @@ test_that("semiJoin : Duplicate and NA values in 'by'", {
         regexp = "not unique"
     )
     x2 <- x
-    x2[[by]][[1L]] <- NA
+    x2[[by]][[1L]] <- NA_character_
     expect_error(
         object = semiJoin(x = x2, y = y, by = by),
         regexp = "NA"
@@ -257,7 +257,7 @@ test_that("semiJoin : Duplicate and NA values in 'by'", {
         regexp = "not unique"
     )
     y2 <- y
-    y2[[by]][[1L]] <- NA
+    y2[[by]][[1L]] <- NA_character_
     expect_error(
         object = semiJoin(x = x, y = y2, by = by),
         regexp = "NA"
