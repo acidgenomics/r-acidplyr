@@ -1,6 +1,6 @@
 #' @name join
 #' @inherit AcidGenerics::join
-#' @note Updated 2023-08-25.
+#' @note Updated 2023-10-12.
 #'
 #' @inheritParams AcidRoxygen::params
 #' @param ... Additional arguments.
@@ -35,7 +35,7 @@ NULL
 
 
 
-## Updated 2023-08-25.
+## Updated 2023-10-12.
 `antiJoin,DFrame` <- # nolint
     function(x, y, by) {
         assert(
@@ -59,22 +59,48 @@ NULL
             allAreAtomic(x[, by, drop = FALSE]),
             allAreAtomic(y[, by, drop = FALSE])
         )
+        xBy <- x[, by, drop = FALSE]
+        yBy <- y[, by, drop = FALSE]
+        assert(
+            identical(
+                lapply(X = xBy, FUN = class),
+                lapply(X = yBy, FUN = class)
+            ),
+            msg = sprintf(
+                paste(
+                    "Type mismatch of columns defined in {.var %s}",
+                    "between {.var %s} and {.var %s}."
+                ),
+                "by", "x", "y"
+            )
+        )
+        assert(
+            allAreAtomic(xBy),
+            allAreAtomic(yBy),
+            msg = sprintf(
+                paste(
+                    "Columns defined in {.var %s} are not atomic",
+                    "for both {.var %s} and {.var %s}."
+                ),
+                "by", "x", "y"
+            )
+        )
         assert(
             identical(
                 x = nrow(x),
-                y = nrow(unique(x[, by, drop = FALSE]))
+                y = nrow(unique(xBy))
             ),
             identical(
                 x = nrow(y),
-                y = nrow(unique(y[, by, drop = FALSE]))
+                y = nrow(unique(yBy))
             ),
             msg = sprintf(
                 "Columns defined in {.var %s} argument are not unique.", "by"
             )
         )
         assert(
-            all(complete.cases(x[, by, drop = FALSE])),
-            all(complete.cases(y[, by, drop = FALSE])),
+            all(complete.cases(xBy)),
+            all(complete.cases(yBy)),
             msg = sprintf(
                 "Columns defined in {.var %s} argument contain {.val %s}.",
                 "by", "NA"
