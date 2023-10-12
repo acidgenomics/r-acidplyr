@@ -41,30 +41,19 @@ NULL
         assert(
             hasColnames(x),
             hasColnames(y),
-            isSubset(x = by, y = colnames(x)),
-            isSubset(x = by, y = colnames(y)),
-            areDisjointSets(
-                x = setdiff(x = colnames(x), y = by),
-                y = setdiff(x = colnames(y), y = by)
-            ),
+            isSubset(by, colnames(x)),
+            isSubset(by, colnames(y)),
+            areDisjointSets(setdiff(colnames(x), by), setdiff(colnames(y), by)),
             hasNoDuplicates(by),
-            areDisjointSets(
-                x = c(".idx", ".idy"),
-                y = colnames(x)
-            ),
-            areDisjointSets(
-                x = c(".idx", ".idy"),
-                y = colnames(y)
-            ),
-            allAreAtomic(x[, by, drop = FALSE]),
-            allAreAtomic(y[, by, drop = FALSE])
+            areDisjointSets(c(".idx", ".idy"), colnames(x)),
+            areDisjointSets(c(".idx", ".idy"), colnames(y))
         )
         xBy <- x[, by, drop = FALSE]
         yBy <- y[, by, drop = FALSE]
         assert(
             identical(
-                lapply(X = xBy, FUN = class),
-                lapply(X = yBy, FUN = class)
+                x = lapply(X = xBy, FUN = class),
+                y = lapply(X = yBy, FUN = class)
             ),
             msg = sprintf(
                 paste(
@@ -86,14 +75,8 @@ NULL
             )
         )
         assert(
-            identical(
-                x = nrow(x),
-                y = nrow(unique(xBy))
-            ),
-            identical(
-                x = nrow(y),
-                y = nrow(unique(yBy))
-            ),
+            identical(nrow(x), nrow(unique(xBy))),
+            identical(nrow(y), nrow(unique(yBy))),
             msg = sprintf(
                 "Columns defined in {.var %s} argument are not unique.", "by"
             )
@@ -121,46 +104,55 @@ NULL
 
 
 
-## Updated 2023-08-25.
+## Updated 2023-10-12.
 `fullJoin,DFrame` <- # nolint
     function(x, y, by) {
         assert(
             hasColnames(x),
             hasColnames(y),
-            isSubset(x = by, y = colnames(x)),
-            isSubset(x = by, y = colnames(y)),
-            areDisjointSets(
-                x = setdiff(x = colnames(x), y = by),
-                y = setdiff(x = colnames(y), y = by)
-            ),
+            isSubset(by, colnames(x)),
+            isSubset(by, colnames(y)),
+            areDisjointSets(setdiff(colnames(x), by), setdiff(colnames(y), by)),
             hasNoDuplicates(by),
-            areDisjointSets(
-                x = c(".idx", ".idy"),
-                y = colnames(x)
-            ),
-            areDisjointSets(
-                x = c(".idx", ".idy"),
-                y = colnames(y)
-            ),
-            allAreAtomic(x[, by, drop = FALSE]),
-            allAreAtomic(y[, by, drop = FALSE])
+            areDisjointSets(c(".idx", ".idy"), colnames(x)),
+            areDisjointSets(c(".idx", ".idy"), colnames(y))
         )
+        xBy <- x[, by, drop = FALSE]
+        yBy <- y[, by, drop = FALSE]
         assert(
             identical(
-                x = nrow(x),
-                y = nrow(unique(x[, by, drop = FALSE]))
+                x = lapply(X = xBy, FUN = class),
+                y = lapply(X = yBy, FUN = class)
             ),
-            identical(
-                x = nrow(y),
-                y = nrow(unique(y[, by, drop = FALSE]))
-            ),
+            msg = sprintf(
+                paste(
+                    "Type mismatch of columns defined in {.var %s}",
+                    "between {.var %s} and {.var %s}."
+                ),
+                "by", "x", "y"
+            )
+        )
+        assert(
+            allAreAtomic(xBy),
+            allAreAtomic(yBy),
+            msg = sprintf(
+                paste(
+                    "Columns defined in {.var %s} are not atomic",
+                    "for both {.var %s} and {.var %s}."
+                ),
+                "by", "x", "y"
+            )
+        )
+        assert(
+            identical(nrow(x), nrow(unique(xBy))),
+            identical(nrow(y), nrow(unique(yBy))),
             msg = sprintf(
                 "Columns defined in {.var %s} argument are not unique.", "by"
             )
         )
         assert(
-            all(complete.cases(x[, by, drop = FALSE])),
-            all(complete.cases(y[, by, drop = FALSE])),
+            all(complete.cases(xBy)),
+            all(complete.cases(yBy)),
             msg = sprintf(
                 "Columns defined in {.var %s} argument contain {.val %s}.",
                 "by", "NA"
@@ -192,46 +184,55 @@ NULL
 
 
 
-## Updated 2023-08-25.
+## Updated 2023-10-12.
 `innerJoin,DFrame` <- # nolint
     function(x, y, by) {
         assert(
             hasColnames(x),
             hasColnames(y),
-            isSubset(x = by, y = colnames(x)),
-            isSubset(x = by, y = colnames(y)),
-            areDisjointSets(
-                x = setdiff(x = colnames(x), y = by),
-                y = setdiff(x = colnames(y), y = by)
-            ),
+            isSubset(by, colnames(x)),
+            isSubset(by, colnames(y)),
+            areDisjointSets(setdiff(colnames(x), by), setdiff(colnames(y), by)),
             hasNoDuplicates(by),
-            areDisjointSets(
-                x = c(".idx", ".idy"),
-                y = colnames(x)
-            ),
-            areDisjointSets(
-                x = c(".idx", ".idy"),
-                y = colnames(y)
-            ),
-            allAreAtomic(x[, by, drop = FALSE]),
-            allAreAtomic(y[, by, drop = FALSE])
+            areDisjointSets(c(".idx", ".idy"), colnames(x)),
+            areDisjointSets(c(".idx", ".idy"), colnames(y))
         )
+        xBy <- x[, by, drop = FALSE]
+        yBy <- y[, by, drop = FALSE]
         assert(
             identical(
-                x = nrow(x),
-                y = nrow(unique(x[, by, drop = FALSE]))
+                x = lapply(X = xBy, FUN = class),
+                y = lapply(X = yBy, FUN = class)
             ),
-            identical(
-                x = nrow(y),
-                y = nrow(unique(y[, by, drop = FALSE]))
-            ),
+            msg = sprintf(
+                paste(
+                    "Type mismatch of columns defined in {.var %s}",
+                    "between {.var %s} and {.var %s}."
+                ),
+                "by", "x", "y"
+            )
+        )
+        assert(
+            allAreAtomic(xBy),
+            allAreAtomic(yBy),
+            msg = sprintf(
+                paste(
+                    "Columns defined in {.var %s} are not atomic",
+                    "for both {.var %s} and {.var %s}."
+                ),
+                "by", "x", "y"
+            )
+        )
+        assert(
+            identical(nrow(x), nrow(unique(xBy))),
+            identical(nrow(y), nrow(unique(yBy))),
             msg = sprintf(
                 "Columns defined in {.var %s} argument are not unique.", "by"
             )
         )
         assert(
-            all(complete.cases(x[, by, drop = FALSE])),
-            all(complete.cases(y[, by, drop = FALSE])),
+            all(complete.cases(xBy)),
+            all(complete.cases(yBy)),
             msg = sprintf(
                 "Columns defined in {.var %s} argument contain {.val %s}.",
                 "by", "NA"
@@ -261,42 +262,55 @@ NULL
 ## coercing mismatched `y` to data.frame, which does allow expansion via indices
 ## containing NAs.
 
-## Updated 2023-08-25.
+## Updated 2023-10-12.
 `leftJoin,DFrame` <- # nolint
     function(x, y, by) {
         assert(
             hasColnames(x),
             hasColnames(y),
-            isSubset(x = by, y = colnames(x)),
-            isSubset(x = by, y = colnames(y)),
-            areDisjointSets(
-                x = setdiff(x = colnames(x), y = by),
-                y = setdiff(x = colnames(y), y = by)
-            ),
+            isSubset(by, colnames(x)),
+            isSubset(by, colnames(y)),
+            areDisjointSets(setdiff(colnames(x), by), setdiff(colnames(y), by)),
             hasNoDuplicates(by),
-            areDisjointSets(
-                x = c(".idx", ".idy"),
-                y = colnames(x)
-            ),
-            areDisjointSets(
-                x = c(".idx", ".idy"),
-                y = colnames(y)
-            ),
-            allAreAtomic(x[, by, drop = FALSE]),
-            allAreAtomic(y[, by, drop = FALSE])
+            areDisjointSets(c(".idx", ".idy"), colnames(x)),
+            areDisjointSets(c(".idx", ".idy"), colnames(y))
         )
+        xBy <- x[, by, drop = FALSE]
+        yBy <- y[, by, drop = FALSE]
         assert(
             identical(
-                x = nrow(y),
-                y = nrow(unique(y[, by, drop = FALSE]))
+                x = lapply(X = xBy, FUN = class),
+                y = lapply(X = yBy, FUN = class)
             ),
+            msg = sprintf(
+                paste(
+                    "Type mismatch of columns defined in {.var %s}",
+                    "between {.var %s} and {.var %s}."
+                ),
+                "by", "x", "y"
+            )
+        )
+        assert(
+            allAreAtomic(xBy),
+            allAreAtomic(yBy),
+            msg = sprintf(
+                paste(
+                    "Columns defined in {.var %s} are not atomic",
+                    "for both {.var %s} and {.var %s}."
+                ),
+                "by", "x", "y"
+            )
+        )
+        ## We want to allow duplicates for xBy here.
+        assert(
+            identical(nrow(y), nrow(unique(yBy))),
             msg = sprintf(
                 "Columns defined in {.var %s} argument are not unique.", "by"
             )
         )
         assert(
-            any(complete.cases(x[, by, drop = FALSE])),
-            all(complete.cases(y[, by, drop = FALSE])),
+            any(complete.cases(xBy)),
+            all(complete.cases(yBy)),
             msg = sprintf(
                 "Columns defined in {.var %s} argument contain {.val %s}.",
                 "by", "NA"
@@ -351,40 +365,49 @@ NULL
         assert(
             hasColnames(x),
             hasColnames(y),
-            isSubset(x = by, y = colnames(x)),
-            isSubset(x = by, y = colnames(y)),
-            areDisjointSets(
-                x = setdiff(x = colnames(x), y = by),
-                y = setdiff(x = colnames(y), y = by)
-            ),
+            isSubset(by, colnames(x)),
+            isSubset(by, colnames(y)),
+            areDisjointSets(setdiff(colnames(x), by), setdiff(colnames(y), by)),
             hasNoDuplicates(by),
-            areDisjointSets(
-                x = c(".idx", ".idy"),
-                y = colnames(x)
-            ),
-            areDisjointSets(
-                x = c(".idx", ".idy"),
-                y = colnames(y)
-            ),
-            allAreAtomic(x[, by, drop = FALSE]),
-            allAreAtomic(y[, by, drop = FALSE])
+            areDisjointSets(c(".idx", ".idy"), colnames(x)),
+            areDisjointSets(c(".idx", ".idy"), colnames(y))
         )
+        xBy <- x[, by, drop = FALSE]
+        yBy <- y[, by, drop = FALSE]
         assert(
             identical(
-                x = nrow(x),
-                y = nrow(unique(x[, by, drop = FALSE]))
+                x = lapply(X = xBy, FUN = class),
+                y = lapply(X = yBy, FUN = class)
             ),
-            identical(
-                x = nrow(y),
-                y = nrow(unique(y[, by, drop = FALSE]))
-            ),
+            msg = sprintf(
+                paste(
+                    "Type mismatch of columns defined in {.var %s}",
+                    "between {.var %s} and {.var %s}."
+                ),
+                "by", "x", "y"
+            )
+        )
+        assert(
+            allAreAtomic(xBy),
+            allAreAtomic(yBy),
+            msg = sprintf(
+                paste(
+                    "Columns defined in {.var %s} are not atomic",
+                    "for both {.var %s} and {.var %s}."
+                ),
+                "by", "x", "y"
+            )
+        )
+        assert(
+            identical(nrow(x), nrow(unique(xBy))),
+            identical(nrow(y), nrow(unique(yBy))),
             msg = sprintf(
                 "Columns defined in {.var %s} argument are not unique.", "by"
             )
         )
         assert(
-            all(complete.cases(x[, by, drop = FALSE])),
-            all(complete.cases(y[, by, drop = FALSE])),
+            all(complete.cases(xBy)),
+            all(complete.cases(yBy)),
             msg = sprintf(
                 "Columns defined in {.var %s} argument contain {.val %s}.",
                 "by", "NA"
