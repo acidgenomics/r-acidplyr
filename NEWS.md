@@ -1,5 +1,12 @@
 # Release notes
 
+## AcidPlyr 0.5.1 (2023-10-12)
+
+Minor changes:
+
+- Tightened up assert checks in join functions for columns defined in `"by"`.
+  Argument. Improved error messages on type mismatches and non-atomic input.
+
 ## AcidPlyr 0.5.0 (2023-10-03)
 
 Major changes:
