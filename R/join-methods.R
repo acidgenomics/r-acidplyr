@@ -96,9 +96,9 @@ NULL
         m <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)
         assert(is(m, "DFrame"))
         m <- m[, c(".idx", ".idy"), drop = FALSE]
-        rows <- order(setdiff(x[[".idx"]], m[[".idx"]]))
-        cols <- setdiff(colnames(x), ".idx")
-        out <- x[rows, cols, drop = FALSE]
+        i <- order(setdiff(x[[".idx"]], m[[".idx"]]))
+        j <- setdiff(colnames(x), ".idx")
+        out <- x[i, j, drop = FALSE]
         out
     }
 
@@ -421,9 +421,9 @@ NULL
         assert(is(m, "DFrame"))
         m <- m[, c(".idx", ".idy"), drop = FALSE]
         assert(is(m, "DFrame"))
-        rows <- m[[".idx"]]
-        cols <- setdiff(colnames(x), ".idx")
-        out <- x[rows, cols, drop = FALSE]
+        i <- m[[".idx"]]
+        j <- setdiff(colnames(x), ".idx")
+        out <- x[i, j, drop = FALSE]
         out
     }
 
