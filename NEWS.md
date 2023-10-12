@@ -4,8 +4,8 @@
 
 Minor changes:
 
-- Tightened up assert checks in join functions for columns defined in `"by"`.
-  Argument. Improved error messages on type mismatches and non-atomic input.
+- Tightened up assert checks in join functions for columns defined in `"by"`
+  argument. Improved error messages on type mismatches and non-atomic input.
 
 ## AcidPlyr 0.5.0 (2023-10-03)
 
