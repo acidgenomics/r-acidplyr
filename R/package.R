@@ -32,10 +32,10 @@ NULL
 ## Standard functions ==========================================================
 
 #' @importFrom S4Vectors DataFrame
-#' @importFrom goalie allAreAtomic areDisjointSets assert bapply hasColnames
-#' hasDims hasLength hasNames hasNoDuplicates hasRownames hasRows isAny
-#' isCharacter isFlag isInstalled isInt isNumber isScalar isString isSubset
-#' requireNamespaces
+#' @importFrom goalie allAreAtomic allAreMatchingRegex areDisjointSets assert
+#' bapply hasColnames hasDims hasLength hasNames hasNoDuplicates hasRownames
+#' hasRows isAny isCharacter isFlag isInstalled isInt isNumber isScalar isString
+#' isSubset requireNamespaces
 #' @importFrom methods as is new setMethod signature
 #' @importFrom parallel mclapply
 NULL
