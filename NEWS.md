@@ -1,5 +1,13 @@
 # Release notes
 
+## AcidPlyr 0.5.2 (2023-11-30)
+
+New functions:
+
+- `unlist2`: An alternative method to `unlist` for `DFrameList` that does a
+  better job of keeping track of `names` and `rownames` in the original object,
+  which makes conversion into long format simpler.
+
 ## AcidPlyr 0.5.1 (2023-10-12)
 
 Minor changes:
