@@ -2,8 +2,8 @@ Package: AcidPlyr
 Title: Acid Genomics Rectangular Data Plyr
 Description: A dplyr-like grammar for manipulation of S4 rectangular data
   classes, such as DFrame.
-Version: 0.5.1
-Date: 2023-10-12
+Version: 0.5.2.9000
+Date: 2023-11-30
 Authors@R: c(
     person(
         "Michael", "Steinbaugh",
@@ -23,19 +23,19 @@ License: AGPL-3
 Encoding: UTF-8
 Depends: R (>= 4.3)
 Imports:
-    AcidGenerics (>= 0.7.0),
+    AcidGenerics (>= 0.7.4),
     BiocGenerics (>= 0.46.0),
+    IRanges (>= 2.34.0),
     S4Vectors (>= 0.38.0),
-    goalie (>= 0.7.0),
+    goalie (>= 0.7.6),
     methods,
     parallel
 Suggests:
     AcidCLI (>= 0.3.0),
-    AcidTest (>= 0.7.2),
-    IRanges (>= 2.34.0),
+    AcidTest (>= 0.9.2),
     Matrix (>= 1.6.1),
-    pipette (>= 0.14.0),
-    testthat (>= 3.1.10)
+    pipette (>= 0.15.0),
+    testthat (>= 3.2.0)
 Additional_repositories: https://r.acidgenomics.com
 Config/testthat/edition: 3
 Config/testthat/parallel: true
