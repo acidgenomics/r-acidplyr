@@ -39,23 +39,23 @@ Updated 2023-11-30.
 suppressPackageStartupMessages({
     library(IRanges)
 })
-object <- as.DataFrame(list(
-    "col1" = CharacterList(
-        c("a", "b", "c", "d"),
-        c("e", "f", "g"),
-        c("h", "i")
+dfl <- DataFrameList(
+    "A" = DataFrame(
+        "a" = c(1L, 2L),
+        "b" = c(3L, 4L),
+        row.names = c("aa", "bb")
     ),
-    "col2" = IntegerList(
-        seq(from = 1L, to = 2L),
-        seq(from = 3L, to = 4L),
-        seq(from = 5L, to = 6L)
-    ),
-    "col3" = c("a", "b", "c")
-))
-print(object)
-x <- unnest2(object, col = "col1")
+    "B" = DataFrame(
+        "a" = 5L,
+        "b" = 6L,
+        row.names = "cc"
+    )
+)
+## Our variant, which assigns into columns.
+x <- unlist2(dfl)
 print(x)
-y <- unnest2(object, col = "col2")
+## Compare with the standard variant, which modifies rownames.
+y <- unlist(dfl)
 print(y)
 }
 \seealso{
