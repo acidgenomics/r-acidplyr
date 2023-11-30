@@ -39,11 +39,9 @@ NULL
 
 ## Updated 2023-11-30.
 `unlist2,DFrameList` <- # nolint
-    function(
-        x,
-        nameCol = "name",
-        rownameCol = "rowname"
-    ) {
+    function(x,
+             nameCol = "name",
+             rownameCol = "rowname") {
         if (!hasLength(x)) {
             return(DataFrame())
         }
