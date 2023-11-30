@@ -100,6 +100,12 @@ NULL
 #' @export
 NULL
 
+#' @rdname unlist2
+#' @name unlist2
+#' @usage unlist2(x, ...)
+#' @export
+NULL
+
 #' @rdname unnest2
 #' @name unnest2
 #' @usage unnest2(object, ...)
