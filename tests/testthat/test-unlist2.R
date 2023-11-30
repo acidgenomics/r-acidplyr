@@ -50,6 +50,11 @@ test_that("DFrameList : only colnames", {
             "b" = c(3L, 4L, 6L)
         )
     )
-
-    unlist(dfl)
+    expect_identical(
+        object = unlist(dfl),
+        expected = DataFrame(
+            "a" = c(1L, 2L, 5L),
+            "b" = c(3L, 4L, 6L)
+        )
+    )
 })
