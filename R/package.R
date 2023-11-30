@@ -10,6 +10,7 @@
 
 ## Classes =====================================================================
 
+#' @importClassesFrom IRanges DFrameList
 #' @importClassesFrom S4Vectors DFrame
 NULL
 
