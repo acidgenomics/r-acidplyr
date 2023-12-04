@@ -174,7 +174,7 @@ NULL
             assert(hasLength(rn, n = nrow(out)))
             rownames(out) <- rn
         } else {
-            rownames(out) <- NULL # nocov
+            rownames(out) <- NULL
         }
         out[[".idx"]] <- NULL
         out[[".idy"]] <- NULL
