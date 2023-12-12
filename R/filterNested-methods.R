@@ -29,7 +29,7 @@ NULL
 ## https://github.com/Bioconductor/IRanges/issues/51
 
 ## Updated 2023-12-12.
-`filterNested,DFrame` <-
+`filterNested,DFrame` <- # nolint
     function(object, pattern, ignoreCase = FALSE) {
         assert(
             validObject(object),
