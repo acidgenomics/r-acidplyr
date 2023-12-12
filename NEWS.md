@@ -1,5 +1,12 @@
 # Release notes
 
+## AcidPlyr 0.5.3 (2023-12-12)
+
+New functions:
+
+- `filterNested`: Keep rows that match a nested condition. Performs recursive
+  regular expression matching across all columns, including nested list columns.
+
 ## AcidPlyr 0.5.2 (2023-11-30)
 
 New functions:
