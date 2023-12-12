@@ -5,7 +5,7 @@
 \alias{filterNested,DFrame,character-method}
 \title{Keep rows that match a nested condition}
 \usage{
-filterNested(object, pattern, ignoreCase, ...)
+filterNested(object, pattern, ...)
 
 \S4method{filterNested}{DFrame,character}(object, pattern, ignoreCase = FALSE)
 }
