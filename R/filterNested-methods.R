@@ -32,7 +32,6 @@ NULL
 `filterNested,DFrame` <- # nolint
     function(object, pattern, ignoreCase = FALSE) {
         assert(
-            validObject(object),
             isString(pattern),
             isFlag(ignoreCase)
         )
@@ -40,7 +39,17 @@ NULL
             X = object,
             MARGIN = 1L,
             FUN = function(x) {
-                x <- unlist(x = x, recursive = TRUE, use.names = FALSE)
+                x <- tryCatch(
+                    expr = {
+                        unlist(x = x, recursive = TRUE, use.names = FALSE)
+                    },
+                    error = function(e) {
+                        NULL
+                    }
+                )
+                if (is.null(x)) {
+                    return(x)
+                }
                 x <- as.character(x)
                 x <- na.omit(x)
                 x <- unique(x)
