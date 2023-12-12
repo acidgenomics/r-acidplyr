@@ -10,6 +10,12 @@ NULL
 #' @export
 NULL
 
+#' @rdname filterNested
+#' @name filterNested
+#' @usage filterNested(object, pattern, ignoreCase, ...)
+#' @export
+NULL
+
 #' @rdname join
 #' @name innerJoin
 #' @usage innerJoin(x, y, by, ...)
