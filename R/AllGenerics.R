@@ -12,7 +12,7 @@ NULL
 
 #' @rdname filterNested
 #' @name filterNested
-#' @usage filterNested(object, pattern, ignoreCase, ...)
+#' @usage filterNested(object, pattern, ...)
 #' @export
 NULL
 
