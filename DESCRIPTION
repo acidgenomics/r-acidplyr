@@ -2,7 +2,7 @@ Package: AcidPlyr
 Title: Acid Genomics Rectangular Data Plyr
 Description: A dplyr-like grammar for manipulation of S4 rectangular data
   classes, such as DFrame.
-Version: 0.5.3.9000
+Version: 0.5.3
 Date: 2023-12-12
 Authors@R: c(
     person(
@@ -32,7 +32,7 @@ Imports:
     parallel
 Suggests:
     AcidCLI (>= 0.3.0),
-    AcidTest (>= 0.9.2),
+    AcidTest (>= 0.9.0),
     Matrix (>= 1.6.4),
     pipette (>= 0.15.0),
     testthat (>= 3.2.1)
