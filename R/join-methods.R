@@ -55,6 +55,8 @@ NULL
                 x = lapply(X = xBy, FUN = class),
                 y = lapply(X = yBy, FUN = class)
             ),
+            ## FIXME Improve this error message to inform the user about what
+            ## are the type mismatches specifically.
             msg = sprintf(
                 paste(
                     "Type mismatch of columns defined in {.var %s}",
