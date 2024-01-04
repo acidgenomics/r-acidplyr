@@ -37,9 +37,6 @@ NULL
 
 
 
-## FIXME Need to add edge case handling of "rowname" column from `melt` return.
-## FIXME Allow the user to set rownameCol to NULL to ignore setting rownames.
-
 ## Updated 2024-01-04.
 `unlist2,DFrameList` <- # nolint
     function(x,
