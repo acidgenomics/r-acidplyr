@@ -1,13 +1,13 @@
 #' @name unlist2
 #' @inherit AcidGenerics::unlist2
-#' @note Updated 2023-11-30.
+#' @note Updated 2024-01-04.
 #'
 #' @param ... Additional arguments.
 #'
-#' @param nameCol `character(1)`.
+#' @param nameCol `character(1)` or `NULL`.
 #' Column name to assign `names` of input object.
 #'
-#' @param rownameCol `character(1)`.
+#' @param rownameCol `character(1)` or `NULL`.
 #' Column name to assign `rownames` of input object.
 #'
 #' @examples
@@ -37,11 +37,18 @@ NULL
 
 
 
-## Updated 2023-11-30.
+## FIXME Need to add edge case handling of "rowname" column from `melt` return.
+## FIXME Allow the user to set rownameCol to NULL to ignore setting rownames.
+
+## Updated 2024-01-04.
 `unlist2,DFrameList` <- # nolint
     function(x,
              nameCol = "name",
              rownameCol = "rowname") {
+        assert(
+            isString(nameCol, nullOk = TRUE),
+            isString(rownameCol, nullOk = TRUE)
+        )
         if (!hasLength(x)) {
             return(DataFrame())
         }
@@ -59,15 +66,18 @@ NULL
                 if (!hasRows(df)) {
                     return(DataFrame())
                 }
-                assert(
-                    hasColnames(df),
-                    areDisjointSets(c(nameCol, rownameCol), colnames(df))
-                )
+                assert(hasColnames(df))
                 if (!hasRownames(df)) {
                     rownames(df) <- seq_len(nrow(df))
                 }
-                df[[nameCol]] <- name
-                df[[rownameCol]] <- rownames(df)
+                if (isString(nameCol)) {
+                    assert(areDisjointSets(nameCol, colnames(df)))
+                    df[[nameCol]] <- name
+                }
+                if (isString(rownameCol)) {
+                    assert(areDisjointSets(rownameCol, colnames(df)))
+                    df[[rownameCol]] <- rownames(df)
+                }
                 j <- c(
                     c(nameCol, rownameCol),
                     setdiff(colnames(df), c(nameCol, rownameCol))
@@ -78,10 +88,16 @@ NULL
             }
         )
         df <- do.call(what = rbind, args = lst)
-        if (allAreMatchingRegex(x = df[[nameCol]], pattern = "^[0-9]+$")) {
+        if (
+            isString(nameCol) &&
+            allAreMatchingRegex(x = df[[nameCol]], pattern = "^[0-9]+$")
+        ) {
             df[[nameCol]] <- as.integer(df[[nameCol]])
         }
-        if (allAreMatchingRegex(x = df[[rownameCol]], pattern = "^[0-9]+$")) {
+        if (
+            isString(rownameCol) &&
+            allAreMatchingRegex(x = df[[rownameCol]], pattern = "^[0-9]+$")
+        ) {
             df[[rownameCol]] <- as.integer(df[[rownameCol]])
         }
         df
