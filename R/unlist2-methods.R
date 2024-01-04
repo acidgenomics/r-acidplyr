@@ -87,13 +87,13 @@ NULL
         df <- do.call(what = rbind, args = lst)
         if (
             isString(nameCol) &&
-            allAreMatchingRegex(x = df[[nameCol]], pattern = "^[0-9]+$")
+                allAreMatchingRegex(x = df[[nameCol]], pattern = "^[0-9]+$")
         ) {
             df[[nameCol]] <- as.integer(df[[nameCol]])
         }
         if (
             isString(rownameCol) &&
-            allAreMatchingRegex(x = df[[rownameCol]], pattern = "^[0-9]+$")
+                allAreMatchingRegex(x = df[[rownameCol]], pattern = "^[0-9]+$")
         ) {
             df[[rownameCol]] <- as.integer(df[[rownameCol]])
         }
