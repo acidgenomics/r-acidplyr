@@ -1,5 +1,12 @@
 # Release notes
 
+## AcidPlyr 0.5.4 (2024-03-18)
+
+Minor changes:
+
+- `unlist2`: Added support for `NULL` definition in `nameCol` and `rownameCol`
+  variables.
+
 ## AcidPlyr 0.5.3 (2023-12-12)
 
 New functions:
