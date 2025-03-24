@@ -12,10 +12,10 @@ unlist2(x, ...)
 \arguments{
 \item{x}{Object.}
 
-\item{nameCol}{\code{character(1)}.
+\item{nameCol}{\code{character(1)} or \code{NULL}.
 Column name to assign \code{names} of input object.}
 
-\item{rownameCol}{\code{character(1)}.
+\item{rownameCol}{\code{character(1)} or \code{NULL}.
 Column name to assign \code{rownames} of input object.}
 
 \item{...}{Additional arguments.}
@@ -32,7 +32,7 @@ Intended primarily for complex S4 classes, such as \code{DFrameList}.
 Intentionally does not support recursion.
 }
 \note{
-Updated 2023-11-30.
+Updated 2024-01-04.
 }
 \examples{
 ## DFrameList ====

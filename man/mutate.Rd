@@ -24,15 +24,15 @@ transmuteAt(object, vars, fun, ...)
 
 transmuteIf(object, predicate, fun, ...)
 
-\S4method{mutateAll}{DFrame,`function`}(object, fun, ...)
+\S4method{mutateAll}{DFrame,function}(object, fun, ...)
 
-\S4method{mutateAt}{DFrame,character,`function`}(object, vars, fun, ...)
+\S4method{mutateAt}{DFrame,character,function}(object, vars, fun, ...)
 
-\S4method{mutateIf}{DFrame,`function`,`function`}(object, predicate, fun, ...)
+\S4method{mutateIf}{DFrame,function,function}(object, predicate, fun, ...)
 
-\S4method{transmuteAt}{DFrame,character,`function`}(object, vars, fun, ...)
+\S4method{transmuteAt}{DFrame,character,function}(object, vars, fun, ...)
 
-\S4method{transmuteIf}{DFrame,`function`,`function`}(object, predicate, fun, ...)
+\S4method{transmuteIf}{DFrame,function,function}(object, predicate, fun, ...)
 }
 \arguments{
 \item{object}{Object.}
