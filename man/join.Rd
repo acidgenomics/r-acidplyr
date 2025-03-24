@@ -57,7 +57,7 @@ New object containing a merge of \code{x} and \code{y} objects.
 Join operations
 }
 \note{
-Updated 2023-10-12.
+Updated 2024-01-04.
 }
 \section{Ordering}{
 
