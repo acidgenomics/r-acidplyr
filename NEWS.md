@@ -1,5 +1,11 @@
 # Release notes
 
+## AcidPlyr 0.5.5 (2025-03-24)
+
+Minor changes:
+
+- Reduced R dependency from 4.3 to 4.0 for backwards compatibility.
+
 ## AcidPlyr 0.5.4 (2024-03-18)
 
 Minor changes:

@@ -8,7 +8,7 @@
 \usage{
 selectIf(object, predicate, ...)
 
-\S4method{selectIf}{DFrame,`function`}(object, predicate)
+\S4method{selectIf}{DFrame,function}(object, predicate)
 }
 \arguments{
 \item{object}{Object.}
