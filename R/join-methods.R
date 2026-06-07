@@ -96,7 +96,7 @@ NULL
         m <- merge(x = x, y = y, by = by, all = FALSE, sort = FALSE)
         assert(is(m, "DFrame"))
         m <- m[, c(".idx", ".idy"), drop = FALSE]
-        i <- order(setdiff(x[[".idx"]], m[[".idx"]]))
+        i <- sort(setdiff(x[[".idx"]], m[[".idx"]]))
         j <- setdiff(colnames(x), ".idx")
         out <- x[i, j, drop = FALSE]
         out
@@ -166,10 +166,13 @@ NULL
         assert(is(out, "DFrame"))
         out <- out[order(out[[".idx"]], out[[".idy"]]), , drop = FALSE]
         if (hasRownames(x) && hasRownames(y)) {
-            rnx <- rownames(x)[order(out[[".idx"]])]
-            rnx <- gsub(pattern = "NA", replacement = NA, x = rnx)
-            rny <- rownames(y)[order(out[[".idy"]])]
-            rny <- gsub(pattern = "NA", replacement = NA, x = rny)
+            ## Use index vectors to track which rows came from x vs y.
+            ## Avoid gsub("NA", ...) which corrupts names containing "NA"
+            ## as a substring (e.g. "NANOG", "RNA", "TNAP").
+            idx <- out[[".idx"]]
+            idy <- out[[".idy"]]
+            rnx <- ifelse(!is.na(idx), rownames(x)[idx], NA_character_)
+            rny <- ifelse(!is.na(idy), rownames(y)[idy], NA_character_)
             rn <- unique(c(na.omit(rnx), na.omit(rny)))
             assert(hasLength(rn, n = nrow(out)))
             rownames(out) <- rn
