@@ -15,3 +15,32 @@ news:
 template:
   bootstrap: 5
 url: https://r.acidgenomics.com/packages/acidplyr
+reference:
+  - title: Join operations
+    contents:
+      - antiJoin
+      - fullJoin
+      - innerJoin
+      - leftJoin
+      - rightJoin
+      - semiJoin
+  - title: Mutate and select
+    contents:
+      - mutateAll
+      - mutateAt
+      - mutateIf
+      - selectIf
+      - transmuteAt
+      - transmuteIf
+  - title: Reshape
+    contents:
+      - cast
+      - melt
+  - title: List and nested data
+    contents:
+      - collapseToString
+      - filterNested
+      - rbindToDataFrame
+      - splitByLevel
+      - unlist2
+      - unnest2
