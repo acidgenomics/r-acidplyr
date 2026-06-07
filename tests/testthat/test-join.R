@@ -17,6 +17,26 @@ test_that("antiJoin", {
     )
 })
 
+test_that("antiJoin : Row order preserved (regression for sort vs order bug)", {
+    ## When multiple rows are anti-joined, output must preserve the original
+    ## x row order. Using order() instead of sort() on the .idx column would
+    ## return rank positions (wrong) instead of row indices (correct).
+    x2 <- DataFrame(
+        "key" = c("a", "b", "c", "d"),
+        "val" = c(10L, 20L, 30L, 40L),
+        row.names = c("r1", "r2", "r3", "r4")
+    )
+    y2 <- DataFrame(
+        "key" = "b",
+        "extra" = "y",
+        row.names = "r2"
+    )
+    result <- antiJoin(x = x2, y = y2, by = "key")
+    ## Rows r1, r3, r4 should appear in that order (x order), not rank order.
+    expect_identical(rownames(result), c("r1", "r3", "r4"))
+    expect_identical(result[["key"]], c("a", "c", "d"))
+})
+
 test_that("antiJoin : Duplicate and NA values in 'by'", {
     x2 <- x
     x2[[by]][[2L]] <- x2[[by]][[1L]]
@@ -54,6 +74,25 @@ test_that("fullJoin", {
             row.names = c("Mick", "John", "Paul", "Keith")
         )
     )
+})
+
+test_that("fullJoin : Rownames containing 'NA' substring are not corrupted", {
+    ## gsub("NA", NA, "NANOG") → NA in R, corrupting the rowname.
+    ## The fix uses index-based reconstruction instead of string matching.
+    x2 <- DataFrame(
+        "key" = c("NANOG", "PTEN"),
+        "val" = c(1L, 2L),
+        row.names = c("NANOG", "PTEN")
+    )
+    y2 <- DataFrame(
+        "key" = "BRCA1",
+        "extra" = "z",
+        row.names = "BRCA1"
+    )
+    result <- fullJoin(x = x2, y = y2, by = "key")
+    ## "NANOG" rowname must not become NA.
+    expect_true("NANOG" %in% rownames(result))
+    expect_false(anyNA(rownames(result)))
 })
 
 test_that("fullJoin : Duplicate and NA values in 'by'", {
