@@ -38,3 +38,7 @@ R
 [bioconductor]: https://bioconductor.org/
 [conda]: https://docs.conda.io/
 [r]: https://www.r-project.org/
+
+## License
+
+Apache-2.0 — Copyright 2020 Acid Genomics LLC — see [LICENSE.md](LICENSE.md).

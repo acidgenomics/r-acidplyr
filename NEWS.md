@@ -1,5 +1,11 @@
 # Release notes
 
+## AcidPlyr 0.5.6 (2026-06-19)
+
+License changes:
+
+- Switched from AGPL-3.0 to Apache-2.0.
+
 ## AcidPlyr 0.5.5 (2025-03-24)
 
 Minor changes:
