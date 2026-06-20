@@ -3,7 +3,8 @@
 data <- utils::data
 
 data(
-    DFrame, matrix,
+    DFrame,
+    matrix,
     package = "AcidTest",
     envir = environment()
 )

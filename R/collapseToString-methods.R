@@ -46,13 +46,9 @@
 NULL
 
 
-
 ## Updated 2021-02-02.
 `collapseToString,atomic` <- # nolint
-    function(object,
-             sep = ", ",
-             sort = FALSE,
-             unique = FALSE) {
+    function(object, sep = ", ", sort = FALSE, unique = FALSE) {
         assert(
             isAny(object, classes = c("character", "factor", "vector")),
             isString(sep),
@@ -74,14 +70,10 @@ NULL
     }
 
 
-
 ## Alternatively, can use `dplyr::summarise_all()` approach.
 ## Updated 2020-02-02.
 `collapseToString,matrix` <- # nolint
-    function(object,
-             sep = ", ",
-             sort = FALSE,
-             unique = FALSE) {
+    function(object, sep = ", ", sort = FALSE, unique = FALSE) {
         assert(hasLength(object))
         x <- object
         x <- as.data.frame(x, stringsAsFactors = FALSE)
@@ -103,7 +95,6 @@ NULL
     }
 
 
-
 ## Updated 2023-04-26.
 `collapseToString,DFrame` <- # nolint
     `collapseToString,matrix`
@@ -111,7 +102,6 @@ NULL
 ## Updated 2019-07-22.
 `collapseToString,data.frame` <- # nolint
     `collapseToString,matrix`
-
 
 
 #' @rdname collapseToString

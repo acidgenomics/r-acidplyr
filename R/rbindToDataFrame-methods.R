@@ -26,7 +26,6 @@
 NULL
 
 
-
 ## Updated 2023-09-25.
 `rbindToDataFrame,list` <- # nolint
     function(x) {
@@ -107,7 +106,6 @@ NULL
         }
         df
     }
-
 
 
 #' @rdname rbindToDataFrame

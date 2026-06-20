@@ -17,7 +17,6 @@
 NULL
 
 
-
 ## Loop across the columns and then each row internally.
 ## Updated 2023-04-26.
 `mutateAll,DFrame` <- # nolint
@@ -39,7 +38,6 @@ NULL
     }
 
 
-
 ## Updated 2023-04-26.
 `mutateAt,DFrame` <- # nolint
     function(object, vars, fun, ...) {
@@ -49,7 +47,6 @@ NULL
         out <- out[, colnames(object), drop = FALSE]
         out
     }
-
 
 
 ## Updated 2023-04-26.
@@ -68,7 +65,6 @@ NULL
     }
 
 
-
 ## Updated 2023-04-26.
 `transmuteAt,DFrame` <- # nolint
     function(object, vars, fun, ...) {
@@ -78,7 +74,6 @@ NULL
     }
 
 
-
 ## Updated 2023-04-26.
 `transmuteIf,DFrame` <- # nolint
     function(object, predicate, fun, ...) {
@@ -86,7 +81,6 @@ NULL
         x <- mutateAll(x, fun = fun, ...)
         x
     }
-
 
 
 #' @rdname mutate
