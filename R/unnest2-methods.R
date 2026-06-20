@@ -34,7 +34,6 @@
 NULL
 
 
-
 ## Updated 2023-08-24.
 `unnest2,DFrame` <- # nolint
     function(object, col) {
@@ -66,7 +65,8 @@ NULL
                 }
                 if (length(vals) > 1L) {
                     row <- row[
-                        rep(seq_len(nrow(row)), each = length(vals)), ,
+                        rep(seq_len(nrow(row)), each = length(vals)),
+                        ,
                         drop = FALSE
                     ]
                 }
@@ -79,7 +79,6 @@ NULL
         rownames(out) <- NULL
         out
     }
-
 
 
 #' @rdname unnest2

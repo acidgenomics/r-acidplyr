@@ -36,12 +36,9 @@
 NULL
 
 
-
 ## Updated 2024-01-04.
 `unlist2,DFrameList` <- # nolint
-    function(x,
-             nameCol = "name",
-             rownameCol = "rowname") {
+    function(x, nameCol = "name", rownameCol = "rowname") {
         assert(
             isString(nameCol, nullOk = TRUE),
             isString(rownameCol, nullOk = TRUE)
@@ -99,7 +96,6 @@ NULL
         }
         df
     }
-
 
 
 #' @rdname unlist2

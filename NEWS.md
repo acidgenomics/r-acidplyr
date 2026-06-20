@@ -1,5 +1,12 @@
 # Release notes
 
+## AcidPlyr 0.5.7 (2026-06-19)
+
+Minor changes:
+
+- Modernized tooling: removed per-package `.lintr` in favour of global
+  `~/.lintr`; added `air.toml`; migrated to roxygen2 8.0.
+
 ## AcidPlyr 0.5.6 (2026-06-19)
 
 License changes:
