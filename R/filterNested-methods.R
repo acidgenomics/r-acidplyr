@@ -23,7 +23,6 @@
 NULL
 
 
-
 ## CharacterList method for `grepl` doesn't currently support `fixed`
 ## argument correctly, so disabling.
 ## https://github.com/Bioconductor/IRanges/issues/51
@@ -74,7 +73,6 @@ NULL
         out <- object[i, , drop = FALSE]
         out
     }
-
 
 
 #' @rdname filterNested

@@ -40,16 +40,17 @@
 NULL
 
 
-
 ## NOTE Matrix method is defined in AcidExperiment and inherits matrix method.
 
 ## Updated 2023-04-27.
 `melt,matrix` <- # nolint
-    function(object,
-             colnames = c("rowname", "colname", "value"),
-             min = -Inf,
-             minMethod = c("absolute", "perRow"),
-             trans = c("identity", "log2", "log10")) {
+    function(
+        object,
+        colnames = c("rowname", "colname", "value"),
+        min = -Inf,
+        minMethod = c("absolute", "perRow"),
+        trans = c("identity", "log2", "log10")
+    ) {
         if (!hasRownames(object)) {
             rownames(object) <- as.character(seq_len(nrow(object)))
         }
@@ -136,7 +137,8 @@ NULL
             assert(isInt(min))
             if (isTRUE(hasCli)) {
                 AcidCLI::alert(sprintf(
-                    "Applying {.code %s(x + 1L)} transformation.", trans
+                    "Applying {.code %s(x + 1L)} transformation.",
+                    trans
                 ))
             }
             fun <- get(
@@ -151,7 +153,6 @@ NULL
     }
 
 
-
 ## This is used in pointillism package.
 ## Updated 2020-10-12.
 `melt,table` <- # nolint
@@ -160,11 +161,9 @@ NULL
     }
 
 
-
 ## Updated 2023-08-23.
 `melt,DFrame` <- # nolint
-    function(object,
-             colnames = c("rowname", "colname", "value")) {
+    function(object, colnames = c("rowname", "colname", "value")) {
         assert(
             hasColnames(object),
             allAreAtomic(object),
@@ -175,7 +174,6 @@ NULL
 
 formals(`melt,DFrame`)[["colnames"]] <- # nolint
     formals(`melt,matrix`)[["colnames"]]
-
 
 
 #' @rdname melt

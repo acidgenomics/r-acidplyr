@@ -34,7 +34,6 @@
 NULL
 
 
-
 ## Updated 2023-10-12.
 `antiJoin,DFrame` <- # nolint
     function(x, y, by) {
@@ -60,7 +59,9 @@ NULL
                     "Type mismatch of columns defined in {.var %s}",
                     "between {.var %s} and {.var %s}."
                 ),
-                "by", "x", "y"
+                "by",
+                "x",
+                "y"
             )
         )
         assert(
@@ -71,14 +72,17 @@ NULL
                     "Columns defined in {.var %s} are not atomic",
                     "for both {.var %s} and {.var %s}."
                 ),
-                "by", "x", "y"
+                "by",
+                "x",
+                "y"
             )
         )
         assert(
             identical(nrow(x), nrow(unique(xBy))),
             identical(nrow(y), nrow(unique(yBy))),
             msg = sprintf(
-                "Columns defined in {.var %s} argument are not unique.", "by"
+                "Columns defined in {.var %s} argument are not unique.",
+                "by"
             )
         )
         assert(
@@ -86,7 +90,8 @@ NULL
             all(complete.cases(yBy)),
             msg = sprintf(
                 "Columns defined in {.var %s} argument contain {.val %s}.",
-                "by", "NA"
+                "by",
+                "NA"
             )
         )
         x <- as(x, "DFrame")
@@ -101,7 +106,6 @@ NULL
         out <- x[i, j, drop = FALSE]
         out
     }
-
 
 
 ## Updated 2023-10-12.
@@ -129,7 +133,9 @@ NULL
                     "Type mismatch of columns defined in {.var %s}",
                     "between {.var %s} and {.var %s}."
                 ),
-                "by", "x", "y"
+                "by",
+                "x",
+                "y"
             )
         )
         assert(
@@ -140,14 +146,17 @@ NULL
                     "Columns defined in {.var %s} are not atomic",
                     "for both {.var %s} and {.var %s}."
                 ),
-                "by", "x", "y"
+                "by",
+                "x",
+                "y"
             )
         )
         assert(
             identical(nrow(x), nrow(unique(xBy))),
             identical(nrow(y), nrow(unique(yBy))),
             msg = sprintf(
-                "Columns defined in {.var %s} argument are not unique.", "by"
+                "Columns defined in {.var %s} argument are not unique.",
+                "by"
             )
         )
         assert(
@@ -155,7 +164,8 @@ NULL
             all(complete.cases(yBy)),
             msg = sprintf(
                 "Columns defined in {.var %s} argument contain {.val %s}.",
-                "by", "NA"
+                "by",
+                "NA"
             )
         )
         x <- as(x, "DFrame")
@@ -186,7 +196,6 @@ NULL
     }
 
 
-
 ## Updated 2023-10-12.
 `innerJoin,DFrame` <- # nolint
     function(x, y, by) {
@@ -212,7 +221,9 @@ NULL
                     "Type mismatch of columns defined in {.var %s}",
                     "between {.var %s} and {.var %s}."
                 ),
-                "by", "x", "y"
+                "by",
+                "x",
+                "y"
             )
         )
         assert(
@@ -223,14 +234,17 @@ NULL
                     "Columns defined in {.var %s} are not atomic",
                     "for both {.var %s} and {.var %s}."
                 ),
-                "by", "x", "y"
+                "by",
+                "x",
+                "y"
             )
         )
         assert(
             identical(nrow(x), nrow(unique(xBy))),
             identical(nrow(y), nrow(unique(yBy))),
             msg = sprintf(
-                "Columns defined in {.var %s} argument are not unique.", "by"
+                "Columns defined in {.var %s} argument are not unique.",
+                "by"
             )
         )
         assert(
@@ -238,7 +252,8 @@ NULL
             all(complete.cases(yBy)),
             msg = sprintf(
                 "Columns defined in {.var %s} argument contain {.val %s}.",
-                "by", "NA"
+                "by",
+                "NA"
             )
         )
         x <- as(x, "DFrame")
@@ -257,7 +272,6 @@ NULL
         out[[".idy"]] <- NULL
         out
     }
-
 
 
 ## S4Vectors (i.e. `DFrame`) doesn't support expansion via indices containing
@@ -290,7 +304,9 @@ NULL
                     "Type mismatch of columns defined in {.var %s}",
                     "between {.var %s} and {.var %s}."
                 ),
-                "by", "x", "y"
+                "by",
+                "x",
+                "y"
             )
         )
         assert(
@@ -301,14 +317,17 @@ NULL
                     "Columns defined in {.var %s} are not atomic",
                     "for both {.var %s} and {.var %s}."
                 ),
-                "by", "x", "y"
+                "by",
+                "x",
+                "y"
             )
         )
         ## We want to allow duplicates for xBy here.
         assert(
             identical(nrow(y), nrow(unique(yBy))),
             msg = sprintf(
-                "Columns defined in {.var %s} argument are not unique.", "by"
+                "Columns defined in {.var %s} argument are not unique.",
+                "by"
             )
         )
         assert(
@@ -316,7 +335,8 @@ NULL
             all(complete.cases(yBy)),
             msg = sprintf(
                 "Columns defined in {.var %s} argument contain {.val %s}.",
-                "by", "NA"
+                "by",
+                "NA"
             )
         )
         x <- as(x, "DFrame")
@@ -353,13 +373,11 @@ NULL
     }
 
 
-
 ## Updated 2023-04-26.
 `rightJoin,DFrame` <- # nolint
     function(x, y, by) {
         leftJoin(x = y, y = x, by = by)
     }
-
 
 
 ## Updated 2023-08-25.
@@ -387,7 +405,9 @@ NULL
                     "Type mismatch of columns defined in {.var %s}",
                     "between {.var %s} and {.var %s}."
                 ),
-                "by", "x", "y"
+                "by",
+                "x",
+                "y"
             )
         )
         assert(
@@ -398,14 +418,17 @@ NULL
                     "Columns defined in {.var %s} are not atomic",
                     "for both {.var %s} and {.var %s}."
                 ),
-                "by", "x", "y"
+                "by",
+                "x",
+                "y"
             )
         )
         assert(
             identical(nrow(x), nrow(unique(xBy))),
             identical(nrow(y), nrow(unique(yBy))),
             msg = sprintf(
-                "Columns defined in {.var %s} argument are not unique.", "by"
+                "Columns defined in {.var %s} argument are not unique.",
+                "by"
             )
         )
         assert(
@@ -413,7 +436,8 @@ NULL
             all(complete.cases(yBy)),
             msg = sprintf(
                 "Columns defined in {.var %s} argument contain {.val %s}.",
-                "by", "NA"
+                "by",
+                "NA"
             )
         )
         x <- as(x, "DFrame")
@@ -429,7 +453,6 @@ NULL
         out <- x[i, j, drop = FALSE]
         out
     }
-
 
 
 #' @rdname join

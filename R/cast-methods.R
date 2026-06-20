@@ -25,12 +25,9 @@
 NULL
 
 
-
 ## Updated 2023-08-23.
 `cast,DFrame` <- # nolint
-    function(object,
-             colnames = "colname",
-             values = "value") {
+    function(object, colnames = "colname", values = "value") {
         assert(
             isString(colnames),
             isString(values),
@@ -64,7 +61,6 @@ NULL
         df <- df[, sort(colnames(df)), drop = FALSE]
         df
     }
-
 
 
 #' @rdname cast
