@@ -42,7 +42,6 @@
 NULL
 
 
-
 ## Updated 2023-04-26.
 `splitByLevel,DFrame` <- # nolint
     function(x, f, ref = FALSE) {
@@ -70,7 +69,6 @@ NULL
             }
         )
     }
-
 
 
 #' @rdname splitByLevel

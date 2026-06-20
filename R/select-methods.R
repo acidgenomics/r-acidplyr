@@ -26,14 +26,12 @@
 NULL
 
 
-
 ## Updated 2023-04-26.
 `selectIf,DFrame` <- # nolint
     function(object, predicate) {
         keep <- bapply(X = object, FUN = predicate)
         object[, keep, drop = FALSE]
     }
-
 
 
 #' @rdname select

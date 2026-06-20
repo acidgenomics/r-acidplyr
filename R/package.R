@@ -7,7 +7,6 @@
 "_PACKAGE"
 
 
-
 ## Classes =====================================================================
 
 #' @importClassesFrom IRanges DFrameList
@@ -15,19 +14,18 @@
 NULL
 
 
-
 ## S4 generics =================================================================
 
-#' @importFrom AcidGenerics antiJoin cast collapseToString filterNested fullJoin
-#' innerJoin leftJoin melt mutateAll mutateAt mutateIf rbindToDataFrame
-#' rightJoin selectIf semiJoin splitByLevel transmuteAt transmuteIf unlist2
-#' unnest2
-#' @importFrom BiocGenerics as.data.frame cbind do.call grepl lapply order rbind
-#' setdiff unique unlist
+#' @importFrom AcidGenerics antiJoin cast collapseToString filterNested
+#' @importFrom AcidGenerics fullJoin innerJoin leftJoin melt mutateAll
+#' @importFrom AcidGenerics mutateAt mutateIf rbindToDataFrame rightJoin
+#' @importFrom AcidGenerics selectIf semiJoin splitByLevel transmuteAt
+#' @importFrom AcidGenerics transmuteIf unlist2 unnest2
+#' @importFrom BiocGenerics as.data.frame cbind do.call grepl lapply
+#' @importFrom BiocGenerics order rbind setdiff unique unlist
 #' @importFrom S4Vectors complete.cases decode expand.grid merge metadata
-#' metadata<- na.omit split
+#' @importFrom S4Vectors "metadata<-" na.omit split
 NULL
-
 
 
 ## Standard functions ==========================================================
@@ -35,9 +33,10 @@ NULL
 #' @importFrom IRanges CharacterList
 #' @importFrom S4Vectors DataFrame
 #' @importFrom goalie allAreAtomic allAreMatchingRegex areDisjointSets assert
-#' bapply hasColnames hasDims hasLength hasNames hasNoDuplicates hasRownames
-#' hasRows isAny isCharacter isFlag isInstalled isInt isNumber isScalar isString
-#' isSubset requireNamespaces
+#' @importFrom goalie bapply hasColnames hasDims hasLength hasNames
+#' @importFrom goalie hasNoDuplicates hasRownames hasRows isAny isCharacter
+#' @importFrom goalie isFlag isInstalled isInt isNumber isScalar isString
+#' @importFrom goalie isSubset requireNamespaces
 #' @importFrom methods as is new setMethod signature
 #' @importFrom parallel mclapply
 NULL
