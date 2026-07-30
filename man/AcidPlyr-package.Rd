@@ -12,7 +12,7 @@ as \code{DFrame}.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://r.acidgenomics.com/packages/acidplyr/}
+  \item \url{https://r.acidgenomics.com/acidplyr/}
   \item \url{https://github.com/acidgenomics/r-acidplyr/}
   \item Report bugs at \url{https://github.com/acidgenomics/r-acidplyr/issues/}
 }

@@ -34,10 +34,7 @@ NULL
             isSubset(c(colnames, values), colnames(object)),
             is.factor(object[[colnames]]),
             isFALSE(is.ordered(object[[colnames]])),
-            identical(
-                x = levels(object[[colnames]]),
-                y = sort(levels(object[[colnames]]))
-            ),
+            !is.unsorted(levels(object[[colnames]])),
             is.atomic(object[[values]]),
             !is.factor(object[[values]])
         )
