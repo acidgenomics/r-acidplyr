@@ -48,32 +48,32 @@ NULL
             msg = "Nested list elements are not named."
         )
         ## Transpose the list.
-        xt <- Map(
-            j = dimnames[[2L]],
-            f = function(j, i, x) {
-                Map(
-                    i = i,
-                    f = function(i, j, x) {
-                        if (j %in% names(x[[i]])) {
-                            value <- x[[i]][[j]]
-                        } else {
-                            value <- NA
-                        }
-                        value
-                    },
-                    MoreArgs = list(
-                        "j" = j,
-                        "x" = x
-                    ),
-                    USE.NAMES = TRUE
-                )
-            },
-            MoreArgs = list(
-                "i" = seq_along(x),
-                "x" = x
-            ),
-            USE.NAMES = TRUE
+        ## Align each row to the full column set with a single vectorized
+        ## `row[idx]`, instead of one `match()` + `[[` call per cell -- for
+        ## an atomic-vector row, `row[idx]` also coerces an unmatched
+        ## position's value to that vector's type (e.g. `NA_integer_`), so
+        ## it must be overwritten back to a plain (logical) `NA` explicitly
+        ## to match the original per-cell fallback exactly. List rows are
+        ## handled the same way for consistency, even though `row[idx]`
+        ## already yields `NULL` (not a typed `NA`) for a list.
+        perRow <- lapply(X = x, FUN = function(row) {
+            idx <- match(dimnames[[2L]], names(row))
+            miss <- is.na(idx)
+            out <- if (is.list(row)) {
+                unname(row[idx])
+            } else {
+                as.list(unname(row[idx]))
+            }
+            if (any(miss)) {
+                out[miss] <- list(NA)
+            }
+            out
+        })
+        xt <- lapply(
+            X = seq_along(dimnames[[2L]]),
+            FUN = function(j) unname(lapply(perRow, `[[`, j))
         )
+        names(xt) <- dimnames[[2L]]
         ## Refer to `pipette::as.DataFrame` for inspiration on this approach.
         df <- new(Class = "DFrame", listData = xt, nrows = length(xt[[1L]]))
         assert(identical(nrow(df), length(x)))
